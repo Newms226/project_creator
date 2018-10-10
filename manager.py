@@ -1,6 +1,7 @@
 import os
-from util import git as repo
 import config
+from util import git
+
 
 
 class Project:
@@ -14,10 +15,12 @@ class Project:
     Process
     1. if *git* is set to ``True``, initalize the git repo
     '''
-    def auto(self, name:str, model, git=True, init=True, clone=False,
-             directory=os.curdir,
-             auto_combine=True, URL_Root=config.DEFAULTS['URL_ROOT']):
-        if git:
+    def auto(self, name: str, model, repo=True, clone=False,
+             directory=os.curdir, temp=True,
+             auto_combine=True, url_root=config.DEFAULTS['URL_ROOT']):
+        if repo:
+            git.auto_gen(name, temp, directory, repo, auto_combine, url_root)
+
 
 
 

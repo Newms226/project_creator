@@ -1,6 +1,7 @@
 import os, requests, config
 from urllib import parse
 from util import directories
+from git import Repo
 
 def clone(rootDir:str = os.curdir ):
     # TODO write method
@@ -11,8 +12,7 @@ def branch(name:str, parent:str="master"):
 
 
 def do_init(repo_directory=os.curdir):
-    if not repo_directory == os.curdir:  # TODO cd to directory
-    # TODO write method
+    return Repo.init(repo_directory)
 
 
 def add(*files)
@@ -48,26 +48,24 @@ def assert_valid_repo(url):
 def valid_git_hub_url(url):
     return str(url).index('https://github.com/') == 0
 
-def auto_gen(name, temp=False, root_directory=os.curdir, init_repo=True,
+def auto_gen(name, temp=False, root_directory=os.curdir, gen_repo=True,
              auto_combine=True, url_root=config.DEFAULTS['URL_ROOT'],
              ):
+
     if auto_combine:
         qualified_url = render_url(name, url_root)
     if url_root is not config.DEFAULTS['URL_ROOT']:
         assert_valid_repo(qualified_url)
 
+    if temp:
+        repo_dir = directories.create_temp(root_directory)
+    else:
+        repo_dir = directories.create(root_directory)
 
-    if init_repo:
-        if not directories.exsits(root_directory):
-            if temp:
-                repo_dir = directories.create_temp(root_directory)
-            else:
-                repo_dir = directories.create(root_directory)
+    repo = do_init(repo_dir)
+    repo.clone_from(qualified_url)
 
-        do_init(repo_dir)
-
-
-
+    return repo_dir, repo
 
 
 # TODO error handler
