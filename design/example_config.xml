@@ -45,6 +45,19 @@
         </folder>
     </folders>
 
+    <autofiles>
+        <file>
+            <title></title>
+            <filename></filename>
+            <extension></extension>
+            <text></text>
+            <import></import>
+            <dir></dir>
+            <git></git>
+        </file>
+
+    </autofiles>
+
     <files>
         <file>
             <title>Read Me</title>

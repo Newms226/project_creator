@@ -1,6 +1,8 @@
-import os, requests, config
+import os, requests
+from src import config
 from urllib import parse
-from util import directories
+from src.util import directories
+
 
 def clone(rootDir:str = os.curdir ):
 
