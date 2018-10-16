@@ -31,13 +31,15 @@
     </git>
 
     <folders>
-        <folder name="design">
+        <folder>
+            <name>design</name>
             <root />
                 <!-- defining the root this way implies that the folder
                 should go in the root dir -->
             <git>true</git>
         </folder>
-        <folder name="strategy">
+        <folder>
+            <name>strategy</name>
             <root>design</root>
                 <!-- defining the root this way implies that the folder
                 should go in root/design-->
