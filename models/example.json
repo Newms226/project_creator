@@ -44,13 +44,12 @@
     {
       "name": "src",
       "git": true,
-      "sub": null
+      "root": null
     },
 
     {
       "name": "ref",
       "git": true,
-      "sub": ["links", "guides", "code"]
     },
 
     {
@@ -75,6 +74,12 @@
       "name": "design",
       "git": true,
       "sub": null
+    },
+
+    {
+      "name": "strategy",
+      "git": true,
+      "root": "design"
     }
   ],
 
