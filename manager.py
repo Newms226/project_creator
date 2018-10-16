@@ -17,7 +17,22 @@ class Project:
     def auto(self, name:str, model, git=True, init=True, clone=False,
              directory=os.curdir,
              auto_combine=True, URL_Root=config.DEFAULTS['URL_ROOT']):
-        if git:
+        '''
+        1. Init git repo
+        2. Define the directory hierarchy from model
+        3. Generate default files from model
+
+
+        :param name:
+        :param model:
+        :param git:
+        :param init:
+        :param clone:
+        :param directory:
+        :param auto_combine:
+        :param URL_Root:
+        :return:
+        '''
 
 
 
