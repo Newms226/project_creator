@@ -1,0 +1,80 @@
+<project>
+    <info>
+        <name>Project Creator</name>
+            <!-- The name of the project. Should be in title case. Will have
+            spaces removed & capitalization added to generate the root folder
+            name. For example "Project Creator" would become the folder
+            "ProjectCreator"
+             -->
+        <rootdir>/Users/Michael/prog/python/python3</rootdir>
+        <date>2018-10-16</date>
+        <license>MIT</license>
+        <contributors>
+            <contributor>Michael Newman</contributor>
+        </contributors>
+    </info>
+
+    <git>
+        <public>true</public>
+        <login>
+            <username></username>
+            <password></password>
+        </login>
+        <remotes>
+            <remote>URL PATH</remote>
+            <remote>FILE PATH</remote>
+        </remotes>
+        <branches>
+            <branch>dev</branch>
+            <branch>feature</branch>
+        </branches>
+    </git>
+
+    <sync>
+        <remotes>
+            <remote>
+                <path></path>
+                <username></username>
+                <password></password>
+            </remote>
+        </remotes>
+
+
+    </sync>
+
+    <!--      HIERARCHY      -->
+
+    <src type="folder">
+
+    </src>
+
+    <tests type="folder">
+
+    </tests>
+
+    <design type="folder">
+        <agile type="folder">
+
+            <project_backlog type="file">
+                <extension>rst</extension>
+            </project_backlog>
+
+            <sprint_backlog type ="file">
+                <extension>rst</extension>
+            </sprint_backlog>
+
+        </agile>
+
+        <examples type="folder">
+
+        </examples>
+    </design>
+
+    <venv type="folder" git="false">
+
+    </venv>
+
+    <README type="autofile">
+        <import>PATH</import>
+    </README>
+</project>
