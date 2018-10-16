@@ -1,4 +1,3 @@
 DEFAULTS = {
-    'URL_ROOT': 'https://github.com/Newms226',
-    'GIT_DIR': '~/github'
+    'GIT_URL_ROOT': 'https://github.com/Newms226'
 }
