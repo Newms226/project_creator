@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as ET
-import xml.etree.ElementTree.ParseError as ParseError
+from xml.etree.ElementTree import ParseError
 
 
 class Tree(object):
