@@ -32,13 +32,13 @@ class Tree(object):
         self.parse_info()
 
     def parse_info(self):
-        self.setup['name'] = self.info.get('name').text
 
         contributors = []
-        for contributor in self.info.get('contributors'):
-            contributors.append(contributor)
+        for contributor in self.info.findall('contributors'):
+            contributors.append(contributor.text)
 
         self.setup['contributors'] = contributors
-        self.setup['rootdir'] = self.info.get('rootdir')
-        self.setup['license'] = self.info.get('license')
-        self.setup['date'] = self.info.get('date')
+        self.setup['name'] = self.info.findtext('name')
+        self.setup['rootdir'] = self.info.findtext('rootdir')
+        self.setup['license'] = self.info.findtext('license')
+        self.setup['date'] = self.info.findtext('date')

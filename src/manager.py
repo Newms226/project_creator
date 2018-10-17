@@ -18,8 +18,9 @@ class Generator(object):
         return self.temp_handler.dir
 
     def _generate(self, cur: Element):
-        if list(cur) is None:
-            self.dir_stack.pop()
+        print("called generate on: ", cur.tag)
+        if not list(cur):
+            print('BASE CASE FOUND AT: ', cur.tag)
             return
 
         for child in list(cur):
@@ -37,14 +38,19 @@ class Generator(object):
     def _gen_dir(self, cur: Element):
         print("called generate directory for element: ", cur.tag)
 
-        self.dir_stack.append(
-            self.temp_handler.generate_dir(cur, self.dir_stack[-1]))
+        pushed = self.temp_handler.generate_dir(cur, self.dir_stack[-1])
+        print('PUSHED: ', pushed)
+        self.dir_stack.append(pushed)
         for child in list(cur):
             self._generate(child)
 
+        popped = self.dir_stack.pop()
+        print("POPPED: ", popped)
+
     def _gen_file(self, cur: Element):
         print("called generate file for element: ", cur.tag)
-        self.temp_handler.generate_file(cur, self.dir_stack[-1])
+        file = self.temp_handler.generate_file(cur, self.dir_stack[-1])
+        file.close()
 
     def _gen_autofile(self, cur: Element):
         print("called generate autofile for element: ", cur.tag)
