@@ -15,12 +15,13 @@ class Tree(object):
 
         self.xml_config = xml_config
         self.tree = ET.parse(xml_config)
+        root = self.tree.getroot()
 
         try:
-            self.info = self.tree.find('info')
-            self.git = self.tree.find('git')
-            self.sync = self.tree.find('sync')
-            self.root = self.tree.find('root')
+            self.info = root.find('info')
+            self.git = root.find('git')
+            self.sync = root.find('sync')
+            self.root = root.find('root')
             # TODO ensure that all values are not null!
 
         except ParseError as err:
@@ -28,6 +29,7 @@ class Tree(object):
             raise err  # TODO error handling
 
         self.setup = {}
+        self.parse_info()
 
     def parse_info(self):
         self.setup['name'] = self.info.get('name').text

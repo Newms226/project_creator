@@ -8,12 +8,13 @@ class Generator(object):
     def __init__(self, xml_location):
         self.tree = Tree(xml_location)
         """self.git_handler = GitHandler()"""
-        self.temp_handler = TempHandler(self.tree.info.get('name'),
+        self.temp_handler = TempHandler(self.tree.setup['name'],
                                         'Users/Michael')
         self.dir_stack = [None]
 
     def generate(self):
         self._generate(self.tree.root)
+        self.temp_handler.finalize()
         return self.temp_handler.dir
 
     def _generate(self, cur: Element):
@@ -26,21 +27,25 @@ class Generator(object):
 
             if item_type == "folder":
                 self._gen_dir(child)
-            elif item_type is 'file':
+            elif item_type == "file":
                 self._gen_file(child)
-            elif item_type is 'autofile':
+            elif item_type == "autofile":
                 self._gen_autofile(child)
             else:
                 raise Exception('invalid type: {}'.format(item_type))
 
     def _gen_dir(self, cur: Element):
-        self.temp_handler.generate_dir(cur, self.dir_stack[-1])
-        # TODO push the new dir to the stack
+        print("called generate directory for element: ", cur.tag)
+
+        self.dir_stack.append(
+            self.temp_handler.generate_dir(cur, self.dir_stack[-1]))
         for child in list(cur):
             self._generate(child)
 
     def _gen_file(self, cur: Element):
-        self.temp_handler.generate_file(cur)
+        print("called generate file for element: ", cur.tag)
+        self.temp_handler.generate_file(cur, self.dir_stack[-1])
 
     def _gen_autofile(self, cur: Element):
+        print("called generate autofile for element: ", cur.tag)
         pass  # TODO
