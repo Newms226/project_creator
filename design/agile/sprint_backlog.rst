@@ -1,10 +1,6 @@
-Design sprint
-#############
+First sprint - Recursive folder creation
+#########################################
 
-[] Finish design
-    [] XML file
-    [] Module diagram
-    [] extensions
-[] Learn how python works with XML
-[] High-level outline
-[] Stub program
+[] figure out a way to relatively generate the path for recursive calls
+[] test out various recursive calls
+[] finalize recursive nature
