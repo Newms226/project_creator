@@ -23,17 +23,17 @@ class Generator(object):
             print('BASE CASE FOUND AT: ', cur.tag)
             return
 
-        for child in list(cur):
-            item_type = str(child.get('type'))
+        '''for child in list(cur):'''
+        item_type = str(cur.get('type'))
 
-            if item_type == "folder":
-                self._gen_dir(child)
-            elif item_type == "file":
-                self._gen_file(child)
-            elif item_type == "autofile":
-                self._gen_autofile(child)
-            else:
-                raise Exception('invalid type: {}'.format(item_type))
+        if item_type == "folder":
+            self._gen_dir(cur)
+        elif item_type == "file":
+            self._gen_file(cur)
+        elif item_type == "autofile":
+            self._gen_autofile(cur)
+        else:
+            raise Exception('invalid type: {}'.format(item_type))
 
     def _gen_dir(self, cur: Element):
         print("called generate directory for element: ", cur.tag)
