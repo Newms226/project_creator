@@ -42,40 +42,56 @@
     </sync>
 
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~HIERARCHY~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-    <root>
-        <src type="folder">
+    <project>
+        <src type="folder" />
 
-        </src>
-
-        <tests type="folder">
-
-        </tests>
+        <tests type="folder" />
 
         <design type="folder">
             <agile type="folder">
 
                 <project_backlog type="file">
                     <extension>rst</extension>
+                    <header>Project Backlog</header>
                 </project_backlog>
 
                 <sprint_backlog type ="file">
                     <extension>rst</extension>
+                    <header>Sprint Backlog</header>
                     <text>#. design</text>
                 </sprint_backlog>
+
+                <past_sprints type="folder">
+
+                </past_sprints>
 
             </agile>
 
             <examples type="folder">
 
             </examples>
+
+            <strategy type="folder">
+
+            </strategy>
         </design>
 
         <venv type="folder" git="false">
 
         </venv>
 
-        <README type="autofile">
-            <import>PATH</import>
-        </README>
-    </root>
+        <logs type="folder">
+
+        </logs>
+
+        <bin type="folder" git="false" />
+
+        <ref type="folder" />
+
+        <resources type="folder" />
+
+        <config type="folder" git="false"/>
+
+        <README type="file"></README>
+    </project>
 </project>

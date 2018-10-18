@@ -21,7 +21,7 @@ class Tree(object):
             self.info = root.find('info')
             self.git = root.find('git')
             self.sync = root.find('sync')
-            self.root = root.find('root')
+            self.root = root.find('project')
             # TODO ensure that all values are not null!
 
         except ParseError as err:
