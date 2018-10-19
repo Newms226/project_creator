@@ -2,6 +2,7 @@ from util.temp_handler import TempHandler
 from models.model_parser import Tree
 """from util.git import GitHandler"""
 from xml.etree.ElementTree import Element
+from util.folders import WorkingDirectory
 
 
 class Generator(object):

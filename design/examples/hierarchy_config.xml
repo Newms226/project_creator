@@ -42,7 +42,7 @@
     </sync>
 
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~HIERARCHY~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-    <project>
+    <project type="folder">
         <src type="folder" />
 
         <tests type="folder" />
