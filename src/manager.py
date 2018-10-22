@@ -36,7 +36,7 @@ class Generator(object):
         print(f' called _gen_dir({cur.tag}')
 
         self.working_dir.push(cur.tag)
-        make_dir(self.working_dir.relative_dir)
+        make_dir(self.working_dir.absolute_dir)
         for child in list(cur):
             self._generate(child)
 
@@ -54,7 +54,7 @@ class Generator(object):
             _filename = cur.tag + '.' + _ext
             print(f'  _filename = {_filename}')
 
-        _path = Paths.join(self.working_dir.relative_dir, _filename)
+        _path = Paths.join(self.working_dir.absolute_dir, _filename)
         print(f' _path relativized as {_path}')
         open(_path, 'w+').close()  # TODO Text import, etc.
 
