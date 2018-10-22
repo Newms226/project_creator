@@ -11,10 +11,11 @@ class Generator(object):
         """self.git_handler = GitHandler()"""
         self.temp_handler = TempHandler(self.tree.setup['name'],
                                         'Users/Michael')
-        self.dir_stack = [None]
+        self.working_dir = WorkingDirectory()
+
 
     def generate(self):
-        self._generate(self.tree.root)
+        self._gen_dir(se)
         self.temp_handler.finalize()
         return self.temp_handler.dir
 
