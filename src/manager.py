@@ -1,6 +1,6 @@
 from util.paths import TempHandler
 from models.model_parser import Tree
-"""from util.git import GitHandler"""
+from util.git import GitTracker
 from xml.etree.ElementTree import Element
 from util.folders import WorkingDirectory, make_dir
 from os import path as Paths
@@ -9,7 +9,7 @@ from os import path as Paths
 class Generator(object):
     def __init__(self, xml_location):
         self.xml = Tree(xml_location)
-        """self.git_handler = GitHandler()"""
+        self.git_handler = GitTracker()
         self.temp_handler = TempHandler(self.xml.setup['root_dir'])
         self.working_dir = WorkingDirectory(root=self.temp_handler.dir)
 
