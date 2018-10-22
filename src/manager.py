@@ -17,6 +17,8 @@ class Generator(object):
         for child in list(self.xml.root):
             self._generate(child)
 
+        self.temp_handler.finalize()
+
     def _generate(self, cur: Element):
         item_type = str(cur.get('type'))
         print(f'Called _generate({cur.tag}) w/ type {item_type}')

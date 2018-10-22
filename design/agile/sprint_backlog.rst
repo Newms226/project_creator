@@ -1,6 +1,6 @@
-First sprint - Recursive folder creation
+Second sprint - Recursive folder creation
 #########################################
 
-[] figure out a way to relatively generate the path for recursive calls
-[] test out various recursive calls
-[] finalize recursive nature
+[x] figure out a way to relatively generate the path for recursive calls
+[x] test out various recursive calls
+[x] finalize recursive nature
