@@ -1,6 +1,11 @@
-Second sprint - Recursive folder creation
-#########################################
+Sprint 3 - Git & writing to files
+==================================
 
-[x] figure out a way to relatively generate the path for recursive calls
-[x] test out various recursive calls
-[x] finalize recursive nature
+[] research into python & git!
+    [] strategy for knowing what is/isn't going to the repo
+[] .gitignore creation
+[] define auto-branches
+[] create separate git repo to sync to (back up)
+
+[] write header / text to a file
+[] abstract out the file creation to util/files.py
