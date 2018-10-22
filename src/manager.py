@@ -20,6 +20,7 @@ class Generator(object):
         self.temp_handler.finalize()
 
     def _generate(self, cur: Element):
+
         item_type = str(cur.get('type'))
         print(f'Called _generate({cur.tag}) w/ type {item_type}')
 
@@ -37,6 +38,9 @@ class Generator(object):
 
         self.working_dir.push(cur.tag)
         make_dir(self.working_dir.absolute_dir)
+
+        self.git_handler.register(cur, self.working_dir.relative_dir)
+
         for child in list(cur):
             self._generate(child)
 
@@ -55,8 +59,11 @@ class Generator(object):
             print(f'  _filename = {_filename}')
 
         _path = Paths.join(self.working_dir.absolute_dir, _filename)
-        print(f' _path relativized as {_path}')
+        print(f' _path opened as {_path}')
         open(_path, 'w+').close()  # TODO Text import, etc.
+
+        self.git_handler.register(cur, self.working_dir.relative_dir + '/' +
+                                  _filename)
 
     def _gen_autofile(self, cur: Element):
         print(" called generate autofile for element: ", cur.tag)

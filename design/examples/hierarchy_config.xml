@@ -90,7 +90,11 @@
 
         <resources type="folder" />
 
-        <config type="folder" git="false"/>
+        <config type="folder">
+            <xml_congig type="file" git="false">
+                <extension>xml</extension>
+            </xml_congig>
+        </config>
 
         <README type="file">
             <extension>txt</extension>

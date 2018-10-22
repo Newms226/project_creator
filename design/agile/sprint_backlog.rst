@@ -6,6 +6,7 @@ Sprint 3 - Git & writing to files
 [] .gitignore creation
 [] define auto-branches
 [] create separate git repo to sync to (back up)
+[] import a specific .gitignore template
 
 [] write header / text to a file
 [] abstract out the file creation to util/files.py

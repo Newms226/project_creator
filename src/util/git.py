@@ -1,4 +1,4 @@
-from git import Repo
+# from git import Repo
 from xml.etree.ElementTree import Element
 
 
@@ -16,12 +16,21 @@ class GitTracker:
         print(f'  registering {cur.tag} @ {path}')
         directive = cur.get('git')
 
-        if (not directive) | directive == True:
-            print(f'   tracking {cur.tag} @ {path}')
-            self.tracking.append(path)
+        if not directive:
+            self._track(cur, path)
         else:
-            print(f'   ignoring {cur.tag} @ {path}')
-            self.ignoring.append(path)
+            if directive == 'True':
+                self._track(cur, path)
+            else:
+                self._ignore(cur, path)
+
+    def _track(self, cur: Element, path):
+        print(f'   tracking {cur.tag} @ {path}')
+        self.tracking.append(path)
+
+    def _ignore(self,cur: Element, path):
+        print(f'   ignoring {cur.tag} @ {path}')
+        self.ignoring.append(path)
 
     def get_git_ignore(self) -> str:
         """returns the contents of self.ignoring as a valid str"""
@@ -30,7 +39,7 @@ class GitTracker:
         for path in self.ignoring:
             _str = _str + path + '\n'
 
-        print('GITIGNORE:'
-              f'\n{_str}')
+        # print('GITIGNORE:'
+        #      f'\n{_str}')
 
         return _str

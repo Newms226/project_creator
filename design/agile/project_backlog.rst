@@ -5,6 +5,7 @@ Main functions
 
 
 Future Features:
+----------------
 - auto import year / contributors into the license doc
 - pull license from some online repo
 - integration with file sync
