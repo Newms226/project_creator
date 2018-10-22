@@ -33,6 +33,7 @@ class WorkingDirectory:
 
         to_return = self.directories.pop()
         self.relative_dir = self._gen_dir(self.directories)
+        print('  new dir: ' + self.relative_dir)
         return to_return
 
     def push(self, to_append):
