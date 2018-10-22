@@ -9,9 +9,10 @@ class TempHandler(object):
     def __init__(self, destination):
         self.destination = destination
         self.dir = tempfile.mkdtemp()  # TODO auto clean up
-        print("Initialized temp at {1} with plans to go to {2}"
-              .format(self.dir, destination))
+        print(f"Initialized temp at {self.dir} with plans to go to "
+              f"{self.destination}")
 
-    def finalize(self, temp_root: str):
-        print('temp_root passed: {}'.format(temp_root))  # TODO copy to root
-        
+    def finalize(self):
+        print(f'called finalize. Temp location: {self.dir}, Planed '
+              f'destination: {self.destination}')  # TODO copy to root
+        # shutil.copytree(self.dir, self.destination)

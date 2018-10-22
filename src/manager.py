@@ -1,32 +1,25 @@
-from util.temp_handler import TempHandler
+from util.paths import TempHandler
 from models.model_parser import Tree
 """from util.git import GitHandler"""
 from xml.etree.ElementTree import Element
-from util.folders import WorkingDirectory
+from util.folders import WorkingDirectory, make_dir
+from os import path as Paths
 
 
 class Generator(object):
     def __init__(self, xml_location):
-        self.tree = Tree(xml_location)
+        self.xml = Tree(xml_location)
         """self.git_handler = GitHandler()"""
-        self.temp_handler = TempHandler(self.tree.setup['name'],
-                                        'Users/Michael')
-        self.working_dir = WorkingDirectory()
-
+        self.temp_handler = TempHandler(self.xml.setup['root_dir'])
+        self.working_dir = WorkingDirectory(root=self.temp_handler.dir)
 
     def generate(self):
-        self._gen_dir(se)
-        self.temp_handler.finalize()
-        return self.temp_handler.dir
+        for child in list(self.xml.root):
+            self._generate(child)
 
     def _generate(self, cur: Element):
-        print("called generate on: ", cur.tag)
-        if not list(cur):
-            print('BASE CASE FOUND AT: ', cur.tag)
-            return
-
-        '''for child in list(cur):'''
         item_type = str(cur.get('type'))
+        print(f'Called _generate({cur.tag}) w/ type {item_type}')
 
         if item_type == "folder":
             self._gen_dir(cur)
@@ -35,25 +28,34 @@ class Generator(object):
         elif item_type == "autofile":
             self._gen_autofile(cur)
         else:
-            raise Exception('invalid type: {}'.format(item_type))
+            raise Exception(f'invalid type: {item_type}')
 
     def _gen_dir(self, cur: Element):
-        print("called generate directory for element: ", cur.tag)
+        print(f' called _gen_dir({cur.tag}')
 
-        pushed = self.temp_handler.generate_dir(cur, self.dir_stack[-1])
-        print('PUSHED: ', pushed)
-        self.dir_stack.append(pushed)
+        self.working_dir.push(cur.tag)
+        make_dir(self.working_dir.relative_dir)
         for child in list(cur):
             self._generate(child)
 
-        popped = self.dir_stack.pop()
-        print("POPPED: ", popped)
+        self.working_dir.pop()
+        print(f'END LOOP: {cur.tag} is done.')
 
     def _gen_file(self, cur: Element):
-        print("called generate file for element: ", cur.tag)
-        file = self.temp_handler.generate_file(cur, self.dir_stack[-1])
-        file.close()
+        print(f' called generate file for element: {cur.tag}')
+
+        _ext = cur.findtext('extension')
+        if not _ext:
+            print(f' WARNING: found no extension for {cur.tag}')
+            _filename = cur.tag
+        else:
+            _filename = cur.tag + '.' + _ext
+            print(f'  _filename = {_filename}')
+
+        _path = Paths.join(self.working_dir.relative_dir, _filename)
+        print(f' _path relativized as {_path}')
+        open(_path, 'w+').close()  # TODO Text import, etc.
 
     def _gen_autofile(self, cur: Element):
-        print("called generate autofile for element: ", cur.tag)
+        print(" called generate autofile for element: ", cur.tag)
         pass  # TODO

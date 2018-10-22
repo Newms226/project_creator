@@ -92,6 +92,8 @@
 
         <config type="folder" git="false"/>
 
-        <README type="file"></README>
+        <README type="file">
+            <extension>txt</extension>
+        </README>
     </project>
 </project>

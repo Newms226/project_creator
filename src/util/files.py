@@ -17,7 +17,7 @@ def generate_reST_header(title: str, underline_with_char: str = '#',
 
 
 def write_text(path, text: str, close: bool = True):
-    _file = open(path)
+    _file = open(path, 'w+')
     _file.write(text)
 
     if close:

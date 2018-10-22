@@ -39,6 +39,6 @@ class Tree(object):
 
         self.setup['contributors'] = contributors
         self.setup['name'] = self.info.findtext('name')
-        self.setup['rootdir'] = self.info.findtext('rootdir')
+        self.setup['root_dir'] = self.info.findtext('rootdir')
         self.setup['license'] = self.info.findtext('license')
         self.setup['date'] = self.info.findtext('date')

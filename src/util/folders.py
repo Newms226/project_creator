@@ -1,8 +1,18 @@
-import os
+from os import makedirs
+from os import path as Paths
 
 
-def generate(name, root):
-    print('Called generate with params: ', name, root)
+'''def make_dir(name, root):
+    _path = path.join(root, name)
+    print(f' Called generate with root {root}, name: {name}')
+    makedirs(_path, exist_ok=True)
+    print(f' Successfully created directory at {_path}')'''
+
+
+def make_dir(path):
+    print(f' called make_dir({path})')
+    makedirs(path, exist_ok=True)
+    print(f' Successfully created directory at {path}')
 
 
 def _ensure_string(obj):
