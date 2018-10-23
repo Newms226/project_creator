@@ -4,7 +4,8 @@ Sprint 3 - Git & writing to files
 [x] research into python & git!
     [x] strategy for knowing what is/isn't going to the repo
 [x] .gitignore creation
-[] deal with nested git ignores
+[] deal with nested git ignores (tree structure?)
+[] REPOS!
 [] define auto-branches
 [] create separate git repo to sync to (back up)
 [] import a specific .gitignore template
