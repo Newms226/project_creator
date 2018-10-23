@@ -1,5 +1,23 @@
 import xml.etree.ElementTree as ET
+from xml.etree.ElementTree import Element
 from xml.etree.ElementTree import ParseError
+
+def get_git_tracking_bool(cur: Element) -> bool:
+    directive = cur.get('git')
+    if not directive:
+        return True
+    else:
+        if directive == 'True':
+            return True
+        else:
+            return False
+
+
+class Unit:
+    def __init__(self, element: Element):
+        self.track: bool = get_git_tracking_bool(element)
+        self.element_type = str(element.get('type'))
+        self.name = element.tag
 
 
 class Tree(object):

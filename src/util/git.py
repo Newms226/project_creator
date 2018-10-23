@@ -17,15 +17,6 @@ class GitRepo:
         print(f'   cur branch: {self.repo.active_branch}')
 
 
-def get_git_tracking_bool(cur: Element) -> bool:
-    directive = cur.get('git')
-    if not directive:
-        return True
-    else:
-        if directive == 'True':
-            return True
-        else:
-            return False
 
 
 class GitTracker:
@@ -40,10 +31,10 @@ class GitTracker:
         if import_text:
             self.export = f'# Imported to GitTracker:\n{import_text}\n'
 
-    def register(self, path, track: bool):
+    def register(self, path, _type, track: bool):
         """Registers an element (either tracks or ignores)"""
 
-        print(f'  registering: {path}')
+        print(f' register(path={path}, type ={_type}, track={track}')
 
         if track:
             self._track()
@@ -51,10 +42,10 @@ class GitTracker:
             self._ignore()
 
     def _track(self, path):
-        print(f'   tracking {path}')
+        print(f'  tracking {path}')
         for p in self.ignoring:
             if path in p:
-                print(f'    NESTED: tracked path ({path}) found in ignored '
+                print(f'   NESTED: tracked path ({path}) found in ignored '
                       f'path ({p})')
                 self._nested_track(path)
                 return
@@ -62,7 +53,7 @@ class GitTracker:
         # self.tracking.append(path)
 
     def _nested_track(self, path):
-        print(f'   _nested_track({path})')
+        print(f'    _nested_track({path})')
         self.tracking.append(path)
 
     def _ignore(self, path):
