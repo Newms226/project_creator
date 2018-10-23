@@ -1,6 +1,6 @@
 from util.paths import TempHandler
 from models.model_parser import Tree
-"""from util.git import GitHandler"""
+from util.git import GitTracker
 from xml.etree.ElementTree import Element
 from util.folders import WorkingDirectory, make_dir
 from os import path as Paths
@@ -9,7 +9,7 @@ from os import path as Paths
 class Generator(object):
     def __init__(self, xml_location):
         self.xml = Tree(xml_location)
-        """self.git_handler = GitHandler()"""
+        self.git_handler = GitTracker()
         self.temp_handler = TempHandler(self.xml.setup['root_dir'])
         self.working_dir = WorkingDirectory(root=self.temp_handler.dir)
 
@@ -20,6 +20,7 @@ class Generator(object):
         self.temp_handler.finalize()
 
     def _generate(self, cur: Element):
+
         item_type = str(cur.get('type'))
         print(f'Called _generate({cur.tag}) w/ type {item_type}')
 
@@ -36,7 +37,10 @@ class Generator(object):
         print(f' called _gen_dir({cur.tag}')
 
         self.working_dir.push(cur.tag)
-        make_dir(self.working_dir.relative_dir)
+        make_dir(self.working_dir.absolute_dir)
+
+        self.git_handler.register(cur, self.working_dir.relative_dir)
+
         for child in list(cur):
             self._generate(child)
 
@@ -54,9 +58,12 @@ class Generator(object):
             _filename = cur.tag + '.' + _ext
             print(f'  _filename = {_filename}')
 
-        _path = Paths.join(self.working_dir.relative_dir, _filename)
-        print(f' _path relativized as {_path}')
+        _path = Paths.join(self.working_dir.absolute_dir, _filename)
+        print(f' _path opened as {_path}')
         open(_path, 'w+').close()  # TODO Text import, etc.
+
+        self.git_handler.register(cur, self.working_dir.relative_dir + '/' +
+                                  _filename)
 
     def _gen_autofile(self, cur: Element):
         print(" called generate autofile for element: ", cur.tag)
