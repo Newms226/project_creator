@@ -6,7 +6,7 @@
             name. For example "Project Creator" would become the folder
             "ProjectCreator"
              -->
-        <rootdir>/Users/Michael/prog/python/python3</rootdir>
+        <root_dir>/Users/Michael/prog/python/python3</root_dir>
         <date>2018-10-16</date>
         <license>MIT</license>
         <contributors>

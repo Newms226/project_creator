@@ -20,7 +20,7 @@ class GitRepo:
 
 
 class GitTracker:
-    """ Keeps track of any files/folders which should not be tracked in a git repo
+    """ Keeps git_track of any files/folders which should not be tracked in a git repo
     """
 
     def __init__(self, import_text: str = None):
@@ -34,7 +34,7 @@ class GitTracker:
     def register(self, path, _type, track: bool):
         """Registers an element (either tracks or ignores)"""
 
-        print(f' register(path={path}, type ={_type}, track={track}')
+        print(f' register(path={path}, type ={_type}, git_track={git_track}')
 
         if track:
             self._track()
