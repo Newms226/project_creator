@@ -18,7 +18,7 @@ class ElementNode(Unit, NodeMixin):
         return Unit.__str__(self)
 
 
-def generate_element_node(element: Element, parent=None) -> ElementNode:
+def element_to_node(element: Element, parent=None) -> ElementNode:
     return ElementNode(name=get_name(element),
                        element_type=get_element_type(element),
                        git_track=get_git_status(element),
@@ -26,11 +26,12 @@ def generate_element_node(element: Element, parent=None) -> ElementNode:
                        suffix=get_element_suffix(element))
 
 
-def generate_element_node(unit: Unit, parent=None) -> ElementNode:
+def unit_to_node(unit: Unit, parent=None) -> ElementNode:
     return ElementNode(name=unit.name,
                        element_type=unit.element_type,
                        git_track=unit.git_track,
                        parent=parent)
+
 
 def tree_to_string(root: ElementNode) -> str:
     _str = ''

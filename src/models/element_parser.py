@@ -50,11 +50,11 @@ def get_element_type(element: Element) -> str:
 
 
 def is_folder(element: Element) -> bool:
-    return get_element_type(element) is 'folder'
+    return get_element_type(element) == 'folder'
 
 
 def is_file(element: Element) -> bool:
-    return get_element_type(element) is 'file'
+    return get_element_type(element) == 'file'
 
 
 def get_name(element: Element) -> str:
