@@ -9,10 +9,11 @@ class Unit(object):
         self.git_track: bool = git_track
         self.element_type: str = element_type
         self.name: str = name
-        self.suffix = suffix
+        self.suffix: str = suffix
 
     def __str__(self):
         return f'{self.name}{self.suffix} (tracked: {self.git_track})'
+
 
 # ----------------------------------------------------------------------------+
 #                                                                             |

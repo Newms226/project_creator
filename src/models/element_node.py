@@ -1,5 +1,5 @@
 from xml.etree.ElementTree import Element
-from anytree import NodeMixin, RenderTree
+from anytree import NodeMixin
 from models.element_parser import get_name, get_git_status, \
     get_element_type, get_element_suffix, Unit
 
@@ -31,12 +31,3 @@ def unit_to_node(unit: Unit, parent=None) -> ElementNode:
                        element_type=unit.element_type,
                        git_track=unit.git_track,
                        parent=parent)
-
-
-def tree_to_string(root: ElementNode) -> str:
-    _str = ''
-
-    for pre, _, node in RenderTree(root):
-        _str += f'{pre}{node}\n'
-
-    return _str

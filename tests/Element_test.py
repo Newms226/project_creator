@@ -1,4 +1,4 @@
-from models.file_system_tree import ElementNode, tree_to_string
+from models.element_node import ElementNode, tree_to_string
 import xml.etree.ElementTree as ET
 
 def basic_node_test():
