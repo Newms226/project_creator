@@ -1,7 +1,26 @@
 from xml.etree.ElementTree import Element
 from xml.etree.ElementTree import ParseError
-from anytree import NodeMixin, RenderTree
 from models import config
+
+
+class Unit(object):
+    def __init__(self, name: str, suffix: str, element_type: str,
+                 git_track: bool):
+        self.git_track: bool = git_track
+        self.element_type: str = element_type
+        self.name: str = name
+        self.suffix = suffix
+
+    def __str__(self):
+        return f'{self.name}{self.suffix} (tracked: {self.git_track})'
+
+# ----------------------------------------------------------------------------+
+#                                                                             |
+#                                                                             |
+#                              PARSING METHODS                                |
+#                                                                             |
+#                                                                             |
+# ----------------------------------------------------------------------------+
 
 
 def get_git_status(element: Element) -> bool:
@@ -38,11 +57,11 @@ def is_file(element: Element) -> bool:
     return get_element_type(element) is 'file'
 
 
-def get_element_name(element: Element) -> str:
+def get_name(element: Element) -> str:
     return element.tag
 
 
-def get_element_extension(element: Element) -> str:
+def get_file_extension(element: Element) -> str:
     extension = element.findtext('extension')
     if not extension:
         raise ParseError(f'{element.tag} did not have a valid extension')
@@ -56,5 +75,5 @@ def get_element_suffix(element: Element,
     if is_folder(element):
         return folder_separator
     else:
-        return file_separator + get_element_extension(element)
+        return file_separator + get_file_extension(element)
 
