@@ -4,64 +4,6 @@ from anytree import NodeMixin, RenderTree
 from models import config
 
 
-class Unit(object):
-    def __init__(self, name: str, extension: str, element_type: str,
-                 git_track: bool):
-        self.git_track: bool = git_track
-        self.element_type: str = element_type
-        self.name: str = name
-        self.extension = extension
-
-    def __str__(self):
-        return f'{self.name}{self.extension} (tracked: {self.git_track})'
-
-
-def element_to_unit(element: Element) -> Unit:
-    return Unit(name=get_element_name(element),
-                element_type=get_element_name(element),
-                git_track=get_git_status(element))
-
-
-class ElementNode(Unit, NodeMixin):
-    def __init__(self, name: str, element_type: str, git_track: bool,
-                 parent=None):
-        Unit.__init__(self,
-                      name=name,
-                      element_type=element_type,
-                      git_track=git_track)
-        self.parent = parent
-
-    def __str__(self):
-        return Unit.__str__(self)
-
-
-def generate_element_node(element: Element, parent=None) -> ElementNode:
-    return ElementNode(name=get_element_name(element),
-                       element_type=get_element_type(element),
-                       git_track=get_git_status(element),
-                       parent=parent)
-
-
-def generate_element_node(unit: Unit, parent=None) -> ElementNode:
-    return ElementNode(name=unit.name,
-                       element_type=unit.element_type,
-                       git_track=unit.git_track,
-                       parent=parent)
-
-
-def generate_element_node(unit: Unit, parent=None) -> ElementNode:
-    return ElementNode(unit, parent)
-
-
-def tree_to_string(root: ElementNode) -> str:
-    _str = ''
-
-    for pre, _, node in RenderTree(root):
-        _str += f'{pre}{node}\n'
-
-    return _str
-
-
 def get_git_status(element: Element) -> bool:
     directive = element.get('git')
     if not directive:
@@ -92,6 +34,10 @@ def is_folder(element: Element) -> bool:
     return get_element_type(element) is 'folder'
 
 
+def is_file(element: Element) -> bool:
+    return get_element_type(element) is 'file'
+
+
 def get_element_name(element: Element) -> str:
     return element.tag
 
@@ -103,15 +49,10 @@ def get_element_extension(element: Element) -> str:
     return extension
 
 
-def get_element_suffix(element: Element, element_type: str = None,
+def get_element_suffix(element: Element,
                        folder_separator: str = config.get_folder_separator(),
                        file_separator: str = config.get_file_separator()
-                       ) -> str:
-    if not element_type:
-        t = get_element_type(element)
-    else:
-        t = element_type
-
+                       ) -> str:  # TODO Should the client be able to overwrite
     if is_folder(element):
         return folder_separator
     else:
