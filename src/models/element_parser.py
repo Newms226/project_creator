@@ -4,8 +4,8 @@ from models import config
 
 
 class Unit(object):
-    def __init__(self, name: str, suffix: str, element_type: str,
-                 git_track: bool):
+    def __init__(self, name: str, element_type: str, git_track: bool,
+                 suffix: str=''):
         self.git_track: bool = git_track
         self.element_type: str = element_type
         self.name: str = name
@@ -51,11 +51,11 @@ def get_element_type(element: Element) -> str:
 
 
 def is_folder(element: Element) -> bool:
-    return get_element_type(element) == 'folder'
+    return get_element_type(element) == config.FOLDER_STR
 
 
 def is_file(element: Element) -> bool:
-    return get_element_type(element) == 'file'
+    return get_element_type(element) == config.FILE_STR
 
 
 def get_name(element: Element) -> str:
