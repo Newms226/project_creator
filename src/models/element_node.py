@@ -1,12 +1,12 @@
+from models.config import NodeBase
 from xml.etree.ElementTree import Element
-from anytree import NodeMixin
-from models.element_parser import get_name, get_git_status, \
+from models.xml_parser import get_name, get_git_status, \
     get_element_type, get_element_suffix, Unit
 
 
-class ElementNode(NodeMixin):
+class ElementNode(NodeBase):
     def __init__(self, name: str, element_type: str, git_track: bool,
-                 suffix: str, element: Element, parent: NodeMixin = None):
+                 suffix: str, element: Element, parent: NodeBase = None):
         self.unit = Unit(name=name,
                          element_type=element_type,
                          git_track=git_track,

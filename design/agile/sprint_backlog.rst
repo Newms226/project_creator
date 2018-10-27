@@ -1,14 +1,16 @@
-Sprint 3 - Git & writing to files
-==================================
+Tree Sprint
+============
 
-[x] research into python & git!
-    [x] strategy for knowing what is/isn't going to the repo
-[x] .gitignore creation
-[] deal with nested git ignores (tree structure?)
-[] REPOS!
-[] define auto-branches
-[] create separate git repo to sync to (back up)
-[] import a specific .gitignore template
+[] get generation of actual files/folders working
+[] design actual test case!
 
-[] write header / text to a file
-[] abstract out the file creation to util/files.py
+Research
+--------
+[] unit testing
+[] python unit testing
+
+Testing
+-------
+[] folder/file creation
+[] tree structure
+

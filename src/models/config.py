@@ -1,3 +1,5 @@
+from anytree import NodeMixin as NodeBase
+
 def get_folder_separator() -> str:
     return '/'
 
