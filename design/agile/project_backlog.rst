@@ -27,3 +27,6 @@ Future Features:
 - integration with file sync
 - reorganize a folder to fit a spec
 - generate dir hierarchy from a command (ex: maven)
+- generate XML from a specific project hierarchy
+    > Useful to copy an entire hierarchy from one location to the next
+    > Useful to build testing dirs from src dirs
