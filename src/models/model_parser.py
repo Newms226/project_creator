@@ -1,8 +1,4 @@
-import xml.etree.ElementTree as ET
-from xml.etree.ElementTree import Element
-from xml.etree.ElementTree import ParseError
-from anytree import NodeMixin
-
+from models import ET, ParseError
 
 class XMLTree(object):
     """Simple class to provide access to the XML tree

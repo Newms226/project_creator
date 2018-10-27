@@ -1,9 +1,7 @@
 from models.element_node import ElementNode, element_to_node
-from anytree import RenderTree
 from models.model_parser import XMLTree
-from xml.etree.ElementTree import Element
-import models.config as config
 from util.tree import Tree
+from models import XMLElement
 
 
 class Generator(object):
@@ -25,7 +23,7 @@ class Generator(object):
         for child in list(node.xml_element):
             self._generate(child, node)
 
-    def _generate(self, element: Element, parent: ElementNode):
+    def _generate(self, element: XMLElement, parent: ElementNode):
         '''if not element:
             raise Exception('No element was found')
             return'''
@@ -33,33 +31,13 @@ class Generator(object):
         print(f'_GENERATE element: ({element.tag}) parent: ({parent})')
 
         node = element_to_node(element=element, parent=parent)
-        print(f'   generated node: {node}')
+        print(f'   generated node: {node.__full_str__()}')
 
-        t = node.unit.element_type
-        if t == config.FILE_STR:
-            self._generate_file(node)
-        elif t == config.FOLDER_STR:
-            self._generate_folder(node)
-        elif t == config.IMPORT_STR:
-            self._generate_import(node)
-        else:
-            raise Exception(f'Could not parse {node}')
-
-    def _generate_folder(self, node: ElementNode):
-        print(f' FOLDER: generating... {node}')
-
-        # TODO generate folder calls
-        self._folder_loop(node)
-
-    def _generate_file(self, node: ElementNode):
-        print(f' FILE: generating... {node}')
-        # TODO generate file calls
-
-    def _generate_import(self, node: ElementNode):
-        print(f' IMPORT: generating... {node}')
-        # TODO
+        if node.is_folder():
+            self._folder_loop(node)
 
 
 if __name__ == '__main__':
-    test = Generator('/Users/michael/prog/python/python3/project_creator/design/examples/hierarchy_config.xml')
+    test = Generator('/Users/michael/prog/python/python3/project_creator/'
+                     'design/examples/hierarchy_config.xml')
     test.generate()
