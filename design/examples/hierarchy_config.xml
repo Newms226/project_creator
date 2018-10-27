@@ -91,13 +91,18 @@
         <resources type="folder" />
 
         <config type="folder">
-            <xml_congig type="file" git="false">
+            <xml_config type="file" git="false">
                 <extension>xml</extension>
-            </xml_congig>
+            </xml_config>
         </config>
 
         <README type="file">
             <extension>txt</extension>
         </README>
+
+        <LICENSE type="import">
+            <path>resources/MIT.rst</path>
+            <extension>rst</extension>
+        </LICENSE>
     </project>
 </project>

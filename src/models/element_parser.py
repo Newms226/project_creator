@@ -12,8 +12,8 @@ class Unit(object):
         self.suffix: str = suffix
 
     def __str__(self):
-        return f'{self.name}{self.suffix} (tracked: {self.git_track})'
-
+        return f'{self.name}{self.suffix}' if self.git_track \
+            else f'{self.name}{self.suffix} (not tracked)'
 
 # ----------------------------------------------------------------------------+
 #                                                                             |

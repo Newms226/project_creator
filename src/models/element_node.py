@@ -15,7 +15,7 @@ class ElementNode(NodeMixin):
         self.xml_element = element
 
     def __str__(self):
-        return Unit.__str__(self)
+        return self.unit.__str__()
 
     def is_folder(self) -> bool:
         return self.unit.element_type == 'folder'  # TODO DANGEROUS!
