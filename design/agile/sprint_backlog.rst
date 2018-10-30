@@ -1,15 +1,15 @@
 Tree Sprint
 ============
 
-[] get generation of actual files/folders working
+[x] get generation of actual files/folders working
 [] design actual test case!
-[] reorganize imports
-[]
+[x] reorganize imports
+
 
 Research
 --------
-[] unit testing
-[] python unit testing
+[x] unit testing
+[x] python unit testing
 
 Testing
 -------
