@@ -1,70 +1,65 @@
-from util.paths import TempHandler
-from models.xml_parser import XMLTree
-from util.git import GitTracker
-from xml.etree.ElementTree import Element
-from util.folders import WorkingDirectory, make_dir
-from os import path as Paths
+from models import XMLTree, generate_tree, ElementNode
+from util import WorkingDirectory, TempHandler, make_folder, make_file
+from os import path
 
 
 class Generator(object):
     def __init__(self, xml_location):
         self.xml = XMLTree(xml_location)
-        self.git_handler = GitTracker()
+        '''self.git_handler = GitTracker()'''
         self.temp_handler = TempHandler(self.xml.setup['root_dir'])
         self.working_dir = WorkingDirectory(root=self.temp_handler.dir)
+        self.tree = generate_tree(self.xml)
 
     def generate(self):
-        for child in list(self.xml.root):
+        for child in list(self.tree.get_root().children):
             self._generate(child)
 
         self.temp_handler.finalize()
 
-    def _generate(self, cur: Element):
+    def _generate(self, cur: ElementNode):
+        print(f'Called _generate({cur.unit.name}) w/ type '
+              f'{cur.unit.element_type}')
 
-        item_type = str(cur.get('type'))
-        print(f'Called _generate({cur.tag}) w/ type {item_type}')
-
-        if item_type == "folder":
+        if cur.is_folder():
             self._gen_dir(cur)
-        elif item_type == "file":
+        elif cur.is_file():
             self._gen_file(cur)
-        elif item_type == "autofile":
-            self._gen_autofile(cur)
+        elif cur.is_import():
+            self._gen_import(cur)
         else:
-            raise Exception(f'invalid type: {item_type}')
+            raise Exception(f'invalid type: {cur.unit.element_type}')
 
-    def _gen_dir(self, cur: Element):
-        print(f' called _gen_dir({cur.tag}')
+    def _gen_dir(self, cur: ElementNode):
+        print(f' called _gen_dir({cur.unit.name}')
 
-        self.working_dir.push(cur.tag)
-        make_dir(self.working_dir.absolute_dir)
+        self.working_dir.push(cur.unit.name)
+        make_folder(self.working_dir.absolute_dir)
 
-        self.git_handler.register(cur, self.working_dir.relative_dir)
+        '''self.git_handler.register(cur, self.working_dir.relative_dir)'''
 
-        for child in list(cur):
+        for child in list(cur.children):
             self._generate(child)
 
         self.working_dir.pop()
-        print(f'END LOOP: {cur.tag} is done.')
+        print(f'END LOOP: {cur.unit.name} is done.')
 
-    def _gen_file(self, cur: Element):
-        print(f' called generate file for element: {cur.tag}')
+    def _gen_file(self, cur: ElementNode):
+        print(f' called generate file for element: {cur.unit.name}')
 
-        _ext = cur.findtext('extension')
-        if not _ext:
-            print(f' WARNING: found no extension for {cur.tag}')
-            _filename = cur.tag
-        else:
-            _filename = cur.tag + '.' + _ext
-            print(f'  _filename = {_filename}')
+        make_file(path=self.working_dir.absolute_dir,
+                  name=cur.unit.name,
+                  suffix=cur.unit.suffix)
 
-        _path = Paths.join(self.working_dir.absolute_dir, _filename)
-        print(f' _path opened as {_path}')
-        open(_path, 'w+').close()  # TODO Text import, etc.
+        '''self.git_handler.register(cur, self.working_dir.relative_dir + '/' +
+                                  _filename)'''
 
-        self.git_handler.register(cur, self.working_dir.relative_dir + '/' +
-                                  _filename)
-
-    def _gen_autofile(self, cur: Element):
-        print(" called generate autofile for element: ", cur.tag)
+    def _gen_import(self, cur: ElementNode):
+        print(f' called generate import as {cur.unit.name}')
         pass  # TODO
+
+
+if __name__ == '__main__':
+    tester = Generator('/Users/michael/prog/python/python3/project_creator/'
+                       'design/examples/hierarchy_config.xml')
+    tester.generate()

@@ -14,17 +14,6 @@ def tree_to_string(root: NodeMixin) -> str:
     return _str
 
 
-class Tree(object):
-
-    def __init__(self, root_node: NodeMixin): self.root = root_node
-
-    def get_root(self) -> NodeMixin: return self.root
-
-    def get_rendered_tree(self): return RenderTree(self.root)
-
-    def __str__(self): return tree_to_string(self.root)
-
-
 class ElementNode(NodeBase):
     def __init__(self, name: str, element_type: str, git_track: bool,
                  suffix: str, element: XMLElement, parent: NodeBase = None):
@@ -108,21 +97,21 @@ class ImportNode(ElementNode):
 
 def element_to_node(element: XMLElement, parent=None) -> ElementNode:
     type_ = get_element_type(element)
-    if type_ is FOLDER_STR:
+    if type_ == FOLDER_STR:
         return FolderNode(name=get_name(element),
                           element_type=type_,
                           git_track=get_git_status(element),
                           parent=parent,
                           suffix=get_element_suffix(element),
                           element=element)
-    elif type_ is FILE_STR:
+    elif type_ == FILE_STR:
         return FileNode(name=get_name(element),
                         element_type=type_,
                         git_track=get_git_status(element),
                         parent=parent,
                         suffix=get_element_suffix(element),
                         element=element)
-    elif type_ is IMPORT_STR:
+    elif type_ == IMPORT_STR:
         return ImportNode(name=get_name(element),
                           element_type=type_,
                           git_track=get_git_status(element),
@@ -134,7 +123,18 @@ def element_to_node(element: XMLElement, parent=None) -> ElementNode:
                         f'{element}')
 
 
-def generate(xml: XMLTree) -> Tree:
+class Tree(object):
+
+    def __init__(self, root_node: NodeMixin): self.root = root_node
+
+    def get_root(self) -> ElementNode: return self.root
+
+    def get_rendered_tree(self): return RenderTree(self.root)
+
+    def __str__(self): return tree_to_string(self.root)
+
+
+def generate_tree(xml: XMLTree) -> Tree:
     def _folder_loop(node: ElementNode):
         print(f'LOOP: {node.unit.name}')
         for child in list(node.xml_element):
@@ -157,7 +157,7 @@ def generate(xml: XMLTree) -> Tree:
                        element_type='folder',
                        git_track='true',
                        suffix='',
-                       element=xml.root)
+                       element=xml.folder_root)
     tree = Tree(root)
     _folder_loop(tree.get_root())
     return tree

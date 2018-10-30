@@ -1,4 +1,4 @@
-
+from os import path as Paths
 
 def generate_reST_header(title: str, underline_with_char: str = '#',
                          top: bool = False) -> str:
@@ -24,3 +24,15 @@ def write_text(path, text: str, close: bool = True):
         _file.close()
     else:
         return _file
+
+
+def make_file(path: str, name: str, suffix:str):
+    print(f'   make_file(path={path}, name={name}, suffix={suffix})')
+
+    filename = name + suffix
+    print(f'    file name generated as {filename}')
+
+    abs_path = Paths.join(path, filename)
+    print(f'    path={abs_path}')
+
+    open(abs_path, 'w+').close()  # TODO write file text!

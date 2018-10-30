@@ -42,7 +42,7 @@
     </sync>
 
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~HIERARCHY~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-    <project type="folder">
+    <folder_root type="folder">
         <src type="folder" />
 
         <tests type="folder" />
@@ -104,5 +104,5 @@
             <path>resources/MIT.rst</path>
             <extension>rst</extension>
         </LICENSE>
-    </project>
+    </folder_root>
 </project>

@@ -1,6 +1,7 @@
 from os import makedirs
 from os import path as Paths
 from warnings import warn
+from util import mkdtemp
 
 
 '''def make_dir(name, root):
@@ -10,7 +11,7 @@ from warnings import warn
     print(f' Successfully created directory at {_path}')'''
 
 
-def make_dir(path):
+def make_folder(path):
     print(f' called make_dir({path})')
     makedirs(path, exist_ok=True)
     print(f' Successfully created directory at {path}')
@@ -21,6 +22,19 @@ def _ensure_string(obj):
         return obj
     else:
         return str(obj)  # TODO regrex expression to test this
+
+
+class TempHandler(object):
+    def __init__(self, destination):
+        self.destination = destination
+        self.dir = mkdtemp()
+        print(f"Initialized temp at {self.dir} with plans to go to "
+              f"{self.destination}")
+
+    def finalize(self):
+        print(f'called finalize. Temp location: {self.dir}, Planed '
+              f'destination: {self.destination}')  # TODO copy to root
+        # shutil.copytree(self.dir, self.destination)
 
 
 # TODO turn the working directory variable into a Python Property
@@ -38,7 +52,7 @@ class WorkingDirectory:
     def pop(self) -> str:
         print('  popping')
         if self.size() == 0:
-            warn(f'\n Called pop when size was zero. Returned: {self.root}')
+            warn(f'Called pop when size was zero. Returned: {self.root}')
             return self.root
 
         to_return = self.directories.pop()
@@ -56,7 +70,7 @@ class WorkingDirectory:
     def size(self):
         return len(self.directories)
 
-    def _update_dir(self):
+    def _update_dir(self):  # TODO use paths to join!
         self.relative_dir = self.separator.join(self.directories)
         self.absolute_dir = self.root + self.separator + self.relative_dir
         print(f'    relative_dir: {self.relative_dir}')

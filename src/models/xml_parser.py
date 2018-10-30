@@ -1,5 +1,3 @@
-
-
 from models import XMLElement, FOLDER_STR, FILE_STR, IMPORT_STR, \
     get_file_separator, get_folder_separator, ParseError, ET
 
@@ -107,7 +105,7 @@ class XMLTree(object):
             self.info = root.find('info')
             self.git = root.find('git')
             self.sync = root.find('sync')
-            self.root = root.find('project')
+            self.folder_root = root.find('folder_root')
             # TODO ensure that all values are not null!
 
         except ParseError as err:
