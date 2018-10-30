@@ -52,13 +52,86 @@ class ElementNode(NodeBase):
         return self.unit.element_type == IMPORT_STR
 
 
+class FileNode(ElementNode):
+    def __init__(self, name: str, element_type: str, git_track: bool,
+                 suffix: str, element: XMLElement, parent: NodeBase = None):
+        if element_type != FILE_STR:
+            raise Exception(f'Attempted to make file node {name} when the '
+                            f'element type was {element_type}')
+
+        ElementNode.__init__(self, name=name, element_type=element_type,
+                             git_track=git_track, suffix=suffix,
+                             element=element, parent=parent)
+
+    def is_file(self) -> bool: return True
+
+    def is_folder(self) -> bool: return False
+
+    def is_import(self) -> bool: return False
+
+
+class FolderNode(ElementNode):
+    def __init__(self, name: str, element_type: str, git_track: bool,
+                 suffix: str, element: XMLElement, parent: NodeBase = None):
+        if element_type != FOLDER_STR:
+            raise Exception(f'Attempted to make folder node {name} when the '
+                            f'element type was {element_type}')
+
+        ElementNode.__init__(self, name=name, element_type=element_type,
+                             git_track=git_track, suffix=suffix,
+                             element=element, parent=parent)
+
+    def is_file(self) -> bool: return False
+
+    def is_folder(self) -> bool: return True
+
+    def is_import(self) -> bool: return False
+
+
+class ImportNode(ElementNode):
+    def __init__(self, name: str, element_type: str, git_track: bool,
+                 suffix: str, element: XMLElement, parent: NodeBase = None):
+        if element_type != IMPORT_STR:
+            raise Exception(f'Attempted to make import node {name} when the '
+                            f'element type was {element_type}')
+
+        ElementNode.__init__(self, name=name, element_type=element_type,
+                             git_track=git_track, suffix=suffix,
+                             element=element, parent=parent)
+
+    def is_file(self) -> bool: return False
+
+    def is_folder(self) -> bool: return False
+
+    def is_import(self) -> bool: return True
+
+
 def element_to_node(element: XMLElement, parent=None) -> ElementNode:
-    return ElementNode(name=get_name(element),
-                       element_type=get_element_type(element),
-                       git_track=get_git_status(element),
-                       parent=parent,
-                       suffix=get_element_suffix(element),
-                       element=element)
+    type_ = get_element_type(element)
+    if type_ is FOLDER_STR:
+        return FolderNode(name=get_name(element),
+                          element_type=type_,
+                          git_track=get_git_status(element),
+                          parent=parent,
+                          suffix=get_element_suffix(element),
+                          element=element)
+    elif type_ is FILE_STR:
+        return FileNode(name=get_name(element),
+                        element_type=type_,
+                        git_track=get_git_status(element),
+                        parent=parent,
+                        suffix=get_element_suffix(element),
+                        element=element)
+    elif type_ is IMPORT_STR:
+        return ImportNode(name=get_name(element),
+                          element_type=type_,
+                          git_track=get_git_status(element),
+                          parent=parent,
+                          suffix=get_element_suffix(element),
+                          element=element)
+    else:
+        raise Exception(f'Element did not have a valid type: {type_} @ '
+                        f'{element}')
 
 
 def generate(xml: XMLTree) -> Tree:
