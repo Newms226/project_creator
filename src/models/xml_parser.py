@@ -1,7 +1,7 @@
-from xml.etree.ElementTree import ParseError
+
 
 from models import XMLElement, FOLDER_STR, FILE_STR, IMPORT_STR, \
-    get_file_separator, get_folder_separator, ParseError
+    get_file_separator, get_folder_separator, ParseError, ET
 
 
 class Unit(object):
@@ -64,7 +64,7 @@ def is_file(element: XMLElement) -> bool:
 
 
 def is_import(element: XMLElement) -> bool:
-    return get_element_type(element)
+    return get_element_type(element) == IMPORT_STR
 
 
 def get_name(element: XMLElement) -> str:

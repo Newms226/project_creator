@@ -61,26 +61,13 @@ def element_to_node(element: XMLElement, parent=None) -> ElementNode:
                        element=element)
 
 
-class Generator:
-    def __init__(self, xml_location):
-        self.xml = XMLTree(xml_location)
-        root = ElementNode(name=self.xml.setup['name'],
-                           element_type='folder',
-                           git_track='true',
-                           suffix='',
-                           element=self.xml.root)
-        super(Tree, self).__init__(root)
-
-    def generate(self):
-        self._folder_loop(self.tree.get_root())
-        print(self.tree.__str__())
-
-    def _folder_loop(self, node: ElementNode):
+def generate(xml: XMLTree) -> Tree:
+    def _folder_loop(node: ElementNode):
         print(f'LOOP: {node.unit.name}')
         for child in list(node.xml_element):
-            self._generate(child, node)
+            _generate(child, node)
 
-    def _generate(self, element: XMLElement, parent: ElementNode):
+    def _generate(element: XMLElement, parent: ElementNode):
         '''if not element:
             raise Exception('No element was found')
             return'''
@@ -91,4 +78,13 @@ class Generator:
         print(f'   generated node: {node.__full_str__()}')
 
         if node.is_folder():
-            self._folder_loop(node)
+            _folder_loop(node)
+
+    root = ElementNode(xml.setup['name'],
+                       element_type='folder',
+                       git_track='true',
+                       suffix='',
+                       element=xml.root)
+    tree = Tree(root)
+    _folder_loop(tree.get_root())
+    return tree
