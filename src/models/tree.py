@@ -68,9 +68,9 @@ def generate(xml: XMLTree) -> Tree:
             _generate(child, node)
 
     def _generate(element: XMLElement, parent: ElementNode):
-        '''if not element:
+        if element is None:
             raise Exception('No element was found')
-            return'''
+            return
 
         print(f'_GENERATE element: ({element.tag}) parent: ({parent})')
 

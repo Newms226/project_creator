@@ -1,5 +1,5 @@
-from models.tree import ElementNode
-import xml.etree.ElementTree as ET
+from models.tree import ElementNode, tree_to_string, generate
+from models.xml_parser import XMLTree
 
 def basic_node_test():
     root = ElementNode('root', 'folder', True, '')
@@ -9,4 +9,9 @@ def basic_node_test():
     util = ElementNode('util', 'folder', True, '', root)
     print(tree_to_string(root))
 
-def element_parse_test()
+
+def element_parse_test():
+    xml = XMLTree('/Users/michael/prog/python/python3/project_creator/design'
+                  '/examples/hierarchy_config.xml')
+    tree = generate(xml)
+    print(tree.__str__())
