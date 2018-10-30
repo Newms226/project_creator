@@ -1,5 +1,6 @@
 from os import makedirs
 from os import path as Paths
+from warnings import warn
 
 
 '''def make_dir(name, root):
@@ -37,8 +38,7 @@ class WorkingDirectory:
     def pop(self) -> str:
         print('  popping')
         if self.size() == 0:
-            print('!!!!              WARNING                             !!!!!'
-                  f'\n Called pop when size was zero. Returned: {self.root}')
+            warn(f'\n Called pop when size was zero. Returned: {self.root}')
             return self.root
 
         to_return = self.directories.pop()

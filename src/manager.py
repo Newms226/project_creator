@@ -1,5 +1,5 @@
 from util.paths import TempHandler
-from models.model_parser import XMLTree
+from models.xml_parser import XMLTree
 from util.git import GitTracker
 from xml.etree.ElementTree import Element
 from util.folders import WorkingDirectory, make_dir

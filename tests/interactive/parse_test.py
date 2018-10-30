@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
-from models.element_node import element_to_node
+from models.tree import element_to_node
+
 tree = ET.parse('/Users/michael/prog/python/python3/project_creator/design'
                 '/examples/hierarchy_config.xml')
 tree_root = tree.getroot()

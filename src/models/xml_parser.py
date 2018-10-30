@@ -1,3 +1,5 @@
+from xml.etree.ElementTree import ParseError
+
 from models import XMLElement, FOLDER_STR, FILE_STR, IMPORT_STR, \
     get_file_separator, get_folder_separator, ParseError
 
@@ -61,6 +63,10 @@ def is_file(element: XMLElement) -> bool:
     return get_element_type(element) == FILE_STR
 
 
+def is_import(element: XMLElement) -> bool:
+    return get_element_type(element)
+
+
 def get_name(element: XMLElement) -> str:
     return element.tag
 
@@ -81,3 +87,44 @@ def get_element_suffix(element: XMLElement,
     else:
         return file_separator + get_file_extension(element)
 
+
+class XMLTree(object):
+    """Simple class to provide access to the XML tree
+    """
+
+    def __init__(self, xml_config):
+        """ Initialize the application & generate shortcuts to main
+        components of the files
+
+        :param xml_config: the location of the XML config file
+        """
+
+        self.xml_config = xml_config
+        self.tree = ET.parse(xml_config)
+        root = self.tree.getroot()
+
+        try:
+            self.info = root.find('info')
+            self.git = root.find('git')
+            self.sync = root.find('sync')
+            self.root = root.find('project')
+            # TODO ensure that all values are not null!
+
+        except ParseError as err:
+            print('Failed to parse: {0}'.format(err))
+            raise err  # TODO error handling
+
+        self.setup = {}
+        self.parse_info()
+
+    def parse_info(self):
+
+        contributors = []
+        for contributor in self.info.findall('contributors'):
+            contributors.append(contributor.text)
+
+        self.setup['contributors'] = contributors
+        self.setup['name'] = self.info.findtext('name')
+        self.setup['root_dir'] = self.info.findtext('root_dir')
+        self.setup['license'] = self.info.findtext('license')
+        self.setup['date'] = self.info.findtext('date')
