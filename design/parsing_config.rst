@@ -1,0 +1,3 @@
+- parse all config data values inside a *function*
+- return object!
+    - prevents access to the config constructor once program is in execution
