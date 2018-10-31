@@ -30,3 +30,4 @@ Future Features:
 - generate XML from a specific project hierarchy
     > Useful to copy an entire hierarchy from one location to the next
     > Useful to build testing dirs from src dirs
+- import not only files, but entire folders
