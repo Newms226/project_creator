@@ -1,4 +1,4 @@
-from project.src import Generator
+from src.manager import Generator
 import unittest
 
 
