@@ -1,5 +1,4 @@
 import xml.etree.ElementTree as ET
-from models.tree import element_to_node
 
 tree = ET.parse('/Users/michael/prog/python/python3/project_creator/design'
                 '/examples/hierarchy_config.xml')

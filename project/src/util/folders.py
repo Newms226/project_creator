@@ -1,5 +1,4 @@
 from os import makedirs
-from os import path as Paths
 from warnings import warn
 from util import mkdtemp
 

@@ -1,0 +1,104 @@
+<project>
+    <info>
+        <project_name>Project Creator</project_name>
+            <!-- The name of the project. Should be in title case. Will have
+            spaces removed & capitalization added to generate the root folder
+            name. For example "Project Creator" would become the folder
+            "ProjectCreator"
+             -->
+        <root_dir>/Users/Michael/prog/python/python3</root_dir>
+        <date>2018-10-16</date>
+        <license>MIT</license>
+        <contributors>
+            <contributor>Michael Newman</contributor>
+        </contributors>
+    </info>
+
+    <git_config>
+        <login>
+            <username></username>
+            <password></password>
+        </login>
+        <remote>URL PATH</remote>
+        <remote>FILE PATH</remote>
+        <branch>dev</branch>
+        <branch>feature</branch>
+    </git_config>
+
+    <sync>
+        <remotes>
+            <remote>
+                <path></path>
+                <username></username>
+                <password></password>
+            </remote>
+        </remotes>
+
+
+    </sync>
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~HIERARCHY~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <folder_root type="folder">
+        <src type="folder" />
+
+        <tests type="folder" />
+
+        <design type="folder" git="False">
+            <agile type="folder">
+
+                <project_backlog type="file">
+                    <extension>rst</extension>
+                    <header>Project Backlog</header>
+                </project_backlog>
+
+                <sprint_backlog type ="file">
+                    <extension>rst</extension>
+                    <header>Sprint Backlog</header>
+                    <text>#. design</text>
+                </sprint_backlog>
+
+                <past_sprints type="folder">
+
+                </past_sprints>
+
+            </agile>
+
+            <examples type="folder">
+
+            </examples>
+
+            <strategy type="folder">
+
+            </strategy>
+        </design>
+
+        <venv type="folder" git="False">
+
+        </venv>
+
+        <logs type="folder">
+
+        </logs>
+
+        <bin type="folder" git="False" />
+
+        <ref type="folder" />
+
+        <resources type="folder" />
+
+        <config type="folder">
+            <xml_config type="file" git="false">
+                <extension>xml</extension>
+            </xml_config>
+        </config>
+
+        <README type="file">
+            <extension>txt</extension>
+        </README>
+
+        <LICENSE type="import">
+            <path>resources/MIT.rst</path>
+            <extension>rst</extension>
+        </LICENSE>
+    </folder_root>
+</project>

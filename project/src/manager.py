@@ -1,6 +1,6 @@
-from models import XMLTree, generate_tree, ElementNode
-from util import WorkingDirectory, TempHandler, make_folder, make_file
-from os import path
+from models import XMLTree, generate_tree, ElementNode, FILE_HEADER, FILE_TEXT
+from util import WorkingDirectory, TempHandler, make_folder, make_file, \
+    generate_reST_header
 
 
 class Generator(object):
@@ -47,15 +47,31 @@ class Generator(object):
     def _gen_file(self, cur: ElementNode):
         print(f' called generate file for element: {cur.unit.name}')
 
-        make_file(path=self.working_dir.absolute_dir,
-                  name=cur.unit.name,
-                  suffix=cur.unit.suffix)
+        file = make_file(path=self.working_dir.absolute_dir,
+                         name=cur.unit.name,
+                         suffix=cur.unit.suffix)
+
+        header = cur.xml_element.findtext(FILE_HEADER)
+        if header is not None:
+            file.write(generate_reST_header(header))
+
+        text = cur.xml_element.findtext(FILE_TEXT)
+        if text is not None:
+            file.write(text)
+
+        file.close()
 
         '''self.git_handler.register(cur, self.working_dir.relative_dir + '/' +
                                   _filename)'''
 
     def _gen_import(self, cur: ElementNode):
         print(f' called generate import as {cur.unit.name}')
+
+        file = make_file(path=self.working_dir.absolute_dir,
+                         name=cur.unit.name,
+                         suffix=cur.unit.suffix)
+
+        path = cur.xml_element.findtext()
         pass  # TODO
 
 

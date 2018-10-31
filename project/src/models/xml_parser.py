@@ -1,5 +1,28 @@
-from models import XMLElement, FOLDER_STR, FILE_STR, IMPORT_STR, \
-    get_file_separator, get_folder_separator, ParseError, ET
+from models import XMLElement, ET, ParseError
+
+# File system strings
+from models import FILE_SEPARATOR, FOLDER_SEPARATOR
+
+# Type strings
+from models import FOLDER_TYPE, FILE_TYPE, IMPORT_TYPE
+# Attribute Strings
+from models import TYPE_ATTR, GIT_ATTR
+
+# Folder Strings
+
+
+# File Strings
+from models import FILE_TEXT, FILE_HEADER, FILE_IMPORT_PATH, FILE_SUFFIX
+
+# Git Strings
+from models import GIT_IGNORE_ATTR_TEXT, GIT_TRACK_ATTR_TEXT, GIT_BRANCH, \
+    GIT_REMOTE, GIT_LOG_IN, GIT_USERNAME, GIT_PASSWORD
+
+# Set-up Strings
+from models import GIT_CONFIG_ROOT, INFO_ROOT, SYNC_ROOT, FOLDER_ROOT
+
+# Info Strings
+from models import CONTRIBUTORS, PROJECT_NAME, LICENSE, DATE, ROOT_DIR
 
 
 class Unit(object):
@@ -15,7 +38,7 @@ class Unit(object):
             else f'{self.name}{self.suffix} (not tracked)'
 
     def __full_str__(self):
-        return f'{self.name}: type={self.element_type}, tracked=' \
+        return f'{self.name}{self.suffix}: type={self.element_type}, tracked=' \
                f'{self.git_track}'
 
 # ----------------------------------------------------------------------------+
@@ -28,11 +51,11 @@ class Unit(object):
 
 
 def get_git_status(element: XMLElement) -> bool:
-    directive = element.get('git')
+    directive = element.get(GIT_ATTR)
     if not directive:
         return True
     else:
-        if directive == 'True':
+        if directive == GIT_TRACK_ATTR_TEXT:
             return True
         else:
             return False
@@ -46,7 +69,7 @@ def get_element_type(element: XMLElement) -> str:
     :raises ParseError: if the element was invalid / method could not find
                         the 'type' attribute
     """
-    value = element.get('type')
+    value = element.get(TYPE_ATTR)
     if not value:
         raise ParseError(f'No type was found for {element.tag} located at'
                          f' {element}')
@@ -54,15 +77,15 @@ def get_element_type(element: XMLElement) -> str:
 
 
 def is_folder(element: XMLElement) -> bool:
-    return get_element_type(element) == FOLDER_STR
+    return get_element_type(element) == FOLDER_TYPE
 
 
 def is_file(element: XMLElement) -> bool:
-    return get_element_type(element) == FILE_STR
+    return get_element_type(element) == FILE_TYPE
 
 
 def is_import(element: XMLElement) -> bool:
-    return get_element_type(element) == IMPORT_STR
+    return get_element_type(element) == IMPORT_TYPE
 
 
 def get_name(element: XMLElement) -> str:
@@ -70,15 +93,15 @@ def get_name(element: XMLElement) -> str:
 
 
 def get_file_extension(element: XMLElement) -> str:
-    extension = element.findtext('extension')
+    extension = element.findtext(FILE_SUFFIX)
     if not extension:
         raise ParseError(f'{element.tag} did not have a valid extension')
     return extension
 
 
 def get_element_suffix(element: XMLElement,
-                       folder_separator: str = get_folder_separator(),
-                       file_separator: str = get_file_separator()
+                       folder_separator: str = FOLDER_SEPARATOR,
+                       file_separator: str = FILE_SEPARATOR
                        ) -> str:  # TODO Should the client be able to overwrite
     if is_folder(element):
         return folder_separator
@@ -102,10 +125,10 @@ class XMLTree(object):
         root = self.tree.getroot()
 
         try:
-            self.info = root.find('info')
-            self.git = root.find('git')
-            self.sync = root.find('sync')
-            self.folder_root = root.find('folder_root')
+            self.info = root.find(INFO_ROOT)
+            self.git = root.find(GIT_CONFIG_ROOT)
+            self.sync = root.find(SYNC_ROOT)
+            self.folder_root = root.find(FOLDER_ROOT)
             # TODO ensure that all values are not null!
 
         except ParseError as err:
@@ -118,11 +141,11 @@ class XMLTree(object):
     def parse_info(self):
 
         contributors = []
-        for contributor in self.info.findall('contributors'):
+        for contributor in self.info.findall(CONTRIBUTORS):
             contributors.append(contributor.text)
 
-        self.setup['contributors'] = contributors
-        self.setup['name'] = self.info.findtext('name')
-        self.setup['root_dir'] = self.info.findtext('root_dir')
-        self.setup['license'] = self.info.findtext('license')
-        self.setup['date'] = self.info.findtext('date')
+        self.setup[CONTRIBUTORS] = contributors
+        self.setup[PROJECT_NAME] = self.info.findtext(PROJECT_NAME)
+        self.setup[ROOT_DIR] = self.info.findtext(ROOT_DIR)
+        self.setup[LICENSE] = self.info.findtext(LICENSE)
+        self.setup[DATE] = self.info.findtext(DATE)

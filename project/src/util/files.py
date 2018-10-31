@@ -1,5 +1,6 @@
 from os import path as Paths
 
+
 def generate_reST_header(title: str, underline_with_char: str = '#',
                          top: bool = False) -> str:
     header = ''
@@ -35,4 +36,4 @@ def make_file(path: str, name: str, suffix:str):
     abs_path = Paths.join(path, filename)
     print(f'    path={abs_path}')
 
-    open(abs_path, 'w+').close()  # TODO write file text!
+    return open(abs_path, 'w+')  # TODO write file text!

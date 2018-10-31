@@ -1,6 +1,6 @@
 from anytree import RenderTree, NodeMixin
 
-from models import FOLDER_STR, FILE_STR, IMPORT_STR, NodeBase, XMLElement
+from models import FOLDER_TYPE, FILE_TYPE, IMPORT_TYPE, NodeBase, XMLElement
 from models.xml_parser import Unit, get_name, get_element_type, get_git_status, \
     get_element_suffix, XMLTree
 
@@ -32,19 +32,19 @@ class ElementNode(NodeBase):
                f'children={list(self.xml_element)}'
 
     def is_folder(self) -> bool:
-        return self.unit.element_type == FOLDER_STR
+        return self.unit.element_type == FOLDER_TYPE
 
     def is_file(self) -> bool:
-        return self.unit.element_type == FILE_STR
+        return self.unit.element_type == FILE_TYPE
 
     def is_import(self) -> bool:
-        return self.unit.element_type == IMPORT_STR
+        return self.unit.element_type == IMPORT_TYPE
 
 
 class FileNode(ElementNode):
     def __init__(self, name: str, element_type: str, git_track: bool,
                  suffix: str, element: XMLElement, parent: NodeBase = None):
-        if element_type != FILE_STR:
+        if element_type != FILE_TYPE:
             raise Exception(f'Attempted to make file node {name} when the '
                             f'element type was {element_type}')
 
@@ -62,7 +62,7 @@ class FileNode(ElementNode):
 class FolderNode(ElementNode):
     def __init__(self, name: str, element_type: str, git_track: bool,
                  suffix: str, element: XMLElement, parent: NodeBase = None):
-        if element_type != FOLDER_STR:
+        if element_type != FOLDER_TYPE:
             raise Exception(f'Attempted to make folder node {name} when the '
                             f'element type was {element_type}')
 
@@ -80,7 +80,7 @@ class FolderNode(ElementNode):
 class ImportNode(ElementNode):
     def __init__(self, name: str, element_type: str, git_track: bool,
                  suffix: str, element: XMLElement, parent: NodeBase = None):
-        if element_type != IMPORT_STR:
+        if element_type != IMPORT_TYPE:
             raise Exception(f'Attempted to make import node {name} when the '
                             f'element type was {element_type}')
 
@@ -97,21 +97,21 @@ class ImportNode(ElementNode):
 
 def element_to_node(element: XMLElement, parent=None) -> ElementNode:
     type_ = get_element_type(element)
-    if type_ == FOLDER_STR:
+    if type_ == FOLDER_TYPE:
         return FolderNode(name=get_name(element),
                           element_type=type_,
                           git_track=get_git_status(element),
                           parent=parent,
                           suffix=get_element_suffix(element),
                           element=element)
-    elif type_ == FILE_STR:
+    elif type_ == FILE_TYPE:
         return FileNode(name=get_name(element),
                         element_type=type_,
                         git_track=get_git_status(element),
                         parent=parent,
                         suffix=get_element_suffix(element),
                         element=element)
-    elif type_ == IMPORT_STR:
+    elif type_ == IMPORT_TYPE:
         return ImportNode(name=get_name(element),
                           element_type=type_,
                           git_track=get_git_status(element),
