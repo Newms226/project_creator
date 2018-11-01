@@ -4,12 +4,14 @@ from models.config import configparser
 class CONFIG(object):
 
     def __init__(self, ):
-        self.file_separator
-        self.folder_separator
+        self.file_separator: str
+        self.folder_separator: str
+
         self.config_locations: tuple
+        self.language_tuple: tuple
+
         self.project_dict: dict
         self.user_dict: dict
-        self.language_tuple: tuple
         self.xml_parsing_dict: dict
 
 
