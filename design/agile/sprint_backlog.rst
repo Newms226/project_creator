@@ -1,18 +1,16 @@
-Tree Sprint
-============
+Config Sprint
+==============
 
-[x] get generation of actual files/folders working
-[] design actual test case!
-[x] reorganize imports
+**TEST AS YOU GO**
+
+[] strategy to prevent changing of the values once they have been imported
+    - collections.NamedTuple()
+        * use to import all the values, then use hard coded representations
+        of those values whenever you need to access them.
+[] design import processor
+[] design export processor
 
 
 Research
 --------
-[x] unit testing
-[x] python unit testing
-
-Testing
--------
-[] folder/file creation
-[] tree structure
-
+[] look into python config libraries, looking for secure parsing methods

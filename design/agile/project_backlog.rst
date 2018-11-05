@@ -31,3 +31,4 @@ Future Features:
     > Useful to copy an entire hierarchy from one location to the next
     > Useful to build testing dirs from src dirs
 - import not only files, but entire folders
+- switch to secure XML parsing
