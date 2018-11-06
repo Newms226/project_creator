@@ -1,10 +1,26 @@
 from . import ElementReader as Reader, BuildConfig as ConfigAPI, \
-    ProjectContainer
+    ProjectContainer, ParseConfig
 
 
-def from_xml(xml_file, config, reader: Reader) -> ConfigAPI:
+def _read_parsing_config(file) -> dict:
+    print(f' _read_parsing_config(file={file}) -> HARDWIRED VALUES')
+    return {
+        file_type: 'file',
+        folder_type: 'folder',
+        import_type: 'import',
+        git_attr: 'git',
+        file_text: 'text',
+        file_header: 'header',
+        system_attr: 'system_attr',
+        import_path: 'path',
+        import_strategy: 'import_strategy'
+    }
+
+
+def from_xml(xml_file, config, parsing_config) -> ConfigAPI:
     print(f'STUBBED: import.xml(xml_file={xml_file}, config={config}, '
-          f'reader={reader})')
+          f'parsing_config={parsing_config})')
+    parsing_dict = _read_parsing_config(parsing_config)
     pass  # TODO
 
 
@@ -25,3 +41,4 @@ def from_project(project: ProjectContainer, config, metadata, reader: Reader) \
     print(f'STUBBED import.project(project={project}, config={config}, '
           f'metadata={metadata}, reader={reader})')
     pass  # TODO
+

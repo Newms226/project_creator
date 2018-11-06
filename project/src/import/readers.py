@@ -1,7 +1,12 @@
+from API import ParseConfig
 from . import ElementReader as Reader, XMLElement, XMLParseError
 
 
 class XMLReader(Reader):
+
+    def __init__(self, parsing_config: ParseConfig):
+        pass
+
     def get_git_status(self, element) -> bool:
         pass
 

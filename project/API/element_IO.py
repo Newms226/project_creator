@@ -1,7 +1,12 @@
 import abc
+from . import ParseConfig
 
 
 class ElementWriter(object, metaclass=abc.ABCMeta):
+
+    @abc.abstractmethod
+    def __init__(self, parsing_config: ParseConfig):
+        pass
 
     @abc.abstractmethod
     def write_git_status(self, element) -> bool:
@@ -21,6 +26,10 @@ class ElementWriter(object, metaclass=abc.ABCMeta):
 
 
 class ElementReader(object, metaclass=abc.ABCMeta):
+
+    @abc.abstractmethod
+    def __init__(self, parsing_config: ParseConfig):
+        pass
 
     @abc.abstractmethod
     def get_git_status(self, element) -> bool:
