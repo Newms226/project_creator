@@ -1,25 +1,27 @@
-from . import BuildConfig as ConfigAPI
+from . import BuildConfig as ConfigAPI, ProjectContainer, \
+    ElementReader as Reader
 
 
-def from_xml(xml_file) -> ConfigAPI:
-    print(f'STUBBED: import.xml(xml_file={xml_file}')
+def from_xml(xml_file, config, reader: Reader) -> ConfigAPI:
+    print(f'STUBBED: import.xml(xml_file={xml_file}, config={config}, '
+          f'reader={reader})')
     pass  # TODO
 
 
-def from_json(json_file) -> ConfigAPI:
-    print(f'STUBBED import.json(json_file={json_file})')
+def from_json(json_file, config, reader: Reader) -> ConfigAPI:
+    print(f'STUBBED import.json(json_file={json_file}, config={config}, '
+          f'reader={reader})')
     pass  # TODO
 
 
-def from_config(config_, hierarchy, hierarchy_type=None) -> ConfigAPI:
-    """Import a config.py & hierarchy as separate entities
+def from_folder(folder_root, config, metadata, reader: Reader) -> ConfigAPI:
+    print(f'STUBBED import.folder(folder_root={folder_root}, config={config}, '
+          f'metadata={metadata}, reader={reader})')
+    pass  # TODO
 
-    Args:
-        config_: a python configuration file
-        hierarchy: a folder/file hierarchy
-        hierarchy_type: the type of the folder_hierarchy. (xml, json, etc.)
-            If none, method will attempt to determine the type by itself.
-    """
-    print(f'STUBBED config(config={config_}, hierarchy={hierarchy} '
-          f'hierarchy_type={hierarchy_type}')
+
+def from_project(project: ProjectContainer, config, metadata, reader: Reader)\
+        -> ConfigAPI:
+    print(f'STUBBED import.project(project={project}, config={config}, '
+          f'metadata={metadata}, reader={reader})')
     pass  # TODO
