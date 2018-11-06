@@ -32,3 +32,4 @@ Future Features:
     > Useful to build testing dirs from src dirs
 - import not only files, but entire folders
 - switch to secure XML parsing
+- auto call to `source` & `cd` for the project -> begin_work()
