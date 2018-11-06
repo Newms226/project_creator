@@ -1,5 +1,5 @@
-from . import BuildConfig as ConfigAPI, ProjectContainer, \
-    ElementReader as Reader
+from . import ElementReader as Reader, BuildConfig as ConfigAPI, \
+    ProjectContainer
 
 
 def from_xml(xml_file, config, reader: Reader) -> ConfigAPI:
@@ -20,7 +20,7 @@ def from_folder(folder_root, config, metadata, reader: Reader) -> ConfigAPI:
     pass  # TODO
 
 
-def from_project(project: ProjectContainer, config, metadata, reader: Reader)\
+def from_project(project: ProjectContainer, config, metadata, reader: Reader) \
         -> ConfigAPI:
     print(f'STUBBED import.project(project={project}, config={config}, '
           f'metadata={metadata}, reader={reader})')

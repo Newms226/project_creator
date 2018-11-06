@@ -5,3 +5,4 @@ from .file_tree import FileTree
 from .project import ProjectContainer
 from .node import TreeNode, FileSystemNode, SyncedNode
 from .element_IO import ElementWriter, ElementReader
+from .parsing_config import ParseConfig

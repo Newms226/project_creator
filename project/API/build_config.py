@@ -1,5 +1,5 @@
 import abc
-from . import FileTree
+from . import FileTree, ParseConfig
 
 
 # noinspection PyUnresolvedReferences
@@ -34,7 +34,7 @@ class BuildConfig(object, metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def parsing(self):  # TODO Is this even necessary? Security here?
+    def parsing(self) -> ParseConfig:
         pass
 
     @abc.abstractmethod

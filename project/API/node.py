@@ -40,6 +40,14 @@ class TreeNode(object, metaclass=abc.ABCMeta):
     def git_track(self) -> bool:
         pass
 
+    @abc.abstractmethod
+    def name(self) -> str:
+        pass
+
+    @abc.abstractmethod
+    def element_type(self):
+        pass
+
 
 class FileSystemNode(TreeNode, metaclass=abc.ABCMeta):
 
