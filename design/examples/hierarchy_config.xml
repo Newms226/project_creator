@@ -1,45 +1,46 @@
 <project>
-    <info>
+
+    <meta>
         <name>Project Creator</name>
-            <!-- The name of the project. Should be in title case. Will have
-            spaces removed & capitalization added to generate the root folder
-            name. For example "Project Creator" would become the folder
-            "ProjectCreator"
-             -->
+            <!-- The name of the project. Should be in title case. Will
+            have spaces removed & capitalization added to generate the
+            root folder name. For example "Project Creator" would become
+            the folder "ProjectCreator"-->
         <root_dir>/Users/Michael/prog/python/python3</root_dir>
-        <date>2018-10-16</date>
+        <date>
+            <month>10</month>
+            <day>5</day>
+            <year>2018</year>
+        </date>
         <license>MIT</license>
         <contributors>
             <contributor>Michael Newman</contributor>
         </contributors>
-    </info>
+        <short_description/>
+        <long_description/>
+        <language>
+            <type>Python</type>
+            <version>3.7</version>
+            <frameworks/>
+            <libraries/>
+            <requirements>
+                <requirement>anytree</requirement>
+            </requirements>
+        </language>
+        <auto_generate>
+            <readme type="file">
+                <extension>rst</extension>
+            </readme>
 
-    <git>
-        <login>
-            <username></username>
-            <password></password>
-        </login>
-        <remotes>
-            <remote>URL PATH</remote>
-            <remote>FILE PATH</remote>
-        </remotes>
-        <branches>
-            <branch>dev</branch>
-            <branch>feature</branch>
-        </branches>
-    </git>
+            <license type="file">
+                <extension>rst</extension>
+            </license>
 
-    <sync>
-        <remotes>
-            <remote>
-                <path></path>
-                <username></username>
-                <password></password>
-            </remote>
-        </remotes>
-
-
-    </sync>
+            <contributors type="file">
+                <extension>rst</extension>
+            </contributors>
+        </auto_generate>
+    </meta>
 
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~HIERARCHY~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
     <folder_root type="folder">
