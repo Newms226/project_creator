@@ -81,7 +81,7 @@ class ImportNode(ElementNode):
     def __init__(self, name: str, element_type: str, git_track: bool,
                  suffix: str, element: XMLElement, parent: NodeBase = None):
         if element_type != IMPORT_TYPE:
-            raise Exception(f'Attempted to make import node {name} when the '
+            raise Exception(f'Attempted to make parse node {name} when the '
                             f'element type was {element_type}')
 
         ElementNode.__init__(self, name=name, element_type=element_type,

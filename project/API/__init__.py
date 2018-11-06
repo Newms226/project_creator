@@ -1,8 +1,9 @@
-# TODO import all modules to top level
+# TODO parse all modules to top level
 
-from .build_config import BuildConfig
-from .file_tree import FileTree
-from .project import ProjectContainer
-from .node import TreeNode, FileSystemNode, SyncedNode
-from .element_IO import ElementWriter, ElementReader
-from .parsing_config import ParseConfig
+from node import TreeNode, FileSystemNode, SyncedNode
+from file_tree import FileTree
+from build_config import BuildConfig
+from project import ProjectContainer
+
+#from API.element_IO import ElementWriter, ElementReader
+#from API.parsing_config import ParseConfig

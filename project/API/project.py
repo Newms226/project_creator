@@ -1,5 +1,5 @@
 import abc
-from . import FileTree, BuildConfig
+from API import FileTree, BuildConfig
 
 
 class ProjectContainer(object, metaclass=abc.ABCMeta):

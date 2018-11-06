@@ -9,3 +9,5 @@ Strategy
 ========
 - Either all contained in one file, or separated apart.
 - Enable a default setting
+! **ANYTHING** that can be replicated over multiple projects should be
+    abstracted

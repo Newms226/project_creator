@@ -4,7 +4,8 @@ from . import ElementReader as Reader, XMLElement, XMLParseError
 
 class XMLReader(Reader):
 
-    def __init__(self, parsing_config: ParseConfig):
+    def __init__(self, parsing_keywords: dict):
+
         pass
 
     def get_git_status(self, element) -> bool:

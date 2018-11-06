@@ -1,5 +1,4 @@
 import abc
-from . import ParseConfig
 
 
 class ElementWriter(object, metaclass=abc.ABCMeta):

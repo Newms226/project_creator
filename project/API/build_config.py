@@ -1,5 +1,5 @@
 import abc
-from . import FileTree, ParseConfig
+from API import FileTree
 
 
 # noinspection PyUnresolvedReferences
@@ -11,17 +11,23 @@ class BuildConfig(object, metaclass=abc.ABCMeta):
         folder_hierarchy: the projects folder/file set up
         sync: external sync settings
         execution: customization of the execution of this program
-        parsing: customization of the parsing configuration of import/exports
+        parsing: customization of the parsing configuration of parse/exports
         security: security settings of the program
         metadata: various stats on the project, including on the language &
             user
     """
 
     @abc.abstractmethod
-    def git(self):
+    def __init__(self):
         pass
 
     @abc.abstractmethod
+    @property(fdel=_private('git'), fdel=_private('git'))
+    def git(self):
+        return self._git
+
+    @abc.abstractmethod
+    @property()
     def folder_hierarchy(self):
         pass
 
@@ -33,9 +39,9 @@ class BuildConfig(object, metaclass=abc.ABCMeta):
     def execution(self):
         pass
 
-    @abc.abstractmethod
-    def parsing(self) -> ParseConfig:
-        pass
+#    @abc.abstractmethod
+#   def parsing(self) -> ParseConfig:
+#        pass
 
     @abc.abstractmethod
     def security(self):
@@ -44,3 +50,8 @@ class BuildConfig(object, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def metadata(self):
         pass
+
+    @abc.abstractmethod
+    def language(self):
+        pass
+

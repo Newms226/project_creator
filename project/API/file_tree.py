@@ -1,7 +1,7 @@
 import abc
 import anytree
 
-from . import TreeNode
+from API.node import TreeNode
 
 
 class FileTree(object, metaclass=abc.ABCMeta):

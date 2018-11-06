@@ -65,7 +65,7 @@ class Generator(object):
                                   _filename)'''
 
     def _gen_import(self, cur: ElementNode):
-        print(f' called generate import as {cur.unit.name}')
+        print(f' called generate parse as {cur.unit.name}')
 
         file = make_file(path=self.working_dir.absolute_dir,
                          name=cur.unit.name,
