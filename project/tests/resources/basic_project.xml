@@ -95,7 +95,7 @@
             </strategy>
         </design>
 
-        <venv type="folder" git="false"/>
+        <venv type="folder" git="False"/>
 
         <README type="file">
             <extension>txt</extension>

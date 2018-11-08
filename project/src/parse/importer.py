@@ -1,5 +1,7 @@
-from src import BuildConfig as ConfigAPI, ProjectContainer
-from src.parse import XMLElement, ElementTree, SimpleBuildConfig
+from parse.xml import parse_2D
+from src import BuildConfig as ConfigAPI
+from src.parse import ElementTree
+from util.immutable_tuple import ImmutableConfig
 
 
 def _read_parsing_config(file) -> dict:
@@ -52,26 +54,6 @@ def _read_parsing_config(file) -> dict:
     }
 
 
-# noinspection PyPep8Naming
-def parse_2D(xml_root: XMLElement, text_to_find: str) -> dict:
-    print(f'  _xml_meta(xml_file={xml_root}, text_to_find={text_to_find}')
-
-    to_return: dict = {}
-
-    for element in list(xml_root.find(text_to_find)):
-        if len(element) == 0:
-            print(f'   {element.tag} found. len=0, text={element.text}')
-            to_return[element.tag] = element.text
-        else:
-            print(f'   {element.tag} found. len={len(element)}')
-            to_return[element.tag]: dict = {}
-            for sub in list(element):
-                print(f'    {sub.tag} found. text={sub.text}, len={len(sub)}')
-                to_return[element.tag][sub.tag] = sub.text
-
-    return to_return
-
-
 def from_xml(xml_file, config, parsing_config) -> ConfigAPI:
     print(f'STUBBED: parse.xml(xml_file={xml_file}, config={config}, '
           f'parsing_config={parsing_config})')
@@ -83,13 +65,14 @@ def from_xml(xml_file, config, parsing_config) -> ConfigAPI:
     _auto_generate = parse_2D(root, parsing_dict['roots']['auto_generate'])
     _git = parse_2D(root, parsing_dict['roots']['git'])
     _sync = parse_2D(root, parsing_dict['roots']['sync'])
+    _folders = None
+    _security = None
+    _execution = None
 
-    return SimpleBuildConfig(git=_git,
-                             language=_language,
-                             metadata=_meta,
-                             auto_generate=auto_generate,
-                             sync=sync,
-                             )
+    return ImmutableConfig(git=_git, metadata=_meta, language=_language,
+                           sync=_sync, folder_hierarchy=_folders,
+                           auto_generate=_auto_generate, security=_security,
+                           execution=_execution)
 
 """
 def from_json(json_file, config, reader: Reader) -> ConfigAPI:

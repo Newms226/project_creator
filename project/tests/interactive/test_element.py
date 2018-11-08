@@ -1,9 +1,9 @@
 from models.tree import ElementNode, tree_to_string, generate_tree
-from models.xml_parser import XMLTree
+from models import XMLTree
 
 def basic_node_test():
     root = ElementNode('root', 'folder', True, '')
-    src = ElementNode('src', 'folder', True, '', root)
+    src = ElementNode('test_src', 'folder', True, '', root)
     util = ElementNode('util', 'folder', True, root)
     read_me = ElementNode('README', 'file', True, '.rst', root)
     util = ElementNode('util', 'folder', True, '', root)

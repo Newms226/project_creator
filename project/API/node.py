@@ -1,5 +1,5 @@
 import abc
-
+from API import ImmutableUnit
 
 class TreeNode(object, metaclass=abc.ABCMeta):
     """Base node of the whole project.
@@ -34,18 +34,6 @@ class TreeNode(object, metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def is_import(self) -> bool:
-        pass
-
-    @abc.abstractmethod
-    def git_track(self) -> bool:
-        pass
-
-    @abc.abstractmethod
-    def name(self) -> str:
-        pass
-
-    @abc.abstractmethod
-    def element_type(self):
         pass
 
 

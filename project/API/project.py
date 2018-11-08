@@ -1,5 +1,5 @@
 import abc
-from API import FileTree, BuildConfig
+from API import FileTree
 
 
 class ProjectContainer(object, metaclass=abc.ABCMeta):
@@ -8,6 +8,3 @@ class ProjectContainer(object, metaclass=abc.ABCMeta):
     def file_tree(self) -> FileTree:
         pass
 
-    @abc.abstractmethod
-    def build_config(self) -> BuildConfig:
-        pass
