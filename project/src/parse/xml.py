@@ -3,28 +3,6 @@ from src import TreeNodeAPI, ReaderAPI
 from warnings import warn
 
 
-# noinspection PyPep8Naming
-def parse_2D(xml_root: XMLElement, text_to_find: str) -> dict:
-    print(f'  _xml_meta(xml_file={xml_root}, text_to_find={text_to_find}')
-
-    to_return: dict = {}
-
-    for element in list(xml_root.find(text_to_find)):
-        if len(element) == 0:
-            print(f'   {element.tag} found. len=0, text={element.text}')
-            to_return[element.tag] = element.text
-        else:
-            print(f'   {element.tag} found. len={len(element)}')
-            to_return[element.tag]: dict = {}
-            for sub in list(element):
-                print(f'    {sub.tag} found. text={sub.text}, len={len(sub)}')
-                if len(sub) != 0:
-                    warn(f'SUB CALL WHEN LEN = {len(sub)}')
-                to_return[element.tag][sub.tag] = sub.text
-
-    return to_return
-
-
 class XMLReader(ReaderAPI):
 
     def name(self, element: XMLElement) -> str:
