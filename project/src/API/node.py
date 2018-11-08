@@ -1,7 +1,9 @@
 import abc
-from API import ImmutableUnit
+from API import ImmutableUnit, NodeMixin
+from src.parse import PARSING_DICT
 
-class TreeNode(object, metaclass=abc.ABCMeta):
+
+'''class TreeNode(NodeMixin, ImmutableUnit, object, metaclass=abc.ABCMeta):
     """Base node of the whole project.
 
     Note:
@@ -13,15 +15,15 @@ class TreeNode(object, metaclass=abc.ABCMeta):
     # TODO everything else should go into the dictionary of the class!
 
     @abc.abstractmethod
+    def __init__(self):
+        pass
+
+    @abc.abstractmethod
     def get_grand_ancestor(self):
         pass
 
     @abc.abstractmethod
-    def children(self) -> list:
-        pass
-
-    @abc.abstractmethod
-    def path_to(self):
+    def get_file_path(self, root=None):
         pass
 
     @abc.abstractmethod
@@ -35,7 +37,7 @@ class TreeNode(object, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def is_import(self) -> bool:
         pass
-
+'''
 
 class FileSystemNode(TreeNode, metaclass=abc.ABCMeta):
 

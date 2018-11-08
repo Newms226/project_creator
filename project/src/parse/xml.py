@@ -1,8 +1,10 @@
-from src.parse import XMLElement, XMLParseError, ImmutableUnit, PARSING_DICT
-from src import TreeNodeAPI, ReaderAPI
+from src.API import ReaderAPI
+from src.parse import XMLElement, XMLParseError, ImmutableUnit, \
+    PARSING_DICT, ImportNode
 from warnings import warn
 
 
+# noinspection PyMethodMayBeStatic
 class XMLReader(ReaderAPI):
 
     def name(self, element: XMLElement) -> str:
@@ -69,29 +71,13 @@ def parse_contents(element: XMLElement, reader=XML_READER,
     return to_return
 
 
-class XMLTreeNode(TreeNodeAPI, ImmutableUnit):
-
-    def __init__(self, element: XMLElement, reader=XML_READER):
-        self.element = element
-        ImmutableUnit.__init__(name=reader.name(element),
-                               unit_type=reader.element_type(element),
-                               git_track=reader.git_track(element))
-
-    def get_grand_ancestor(self):
-        pass
-
-    def children(self) -> list:
-        return list(self.element)
-
-    def path_to(self):
-        pass
-
-    def is_folder(self) -> bool:
-        pass
-
-    def is_file(self) -> bool:
-        pass
-
-    def is_import(self) -> bool:
-        pass
-
+def xml_to_tree_node(element: XMLElement, reader=XML_READER, parent=None):
+    node = ImportNode(name=reader.name(element),
+                      element_type=reader.element_type(element),
+                      git_track=reader.git_track(element))
+    node.__dict__.update({'element': element, 'parent': parent})
+    node.__dict__.update(parse_contents(element=element,
+                                        reader=reader,
+                                        require_folder=False,
+                                        max_loop=1))
+    return node

@@ -5,8 +5,8 @@ ConfigTupleBase = namedtuple('ConfigTupleBase',
                               'language', 'auto_generate', 'execution',
                               'security'])
 
-UnitTupleBase = namedtuple('FileSystemUnitBase',
-                           ['name', 'unit_type', 'git_track'])
+UnitTupleBase = namedtuple('UnitTupleBase',
+                           ['name', 'element_type', 'git_track'])
 
 
 class ImmutableConfig(ConfigTupleBase):

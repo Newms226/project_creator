@@ -2,13 +2,10 @@ import xml.etree.ElementTree as XMLTree
 from xml.etree.ElementTree import Element as XMLElement, ParseError as \
     XMLParseError
 
-from src.util.immutable_tuple import ImmutableConfig, ImmutableUnit
-from src import ReaderAPI
-
 PARSING_DICT: dict = {
     'file_type': 'file',
     'folder_type': 'folder',
-    'import_type': 'parse',
+    'import_type': 'import',
     'git_attr': 'git',
     'type_attr': 'type',
     'system_attr': 'system_attr',
@@ -56,6 +53,10 @@ PARSING_DICT: dict = {
     }
 }
 
+from src.util.immutable_tuple import ImmutableConfig, ImmutableUnit
+from src.API import ReaderAPI
+
+from src.parse.importer import ImportNode
 from src.parse.xml import XML_READER as XMLReader
 
 #from test_src.config import SimpleParsingConfiguration

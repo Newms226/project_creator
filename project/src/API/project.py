@@ -1,5 +1,5 @@
 import abc
-from API import FileTree
+from src.API import FileTreeAPI
 
 
 class ProjectContainer(object, metaclass=abc.ABCMeta):

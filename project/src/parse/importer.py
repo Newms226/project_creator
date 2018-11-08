@@ -1,60 +1,34 @@
-from parse.xml import parse_2D
-from src import BuildConfig as ConfigAPI
-from src.parse import ElementTree
-from util.immutable_tuple import ImmutableConfig
+#from API import TreeNodeAPI
+from util.immutable_tuple import ImmutableConfig, ImmutableUnit
+from src import ABCMeta, NodeMixin
+from src.parse import PARSING_DICT
 
 
-def _read_parsing_config(file) -> dict:
-    print(f' _read_parsing_config(file={file}) -> HARDWIRED VALUES')
-    return {
-        'file_type': 'file',
-        'folder_type': 'folder',
-        'import_type': 'parse',
-        'git_attr': 'git',
-        'type_attr': 'type',
-        'system_attr': 'system_attr',
-        'import_path': 'path',
-        'import_strategy': 'import_strategy',
-        'files': {
-            'text': 'text',
-            'header': 'header',
-            'extension': 'extension'
-        },
-        'roots': {
-            'meta': 'meta',
-            'auto_generate': 'auto_generate',
-            'git': 'git',
-            'sync': 'sync',
-            'language': 'language',
-            'hierarchy': 'folder_root'
-        },
-        'meta': {
-            'name': 'name',
-            'root_directory': 'root_dir',
-            'date': {
-                'month': 'month',
-                'date': 'date',
-                'year': 'year'
-            },
-            'license': 'license',
-            'contributors': 'contributors',
-            'contributor': 'contributor',
-            'short_description': 'short_description',
-            'long_description': 'long_description'
-        },
-        'git': {
-            # TODO
-        },
-        'sync': {
-            # TODO
-        },
-        'auto_generate': {
-            # TODO
-        }
-    }
+class ImportNode(ImmutableUnit, metaclass=ABCMeta):
+
+    def __init__(self, name, element_type, git_track, element=None,
+                 contents=None, parent=None):
+        ImmutableUnit.__init__(name, element_type, git_track)
+        self.parent = parent
+        self.element = element
+
+    def get_grand_ancestor(self):
+        return self.ancestors[0]
+
+    def get_file_path(self, root=None):
+        pass  # TODO
+
+    def is_folder(self) -> bool:
+        return self.element_type == PARSING_DICT['folder_type']
+
+    def is_file(self) -> bool:
+        return self.element_type == PARSING_DICT['file_type']
+
+    def is_import(self) -> bool:
+        return self.element_type == PARSING_DICT['import_type']
 
 
-def from_xml(xml_file, config, parsing_config) -> ConfigAPI:
+def from_xml(xml_file, config, parsing_config):
     print(f'STUBBED: parse.xml(xml_file={xml_file}, config={config}, '
           f'parsing_config={parsing_config})')
     root = ElementTree.parse(xml_file).getroot()
