@@ -1,12 +1,17 @@
 import logging
 import datetime
+import structlog
+from structlog.stdlib import LoggerFactory
+from structlog import get_logger
 
 LOGGING_DIR = '/Users/michael/prog/python/python3/project_creator/logs'
 
 logging.basicConfig()
+structlog.configure(logger_factory=LoggerFactory,
+                    wrapper_class=structlog.stdlib.BoundLogger)
 
 # LOGGERS
-root_logger = logging.getLogger('root')
+root_logger = get_logger('root')
 root_logger.propagate = False
 
 
@@ -29,8 +34,11 @@ _console_handler.setLevel('WARNING')
 _console_handler.setFormatter(_basic_formatter)
 
 # set handlers
-root_logger.addHandler(_file_handler)
+root_logger
 root_logger.addHandler(_console_handler)
 
 root_logger.setLevel('DEBUG')
+
+if __name__ == '__main__':
+    root_logger.msg('x', y='y_')
 
