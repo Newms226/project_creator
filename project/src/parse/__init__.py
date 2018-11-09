@@ -1,3 +1,5 @@
+import setup
+
 import xml.etree.ElementTree as XMLTree
 from xml.etree.ElementTree import Element as XMLElement, ParseError as \
     XMLParseError

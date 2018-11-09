@@ -2,6 +2,8 @@ from src.API import ReaderAPI
 from src.parse import XMLElement, XMLParseError, ImmutableUnit, \
     PARSING_DICT, ImportNode
 from warnings import warn
+from src import getLogger
+from logging_config import root_logger as log
 
 
 # noinspection PyMethodMayBeStatic
@@ -11,17 +13,17 @@ class XMLReader(ReaderAPI):
         return element.tag
 
     def git_track(self, element: XMLElement) -> bool:
-        print(f'  git_track(element_name={element.tag}')
+        log.debug(f'ENTERING (element_name={element.tag})')
         directive = element.get(PARSING_DICT['git_attr'])
         if directive is None:
-            print(f'   git_track found no directive')
+            log.debug(f' found no directive')
             return True
         else:
             if directive == PARSING_DICT['git_track']['track']:
-                print(f'   git_track found {directive} returning TRUE')
+                log.debug(f' found {directive} returning TRUE')
                 return True
             elif directive == PARSING_DICT['git_track']['ignore']:
-                print(f'   git_track found {directive} returning FALSE')
+                log.debug(f' found {directive} returning FALSE')
                 return False
 
     def element_type(self, element: XMLElement) -> str:
@@ -33,13 +35,15 @@ XML_READER = XMLReader()
 
 def parse_contents(element: XMLElement, reader=XML_READER,
                    require_folder=True, max_loop: int=2) -> dict:
-    print(f'  parse_contents(element={element})')
+    log.debug('ENTERING', extra={'element': element,
+                                 'require_folder': require_folder,
+                                 'max_loop': max_loop})
 
     def parse(dictionary: dict, tag: str, content, count=0) -> int:
         dictionary[tag] = content
         count = count + 1
-        print(f'    parse(tag={tag}, content={content}, count={count}, '
-              f'dictionary={dictionary}')
+        log.debug(f'parse(tag={tag}, content={content}, count={count}, '
+                  f'dictionary={dictionary})')
         return count
 
     def loop(e: XMLElement, dictionary: dict, count=0):
@@ -47,10 +51,10 @@ def parse_contents(element: XMLElement, reader=XML_READER,
             raise Exception(f'Max loop exceeded. count={count} max={max_loop}')
 
         if len(e) == 0:
-            print(f'   len = 0')
+            log.debug(f'len = 0')
             parse(dictionary, e.tag, e.text)
         else:
-            print(f'   sub add: len = {len(e)}')
+            log.debug(f'sub add: len = {len(e)}')
             dictionary[e.tag] = {}
             for e_sub in list(e):
                 loop(e_sub, dictionary[e.tag], count=count + 1)
@@ -67,7 +71,7 @@ def parse_contents(element: XMLElement, reader=XML_READER,
     for child in list(element):
         loop(child, to_return)
 
-    print(f'  parsed={to_return}')
+    log.debug(f'EXIT:{to_return}')
     return to_return
 
 
