@@ -34,3 +34,5 @@ root_logger.addHandler(_console_handler)
 
 root_logger.setLevel('DEBUG')
 
+from logging import getLogger
+

@@ -13,9 +13,7 @@
             <year>2018</year>
         </date>
         <license>MIT</license>
-        <contributors>
-            <contributor>Michael Newman</contributor>
-        </contributors>
+        <contributors>Michael Newman, OTHER CONTR., COMMA SEPARATED</contributors>
         <short_description/>
         <long_description/>
     </meta>
@@ -26,7 +24,7 @@
         <frameworks/>
         <libraries/>
         <requirements>
-            <requirement>anytree</requirement>
+            anytree, comma_seperated_list, unittest
         </requirements>
     </language>
 

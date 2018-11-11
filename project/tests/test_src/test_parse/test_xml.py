@@ -1,6 +1,6 @@
 import unittest
-from src.parse import XMLReader, XMLElement, XMLTree
-from src.parse.xml import xml_to_tree_node, parse_contents
+from src.parse import XMLReader, XMLElement, XMLTree, ImportNode
+from src.parse.xml_ import xml_to_tree_node, parse_contents, generate_tree
 
 
 class TestXMLReader(unittest.TestCase):
@@ -51,14 +51,28 @@ class TestXMLReader(unittest.TestCase):
 
 class TestParseElement(unittest.TestCase):
     def setUp(self):
-        self.folder_root: XMLElement = \
-            XMLTree.parse('/Users/michael/prog/python/python3/project_creator'
-                          '/project/tests/resources/basic_project.xml') \
-                .getroot().find('folder_root')
+        self.tree_root = XMLTree.parse('/Users/michael/prog/python/python3/'
+                                       'project_creator/project/tests/'
+                                       'resources/basic_project.xml') \
+                .getroot()
+        self.folder_root: XMLElement = self.tree_root.find('folder_root')
         self.license = self.folder_root.find('LICENSE')
         self.backlog = self.folder_root.find('design').find('agile')\
             .find('sprint_backlog')
         self.src = self.folder_root.find('src')
+
+    def test_parse_info(self):
+        d = parse_contents(self.tree_root.find('meta'))
+        self.assertTrue(d is not None)
+        self.assertTrue(d['name'] == 'Project Creator')
+        self.assertTrue(d['root_dir'] == '/Users/Michael/prog/python/python3')
+        self.assertTrue(d['date']['month'] == '10')
+        self.assertTrue(d['date']['day'] == '5')
+        self.assertTrue(d['date']['year'] == '2018')
+        self.assertTrue(d['license'] == 'MIT')
+        self.assertTrue(d['short_description'] is None)
+        self.assertTrue(d['long_description'] is None)
+        self.assertTrue(d['contributors'] == 'Michael Newman, OTHER CONTR., COMMA SEPARATED')
 
     def test_license_dict_parse(self):
         d = parse_contents(self.license, XMLReader, False)
@@ -116,6 +130,61 @@ class TestParseElement(unittest.TestCase):
         self.assertFalse(n.is_import())
         self.assertTrue(n.is_file())
         self.assertFalse(n.is_folder())
+
+
+class TestTreeParse(unittest.TestCase):
+    def setUp(self):
+        self.root = XMLTree.parse('/Users/michael/prog/python/python3/'
+                                  'project_creator/project/tests/resources/'
+                                  'basic_project.xml') \
+            .getroot()
+        self.tree = generate_tree(self.root, 'test')
+
+    def test_count(self):
+        self.assertTrue(self.tree.node_count == 12)
+
+    def test_count_set(self):
+        with self.assertRaises(AttributeError):
+            self.tree.node_count = 20
+        self.assertTrue(self.tree.node_count == 12)
+
+    def test_count_del(self):
+        with self.assertRaises(AttributeError):
+            del self.tree.node_count
+        self.assertTrue(self.tree.node_count == 12)
+
+    def test_print(self):
+        self.assertTrue(self.tree.__str__() is not None)
+
+    def test_root_children(self):
+        exp = (ImportNode(name='src', element_type='folder', git_track=True),
+               ImportNode(name='tests', element_type='folder', git_track=True),
+               ImportNode(name='design', element_type='folder',
+                          git_track=True),
+               ImportNode(name='venv', element_type='folder', git_track=False),
+               ImportNode(name='README', element_type='file', git_track=True),
+               ImportNode(name='LICENSE', element_type='import',
+                          git_track=True))
+        self.assertTrue(exp == self.tree.get_root().children)
+
+    def test_find_child(self):
+        self.assertTrue(self.tree.get_root().get_child('src').name == 'src')
+        self.assertTrue(self.tree.get_root().get_child('agile') is None)
+        self.assertTrue(self.tree.get_root().get_child('agile', max_level=3))
+
+    def test_design_children(self):
+        exp = (ImportNode(name='agile', element_type='folder', git_track=True),
+               ImportNode(name='examples', element_type='folder',
+                          git_track=True),
+               ImportNode(name='strategy', element_type='folder',
+                          git_track=True))
+        design = self.tree.get_root().get_child('design')
+        self.assertTrue(design is not None)
+        self.assertTrue(design.children == exp)
+
+    def test_contains(self):
+        design = self.tree.get_root().get_child('design')
+        self.assertTrue(design in self.tree.get_root())
 
 
 if __name__ == '__main__':

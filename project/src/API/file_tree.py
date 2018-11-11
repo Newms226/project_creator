@@ -1,13 +1,11 @@
 import abc
 import anytree
 
-from API.node import TreeNode
-
 
 class FileTree(object, metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
-    def get_root(self) -> TreeNode:
+    def get_root(self):
         """Return the root node (the project dir) of the tree
 
         Returns:
@@ -15,21 +13,4 @@ class FileTree(object, metaclass=abc.ABCMeta):
         """
         pass
 
-    def get_render(self, root: TreeNode = None) -> anytree.RenderTree:
-        if root is None:
-            return anytree.RenderTree(self.get_root())
-        else:
-            return anytree.RenderTree(root)
 
-        return
-
-    def __str__(self):
-        _str = ''
-
-        for pre, _, node in self.get_render(self):
-            _str += f'{pre}{node}\n'
-
-        return _str
-
-    def __repr__(self):
-        return f'FileTree <root={self.get_root()}>'

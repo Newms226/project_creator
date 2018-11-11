@@ -1,9 +1,5 @@
 import setup
 
-import xml.etree.ElementTree as XMLTree
-from xml.etree.ElementTree import Element as XMLElement, ParseError as \
-    XMLParseError
-
 PARSING_DICT: dict = {
     'file_type': 'file',
     'folder_type': 'folder',
@@ -40,7 +36,6 @@ PARSING_DICT: dict = {
         },
         'license': 'license',
         'contributors': 'contributors',
-        'contributor': 'contributor',
         'short_description': 'short_description',
         'long_description': 'long_description'
     },
@@ -52,14 +47,15 @@ PARSING_DICT: dict = {
     },
     'auto_generate': {
         # TODO
+    },
+    'language': {
+        # TODO
     }
 }
 
-from src.util.immutable_tuple import ImmutableConfig, ImmutableUnit
-from src.API import ReaderAPI
+from parse.importer import ImportNode, FileTree
+from parse.xml_ import XMLElement, XML_READER as XMLReader, XMLTree
 
-from src.parse.importer import ImportNode
-from src.parse.xml import XML_READER as XMLReader
 
 #from test_src.config import SimpleParsingConfiguration
 
