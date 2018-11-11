@@ -1,44 +1,78 @@
 import logging
+import logging.config
 import datetime
 import structlog
 from structlog.stdlib import LoggerFactory
-from structlog import get_logger
+from structlog import get_logger, BoundLogger
+
+timestamper = structlog.processors.TimeStamper(fmt="%Y-%m-%d %H:%M:%S")
+pre_chain = [
+    # Add the log level and a timestamp to the event_dict if the log entry
+    # is not from structlog.
+    structlog.stdlib.add_log_level,
+    timestamper,
+]
 
 LOGGING_DIR = '/Users/michael/prog/python/python3/project_creator/logs'
+file = LOGGING_DIR + '/{:%b%m_%y:%I%p_%M-%S}.log' \
+                        .format(datetime.datetime.now())
 
-logging.basicConfig()
-structlog.configure(logger_factory=LoggerFactory,
-                    wrapper_class=structlog.stdlib.BoundLogger)
+logging.config.dictConfig({
+        "version": 1,
+        "disable_existing_loggers": False,
+        "formatters": {
+            "plain": {
+                "()": structlog.stdlib.ProcessorFormatter,
+                "processor": structlog.dev.ConsoleRenderer(colors=False),
+                "foreign_pre_chain": pre_chain,
+            },
+            "colored": {
+                "()": structlog.stdlib.ProcessorFormatter,
+                "processor": structlog.dev.ConsoleRenderer(colors=True),
+                "foreign_pre_chain": pre_chain,
+            },
+        },
+        "handlers": {
+            "default": {
+                "level": "DEBUG",
+                "class": "logging.StreamHandler",
+                "formatter": "colored",
+            },
+            "file": {
+                "level": "DEBUG",
+                "class": "logging.handlers.WatchedFileHandler",
+                "filename": file,
+                "formatter": "plain",
+            },
+        },
+        "loggers": {
+            "": {
+                "handlers": ["default", "file"],
+                "level": "DEBUG",
+                "propagate": True,
+            },
+        }
+})
 
-# LOGGERS
-root_logger = get_logger('root')
-root_logger.propagate = False
+structlog.processors.StackInfoRenderer()
 
+structlog.configure(
+    processors=[
+        structlog.stdlib.add_log_level,
+        structlog.stdlib.PositionalArgumentsFormatter(),
+        timestamper,
+        structlog.processors.StackInfoRenderer(),
+        structlog.processors.format_exc_info,
+        structlog.stdlib.ProcessorFormatter.wrap_for_formatter,
+    ],
+    context_class=dict,
+    logger_factory=structlog.stdlib.LoggerFactory(),
+    wrapper_class=structlog.stdlib.BoundLogger,
+    cache_logger_on_first_use=True,
+)
 
-# FORMATTERS
-_basic_formatter = logging.Formatter(
-    fmt='%(name)s:%(levelname)s: %(module)s.%(funcName)s().%('
-        'lineno)d: '
-        '%(message)s')
-
-# HANDLERS
-_file_handler = logging.FileHandler(LOGGING_DIR
-                                        + '/{:%b%m_%y:%I%p_%M-%S}.log'
-                                        .format(datetime.datetime.now()),
-                                    mode='w')
-_file_handler.setLevel('DEBUG')
-_file_handler.setFormatter(_basic_formatter)
-
-_console_handler = logging.StreamHandler()
-_console_handler.setLevel('WARNING')
-_console_handler.setFormatter(_basic_formatter)
-
-# set handlers
-root_logger
-root_logger.addHandler(_console_handler)
-
-root_logger.setLevel('DEBUG')
+root_logger = get_logger()
 
 if __name__ == '__main__':
-    root_logger.msg('x', y='y_')
+    root_logger.info('hey!', x='x', name=__qualname__)
 

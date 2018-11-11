@@ -13,7 +13,7 @@ class XMLReader(ReaderAPI):
         return element.tag
 
     def git_track(self, element: XMLElement) -> bool:
-        log.debug(f'ENTERING (element_name={element.tag})')
+        log.debug(f'ENTER: xml.XML_Reader.git_track()', element=element)
         directive = element.get(PARSING_DICT['git_attr'])
         if directive is None:
             log.debug(f' found no directive')
@@ -35,26 +35,26 @@ XML_READER = XMLReader()
 
 def parse_contents(element: XMLElement, reader=XML_READER,
                    require_folder=True, max_loop: int=2) -> dict:
-    log.debug('ENTERING', extra={'element': element,
-                                 'require_folder': require_folder,
-                                 'max_loop': max_loop})
+    log.debug('ENTER: xml.parse_contents', element=element, reader=reader,
+              require_folder=require_folder, max_loop=max_loop)
 
     def parse(dictionary: dict, tag: str, content, count=0) -> int:
         dictionary[tag] = content
         count = count + 1
-        log.debug(f'parse(tag={tag}, content={content}, count={count}, '
-                  f'dictionary={dictionary})')
+        log.debug(' sub_parse', dict_=dictionary, tag={tag}, content={content},
+                  count={count})
         return count
 
     def loop(e: XMLElement, dictionary: dict, count=0):
+        log.debug(' sub_loop', element=e, dictionary=dictionary, count=count)
         if count > max_loop:
             raise Exception(f'Max loop exceeded. count={count} max={max_loop}')
 
         if len(e) == 0:
-            log.debug(f'len = 0')
+            log.debug(f' len = 0')
             parse(dictionary, e.tag, e.text)
         else:
-            log.debug(f'sub add: len = {len(e)}')
+            log.debug(f' sub add.', len=len(e))
             dictionary[e.tag] = {}
             for e_sub in list(e):
                 loop(e_sub, dictionary[e.tag], count=count + 1)
@@ -71,7 +71,7 @@ def parse_contents(element: XMLElement, reader=XML_READER,
     for child in list(element):
         loop(child, to_return)
 
-    log.debug(f'EXIT:{to_return}')
+    log.debug(f'RETURN: xml.parse_contents', return_=to_return)
     return to_return
 
 
