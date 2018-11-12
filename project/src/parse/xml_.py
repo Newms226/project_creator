@@ -5,7 +5,7 @@ from xml.etree.ElementTree import Element as XMLElement, ParseError as \
 from logging_config import root_logger as log, getLogger
 
 from API import ReaderAPI
-from util import ImmutableUnit
+from util import ImmutableUnit, ImmutableConfig
 from parse import PARSING_DICT, ImportNode, FileTree
 from warnings import warn
 
@@ -41,7 +41,7 @@ XML_READER = XMLReader()
 
 
 def parse_contents(element: XMLElement, reader=XML_READER,
-                   require_folder=True, max_loop: int=2) -> dict:
+                   require_folder=True, max_loop: int = 2) -> dict:
     log.debug('ENTERING', extra={'element': element,
                                  'require_folder': require_folder,
                                  'max_loop': max_loop})
@@ -83,7 +83,7 @@ def parse_contents(element: XMLElement, reader=XML_READER,
 
 
 def xml_to_tree_node(element: XMLElement, reader=XML_READER, parent=None,
-                     parse_contents_: bool=True):
+                     parse_contents_: bool = True):
     node = ImportNode(name=reader.name(element),
                       element_type=reader.element_type(element),
                       git_track=reader.git_track(element))
@@ -101,7 +101,6 @@ def xml_to_tree_node(element: XMLElement, reader=XML_READER, parent=None,
 
 
 def generate_tree(root: XMLElement, project_name: str) -> FileTree:
-
     def folder_loop(parent: ImportNode):
         log.debug(f'generate_tree.folder_loop(parent={parent})')
         for child in list(parent.element):
@@ -142,17 +141,19 @@ def generate_tree(root: XMLElement, project_name: str) -> FileTree:
     return tree
 
 
-def parse(xml_file, config=None, parsing_config: dict=PARSING_DICT):
-    print(f'parse.xml.parse(xml_file={xml_file}, config={config}, '
-          f'parsing_config={parsing_config})')
-    root = ElementTree.parse(xml_file).getroot()
+def parse(xml_file, config=None, parsing_config: dict = PARSING_DICT) \
+        -> ImmutableConfig:
+    log.debug(f'parse.xml.parse(xml_file={xml_file}, config={config}, '
+              f'parsing_config={parsing_config})')
+    root = XMLTree.parse(xml_file).getroot()
 
-    _meta = parse_contents(root, parsing_dict['roots']['meta'])
-    _language = parse_contents(root, parsing_dict['roots']['language'])
-    _auto_generate = parse_contents(root, parsing_dict['roots']['auto_generate'])
-    _git = parse_contents(root, parsing_dict['roots']['git'])
-    _sync = parse_contents(root, parsing_dict['roots']['sync'])
-    _folders = generate_tree()
+    _meta = parse_contents(root.find(parsing_config['roots']['meta']))
+    _language = parse_contents(root.find(parsing_config['roots']['language']))
+    _auto_generate = parse_contents(
+        root.find(parsing_config['roots']['auto_generate']))
+    _git = parse_contents(root.find(parsing_config['roots']['git']))
+    _sync = parse_contents(root.find(parsing_config['roots']['sync']))
+    _folders = generate_tree(root, _meta['name'])
     _security = None
     _execution = None
 
@@ -163,7 +164,8 @@ def parse(xml_file, config=None, parsing_config: dict=PARSING_DICT):
 
 
 if __name__ == '__main__':
-    root = XMLTree.parse('/Users/michael/prog/python/python3/project_creator/project/tests/resources/basic_project.xml') \
+    root = XMLTree.parse(
+        '/Users/michael/prog/python/python3/project_creator/project/tests/resources/basic_project.xml') \
         .getroot()
     tree = generate_tree(root, 'test')
     print(f'{tree}\n')

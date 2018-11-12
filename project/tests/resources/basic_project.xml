@@ -23,9 +23,7 @@
         <version>3.7</version>
         <frameworks/>
         <libraries/>
-        <requirements>
-            anytree, comma_seperated_list, unittest
-        </requirements>
+        <requirements>anytree, comma_seperated_list, unittest</requirements>
     </language>
 
     <auto_generate>

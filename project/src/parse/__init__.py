@@ -54,7 +54,8 @@ PARSING_DICT: dict = {
 }
 
 from parse.importer import ImportNode, FileTree
-from parse.xml_ import XMLElement, XML_READER as XMLReader, XMLTree
+from parse.xml_ import XMLElement, XML_READER as XMLReader, XMLTree, \
+    parse as parse_xml
 
 
 #from test_src.config import SimpleParsingConfiguration
