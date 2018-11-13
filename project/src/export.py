@@ -1,9 +1,20 @@
-from parse import FileTree
-from util import W
 
-def generate(file_tree: FileTree, destination):
-    _folder_loop():
 
-    _file_gen():
+def to_zip():
+    pass  # TODO
 
-    _folder_gen()
+
+def to_json():
+    pass  # TODO
+
+
+def to_xml():
+    pass  # TODO
+
+
+def to_config():
+    pass  # TODO
+
+
+def to_http():
+    pass  # TODO

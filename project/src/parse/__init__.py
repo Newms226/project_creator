@@ -4,20 +4,19 @@ PARSING_DICT: dict = {
     'file_type': 'file',
     'folder_type': 'folder',
     'import_type': 'import',
+
     'git_attr': 'git',
     'type_attr': 'type',
     'system_attr': 'system_attr',
-    'import_path': 'path',
+
     'import_strategy': 'import_strategy',
-    'files': {
-        'text': 'text',
-        'header': 'header',
-        'extension': 'extension'
+    'import_args': 'import_args',
+
+    'system_dependencies': {
+        'file_sep': '.',
+        'folder_sep': '/'
     },
-    'git_track': {
-        'track': 'True',
-        'ignore': 'False'
-    },
+
     'roots': {
         'meta': 'meta',
         'auto_generate': 'auto_generate',
@@ -26,6 +25,18 @@ PARSING_DICT: dict = {
         'language': 'language',
         'hierarchy': 'folder_root'
     },
+
+    'files': {
+        'text': 'text',
+        'header': 'header',
+        'extension': 'extension'
+    },
+
+    'git_track': {
+        'track': 'True',
+        'ignore': 'False'
+    },
+
     'meta': {
         'name': 'name',
         'root_directory': 'root_dir',
