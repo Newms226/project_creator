@@ -101,11 +101,11 @@ def generate_file_text(file_node: ImportNode, prefix_new_line: bool = True,
     if hasattr(file_node, PARSING_DICT['files']['header']):
         log.debug(f'Found header in {file_node.name}')
         file_text = append_header(file_node.header,
-                                  prefix_new_line=prefix_new_line)
+                                  prefix_new_line=False)
     else:
         log.debug(f'Found NO header in {file_node.name}')
         file_text = append_header(file_node.name,
-                                  prefix_new_line=prefix_new_line)
+                                  prefix_new_line=False)
 
     # Text
     if hasattr(file_node, PARSING_DICT['files']['text']):

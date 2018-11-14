@@ -165,21 +165,21 @@ class TestImportNodeParse(unittest.TestCase):
         self.assertTrue(self.sprint_backlog is not None)
         self.assertTrue(type(self.sprint_backlog) is ImportNode)
         self._helper(node=self.sprint_backlog,
-                     exp='\nSprint Backlog\n===============\n#. design',
+                     exp='Sprint Backlog\n===============\n#. design',
                      prefix_new_line=True)
 
     def test_readme(self):
         self.assertTrue(self.readme is not None)
         self.assertTrue(type(self.readme) is ImportNode)
         self._helper(node=self.readme,
-                     exp='\nReadme\n=======\nThis is the readme',
+                     exp='Readme\n=======\nThis is the readme',
                      prefix_new_line=True)
 
     def test_license(self):
         self.assertTrue(self.license is not None)
         self.assertTrue(type(self.license) is ImportNode)
         self._helper(node=self.license,
-                     exp='\nLICENSE\n========',
+                     exp='LICENSE\n========',
                      prefix_new_line=True)
 
     def _helper(self, node, exp, prefix_new_line=False):
