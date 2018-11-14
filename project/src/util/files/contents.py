@@ -66,6 +66,15 @@ def _generate_header_underline(header, header_char: str = '=') -> str:
     return delimiter_text
 
 
+def _auto_gen_header(header_contents: str) -> str:
+    log.debug(f'(header_contents={header_contents})')
+
+    generated_header = header_contents.replace('_', ' ').title()
+
+    log.debug(f'RETURNED {generated_header}')
+    return generated_header
+
+
 def append_text(text, append_to: str='', prefix_new_line: bool = True) -> str:
     log.debug(f'util.files.append_text(text={text}, append_to={append_to},'
               f'prefix_new_line={prefix_new_line}')
@@ -87,7 +96,7 @@ def append_import(strategy, args, append_to: str = None,
 
 
 def generate_file_text(file_node: ImportNode, prefix_new_line: bool = True,
-                       append_to: str='') -> str:
+                       append_to: str = '') -> str:
     log.debug(f'util.files.generate_file_text(file_node={file_node}, '
               f'prefix_new_line={prefix_new_line}, append_to={append_to})')
 
@@ -104,7 +113,7 @@ def generate_file_text(file_node: ImportNode, prefix_new_line: bool = True,
                                   prefix_new_line=False)
     else:
         log.debug(f'Found NO header in {file_node.name}')
-        file_text = append_header(file_node.name,
+        file_text = append_header(_auto_gen_header(file_node.name),
                                   prefix_new_line=False)
 
     # Text

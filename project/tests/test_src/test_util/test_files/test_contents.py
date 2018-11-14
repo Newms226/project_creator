@@ -179,7 +179,7 @@ class TestImportNodeParse(unittest.TestCase):
         self.assertTrue(self.license is not None)
         self.assertTrue(type(self.license) is ImportNode)
         self._helper(node=self.license,
-                     exp='LICENSE\n========',
+                     exp='License\n========',
                      prefix_new_line=True)
 
     def _helper(self, node, exp, prefix_new_line=False):
