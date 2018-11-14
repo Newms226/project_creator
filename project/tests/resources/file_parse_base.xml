@@ -1,0 +1,92 @@
+<project>
+
+    <meta>
+        <name>Project Creator</name>
+            <!-- The name of the project. Should be in title case. Will
+            have spaces removed & capitalization added to generate the
+            root folder name. For example "Project Creator" would become
+            the folder "ProjectCreator"-->
+        <root_dir>/Users/Michael/prog/python/python3</root_dir>
+        <date>
+            <month>10</month>
+            <day>5</day>
+            <year>2018</year>
+        </date>
+        <license>MIT</license>
+        <contributors>Michael Newman, OTHER CONTR., COMMA SEPARATED</contributors>
+        <short_description/>
+        <long_description/>
+    </meta>
+
+    <language>
+        <type>Python</type>
+        <version>3.7</version>
+        <frameworks/>
+        <libraries/>
+        <requirements>anytree, comma_seperated_list, unittest</requirements>
+    </language>
+
+    <auto_generate>
+        <readme type="file">
+            <extension>rst</extension>
+        </readme>
+
+        <license type="file">
+            <extension>rst</extension>
+        </license>
+
+        <contributors type="file">
+            <extension>rst</extension>
+        </contributors>
+    </auto_generate>
+
+    <git>
+        <username/>
+        <password/>
+        <branches>
+            <branch/>
+        </branches>
+        <remotes>
+            <remote/>
+        </remotes>
+        <import>
+            <url/>
+        </import>
+    </git>
+
+    <sync/>
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~HIERARCHY~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <folder_root type="folder">
+        <src type="folder" />
+
+        <tests type="folder" />
+
+        <design type="folder">
+            <agile type="folder">
+
+                <project_backlog type="file">
+                    <extension>rst</extension>
+                    <header>Project Backlog</header>
+                </project_backlog>
+
+                <sprint_backlog type ="file" git="False">
+                    <extension>rst</extension>
+                    <header>Sprint Backlog</header>
+                    <text>#. design</text>
+                </sprint_backlog>
+            </agile>
+        </design>
+
+        <README type="file">
+            <extension>txt</extension>
+            <text>This is the readme</text>
+            <header>Readme</header>
+        </README>
+
+        <LICENSE type="file">
+            <import_strategy/>
+            <import_args/>
+        </LICENSE>
+    </folder_root>
+</project>

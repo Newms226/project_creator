@@ -1,6 +1,7 @@
 from logging_config import root_logger as log
 from parse import ImportNode, PARSING_DICT
 from util.strings import require_string
+from warnings import warn
 
 
 def _prefix_handler(append_to: str,
@@ -24,22 +25,23 @@ def _prefix_handler(append_to: str,
 def append_header(header_contents: str, append_to: str= '', rst_header=True,
                   rst_char: str = '=', prefix_new_line=True,
                   overline: bool=False) -> str:
-    log.debug(stf'util.files.append_header(header_contents={header_contents},'
+    log.debug(f'util.files.append_header(header_contents={header_contents},'
               f'append_to={append_to}, rst_header={rst_header}, '
               f'rst_char={rst_char}, prefix_new_line={prefix_new_line}, '
               f'overline={overline})')
 
-    if prefix_new_line:
-        append_to = append_to = '\n'
-
     if not rst_header:
         log.info('rst_header was false, simple appending...')
-        header_text = append_to + header_contents
+
+        header_text = _prefix_handler(append_to=append_to,
+                                      generated_text=header_contents,
+                                      prefix_new_line=prefix_new_line)
 
         log.debug(f'util.files.append_header RETURNED {header_text}')
         return header_text
 
-    header_underline = _generate_header_underline(header_char=rst_char)
+    header_underline = _generate_header_underline(header=header_contents,
+                                                  header_char=rst_char)
     header_text = header_contents + '\n' + header_underline
     if overline:
         header_text = header_underline + '\n' + header_text
@@ -52,7 +54,7 @@ def append_header(header_contents: str, append_to: str= '', rst_header=True,
     return header_text
 
 
-def _generate_header_underline(header_char: str = '=') -> str:
+def _generate_header_underline(header, header_char: str = '=') -> str:
     log.debug(f'util.files._generate_header(header_char={header_char})')
 
     if len(header_char) != 1:
@@ -68,8 +70,6 @@ def append_text(text, append_to: str='', prefix_new_line: bool = True) -> str:
     log.debug(f'util.files.append_text(text={text}, append_to={append_to},'
               f'prefix_new_line={prefix_new_line}')
 
-    text = append_to + require_string(rext, log=log)
-
     text = _prefix_handler(append_to=append_to,
                            generated_text=text,
                            prefix_new_line=prefix_new_line)
@@ -82,8 +82,8 @@ def append_import(strategy, args, append_to: str = None,
                   suffix_new_line: bool = None) -> str:
     log.debug(f'util.files.append_import(strategy={strategy}, args={args}, '
               f'suffix_new_line={suffix_new_line})')
-    log.debug(f'util.files.append_import RETURNED STUBBED')
-    pass  # TODO
+    log.debug(f'util.files.append_import RETURNED STUBBED {append_to}')
+    return append_to  # TODO
 
 
 def generate_file_text(file_node: ImportNode, prefix_new_line: bool = True,
@@ -93,10 +93,18 @@ def generate_file_text(file_node: ImportNode, prefix_new_line: bool = True,
 
     file_text = append_to
 
+    if not file_node.is_file():
+        raise Exception('Cannot generate file_text when type is'
+                        f'{file_node.element_type}')
+
     # Header
     if hasattr(file_node, PARSING_DICT['files']['header']):
         log.debug(f'Found header in {file_node.name}')
         file_text = append_header(file_node.header,
+                                  prefix_new_line=prefix_new_line)
+    else:
+        log.debug(f'Found NO header in {file_node.name}')
+        file_text = append_header(file_node.name,
                                   prefix_new_line=prefix_new_line)
 
     # Text
@@ -121,3 +129,7 @@ def generate_file_text(file_node: ImportNode, prefix_new_line: bool = True,
 
     log.debug(f'generate_file_text RETURNED {file_text}')
     return file_text
+
+
+if __name__ == '__main__':
+    pass
