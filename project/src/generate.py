@@ -1,19 +1,16 @@
-from parse import FileTree, ImportNode
+from parse import ImportNode
 from util import ImmutableConfig
+from util.folders import WorkingDirectory, TempHandler, make_folder
+from util.files.creation import write_file_text
 from logging_config import root_logger as log
 
 
 def generate(config: ImmutableConfig, destination):
-    def _folder_loop(node: ImportNode):
-        log.debug(f'generate._folder_loop(node={node.__str__(detail=10)})')
-        for child in node.children:
-            _generate(child)
-
-    def _generate(node: ImportNode):
-        log.debug(f'generate._generate(node={node})')
+    def _generate(node: ImportNode, ):
+        log.debug(f'(node={node.name})')
 
         if node is None:
-            exception_str = f'Called generate._generate() when node was NONE'
+            exception_str = f'Called when node was NONE'
             log.error(exception_str)
             raise Exception(exception_str)
 
@@ -21,22 +18,43 @@ def generate(config: ImmutableConfig, destination):
             _folder_gen(node)
         elif node.is_file():
             _file_gen(node)
-        elif node.is_import():
-            _import_gen(node)
         else:
             exception_str = f'No valid type found: {node.__str__(detail=10)}'
             log.error(exception_str)
             raise Exception(exception_str)
 
-
     def _file_gen(node: ImportNode):
-        pass
+        log.debug(f'(node={node})')
+
+        write_file_text(file_node=node, location=working_dir.absolute_dir)
 
     def _folder_gen(node: ImportNode):
-        pass
+        log.debug(f'(node={node})')
 
-    def _import_gen(node: ImportNode):
+        working_dir.push(node.name)
+        make_folder(working_dir.absolute_dir)
 
-    log.debug(f'generate(config={config}, destination={destination})')
+        for child in node.children:
+            _generate(child)
 
-    _folder_loop(config.folder_hierarchy.get_root())
+        working_dir.pop()
+
+    log.debug(f'(config={config}, destination_dir={destination})')
+
+    temp_handler = TempHandler(destination=destination)
+    working_dir = WorkingDirectory(root=temp_handler.temp_dir)
+
+    for child in config.folder_hierarchy.get_root().children:
+        _generate(child)
+
+    temp_handler.finalize()
+
+    log.debug(f'RETURNED {destination}')
+    return temp_handler.temp_dir
+
+if __name__ == '__main__':
+    from parse.xml_ import parse
+    str_ = generate(
+            parse('/Users/michael/prog/python/python3/project_creator'
+                  '/project/tests/resources/file_parse_base.xml'), 'NONE')
+    print('\n' + str_)

@@ -5,7 +5,7 @@ from xml.etree.ElementTree import Element
 class GitRepo:
     def __init__(self, url_path, destination):
         print('CONSTRUCTOR: GitRepo'
-              f'\n  {url_path} -> {destination}')
+              f'\n  {url_path} -> {destination_dir}')
         self.repo = Repo.clone_from(url_path, destination)
         self.git = self.repo.git
 

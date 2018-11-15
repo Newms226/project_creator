@@ -1,5 +1,3 @@
-import setup
-
 PARSING_DICT: dict = {
     'file_type': 'file',
     'folder_type': 'folder',
@@ -29,7 +27,8 @@ PARSING_DICT: dict = {
     'files': {
         'text': 'text',
         'header': 'header',
-        'extension': 'extension'
+        'extension': 'extension',
+        'default_extension': 'rst'
     },
 
     'git_track': {

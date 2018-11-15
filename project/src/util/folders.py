@@ -1,6 +1,7 @@
-from os import makedirs
-from warnings import warn
-from util import mkdtemp
+from os import makedirs as _makedirs, path
+from tempfile import mkdtemp
+from logging_config import root_logger as log
+from util.strings import require_string
 
 
 '''def make_dir(name, root):
@@ -10,67 +11,97 @@ from util import mkdtemp
     print(f' Successfully created directory at {_path}')'''
 
 
-def make_folder(path):
-    print(f' called make_dir({path})')
-    makedirs(path, exist_ok=True)
-    print(f' Successfully created directory at {path}')
+def make_folder(path_to):
+    log.debug(f'({path_to})')
 
-
-def _ensure_string(obj):
-    if isinstance(obj, str):
-        return obj
+    if path.exists(path_to):
+        log.warning(f'Attempted to make directory {path_to} when it already '
+                    f'existed')
+        if not path.isdir(path_to):
+            exception_str = f"'{path_to}' exists & is not a directory"
+            log.error(exception_str)
+            raise Exception(exception_str)
     else:
-        return str(obj)  # TODO regrex expression to test this
+        _makedirs(path_to)
+
+    log.debug(f'RETURNED {path_to}')
+    return path_to
 
 
 class TempHandler(object):
     def __init__(self, destination):
-        self.destination = destination
-        self.dir = mkdtemp()
-        print(f"Initialized temp at {self.dir} with plans to go to "
-              f"{self.destination}")
+        log.debug(f'INIT (destination={destination})')
+        self.data = (destination, mkdtemp())
+        log.debug(f'planning to go to {self.temp_dir}')
+
+    @property
+    def destination_dir(self):
+        to_return = self.data[0]
+        log.debug(f'PROPERTY RETURNED {to_return}')
+        return to_return
+
+    @property
+    def temp_dir(self):
+        to_return = self.data[1]
+        log.debug(f'PROPERTY RETURNED {to_return}')
+        return to_return
 
     def finalize(self):
-        print(f'called finalize. Temp location: {self.dir}, Planed '
-              f'destination: {self.destination}')  # TODO copy to root
-        # shutil.copytree(self.dir, self.destination)
+        log.debug(f'STUBBED (temp_dir={self.temp_dir}, '
+                  f'destination_dir={self.destination_dir})')
+        # TODO: actually do the move
+        # shutil.copytree(self.temp_dir, self.destination_dir)
+
+        log.debug(f'RETURNED {self.temp_dir}')
+        return self.temp_dir
 
 
 # TODO turn the working directory variable into a Python Property
 class WorkingDirectory:
-    def __init__(self, root='.', separator='/'):
-        print('CONSTRUCTOR: WorkingDirectory'
-              f'\n  root: {root} type: {type(root)},'
-              f'\n  separator: {separator} type: {type(separator)}')
-        self.root = _ensure_string(root)
-        self.separator = _ensure_string(separator)
-        self.absolute_dir = self.root
-        self.relative_dir = ""
+    def __init__(self, root='.'):
+
+        log.debug(f'INIT (root={root})')
+
+        self._root = (require_string(root, log=log), )
         self.directories = []
 
-    def pop(self) -> str:
-        print('  popping')
-        if self.size() == 0:
-            warn(f'Called pop when size was zero. Returned: {self.root}')
-            return self.root
+    @property
+    def root(self):
+        log.debug(f'PROPERTY RETURNED {self._root[0]}')
+        return self._root[0]
 
-        to_return = self.directories.pop()
-        self._update_dir()
-        print(f'  popped & returning: {to_return}')
+    @property
+    def relative_dir(self):
+        to_return = path.join('', *self.directories)
+        log.debug(f'PROPERTY RETURNED {to_return}')
+        return to_return
+
+    @property
+    def absolute_dir(self):
+        to_return = path.join(self.root, *self.directories)
+        log.debug(f'PROPERTY RETURNED {to_return}')
+        return to_return
+
+    def pop(self) -> str:
+        log.debug('popping..')
+
+        if self.size <= 0:
+            log.warning(f'Called pop when size was zero.')
+            to_return = self.root
+        else:
+            to_return = self.directories.pop()
+
+        log.debug(f'RETURNED {to_return}')
         return to_return
 
     def push(self, to_append):
-        print(f'  pushing: {to_append}')
-        _dir = _ensure_string(to_append)
-        self.directories.append(_dir)
-        self._update_dir()
-        print(f'  pushed: {to_append}')
+        log.debug(f'(to_append={to_append})')
 
+        _dir = require_string(to_append, log=log)
+        self.directories.append(_dir)
+
+        log.debug(f'RETURNED')
+
+    @property
     def size(self):
         return len(self.directories)
-
-    def _update_dir(self):  # TODO use paths to join!
-        self.relative_dir = self.separator.join(self.directories)
-        self.absolute_dir = self.root + self.separator + self.relative_dir
-        print(f'    relative_dir: {self.relative_dir}')
-        print(f'    absolute_dir: {self.absolute_dir}')

@@ -9,6 +9,9 @@ gen_texts = ['header',
              'many\nlines\ no prefix/suffix'
              '\nmany lines \n with follow & precede\n']
 
+test_file = '/Users/michael/prog/python/python3/project_creator/project/' \
+            'tests/resources/file_parse_base.xml'
+
 
 class TestPrefixHandler(unittest.TestCase):
 
@@ -145,8 +148,7 @@ class TestText(unittest.TestCase):
 class TestImportNodeParse(unittest.TestCase):
     def setUp(self):
         self.folder_node = None
-        config = parse('/Users/michael/prog/python/python3/project_creator/'
-                       'project/tests/resources/file_parse_base.xml')
+        config = parse(test_file)
         root: ImportNode = config.folder_hierarchy.get_root()
         agile = root.get_child('design').get_child('agile')
         self.project_backlog = agile.get_child('project_backlog')

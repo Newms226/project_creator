@@ -40,7 +40,9 @@ def write_file_text(file_node: ImportNode, location,
                               prefix_new_line=prefix_new_line,
                               append_to=append_to)
     path_ = gen_file_name(name=file_node.name,
-                          extension=getattr(file_node, 'extension', 'rst'),
+                          extension=getattr(file_node, 'extension',
+                                            PARSING_DICT['files']
+                                                        ['default_extension']),
                           location=location)
     try:
         with open(path_, mode='w+') as f:  # TODO mode research

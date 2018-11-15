@@ -1,8 +1,4 @@
 # TODO parse all modules to top level
-import setup
-
-from src.util.immutable_tuple import ImmutableUnit
-from src import NodeMixin
 
 #from API.node import TreeNode as TreeNodeAPI #, \
 #    FileSystemNode as FileSystemNodeAPI, \

@@ -1,5 +1,5 @@
 import unittest
-from src.util.immutable_tuple import ImmutableConfig
+from util.immutable_tuple import ImmutableConfig
 
 
 class TestStringConfig(unittest.TestCase):

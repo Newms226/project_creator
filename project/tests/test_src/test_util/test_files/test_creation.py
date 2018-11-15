@@ -3,6 +3,9 @@ from src.util.files.creation import generate_file_text, gen_file_name, \
     _get_valid_name, write_file_text
 from src.parse.xml_ import parse
 
+test_file = '/Users/michael/prog/python/python3/project_creator/project/' \
+            'tests/resources/file_parse_base.xml'
+
 
 class TestGenFileName(unittest.TestCase):
     def setUp(self):
@@ -68,9 +71,7 @@ class TestGenFileName(unittest.TestCase):
 class TestFileWrite(unittest.TestCase):
 
     def setUp(self):
-        self.config = parse('/Users/michael/prog/python/python3/'
-                            'project_creator/project/tests/resources/'
-                            'file_parse_base.xml')
+        self.config = parse(test_file)
         root: ImportNode = self.config.folder_hierarchy.get_root()
         agile = root.get_child('design').get_child('agile')
         self.location = tempfile.mkdtemp()

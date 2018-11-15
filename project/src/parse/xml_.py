@@ -1,13 +1,11 @@
 from xml.etree import ElementTree as XMLTree
-from xml.etree.ElementTree import Element as XMLElement, ParseError as \
-    XMLParseError
+from xml.etree.ElementTree import Element as XMLElement
 
-from logging_config import root_logger as log, getLogger
+from logging_config import root_logger as log
 
 from API import ReaderAPI
-from util import ImmutableUnit, ImmutableConfig
+from util import ImmutableConfig
 from parse import PARSING_DICT, ImportNode, FileTree
-from warnings import warn
 
 
 # noinspection PyMethodMayBeStatic
