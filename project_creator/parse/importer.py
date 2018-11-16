@@ -8,7 +8,7 @@ from . import PARSING_DICT
 #from src.parse.xml import parse_contents as parse_xml
 
 
-class ImportNode(NodeMixin, object, metaclass=ABCMeta):
+class ImportNode(NodeMixin, object):
 
     def __init__(self, name: str, element_type, git_track: bool, element=None,
                  parent: ImportNode = None):
@@ -93,7 +93,6 @@ class ImportNode(NodeMixin, object, metaclass=ABCMeta):
                          maxlevel=max_level) is not None
 
 
-
 class FileTree(object):
 
     def __init__(self, root: NodeMixin):
@@ -126,29 +125,5 @@ class FileTree(object):
         return f'FileTree <root={self.get_root()}, count={self.node_count}>'
 
 
-
-"""
-def from_json(json_file, config, reader: Reader) -> ConfigAPI:
-    print(f'STUBBED parse.json(json_file={json_file}, config={config}, '
-          f'reader={reader})')
-    pass  # TODO
-
-
-def from_folder(folder_root, config, metadata, reader: Reader) -> ConfigAPI:
-    print(f'STUBBED parse.folder(folder_root={folder_root}, config={config}, '
-          f'metadata={metadata}, reader={reader})')
-    pass  # TODO
-
-
-def from_project(project_creator: ProjectContainer, config, metadata, reader: Reader) \
-        -> ConfigAPI:
-    print(f'STUBBED parse.project_creator(project_creator={project_creator}, config={config}, '
-          f'metadata={metadata}, reader={reader})')
-    pass  # TODO
-"""
-
 if __name__ == '__main__':
-    print(parse_2D(ElementTree.parse('/Users/michael/prog/python/python3/'
-                                      'project_creator/project_creator/test/resources'
-                                      '/basic_project.xml').getroot(),
-                   _read_parsing_config(None)['roots']['meta']))
+    pass

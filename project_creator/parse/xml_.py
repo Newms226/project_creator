@@ -101,9 +101,9 @@ def xml_to_tree_node(element: XMLElement, reader=XML_READER, parent=None,
 
 
 def generate_tree(root: XMLElement, project_name: str) -> FileTree:
-    def folder_loop(parent: ImportNode):
+    def folder_loop(parent: ImportNode, parent_element: XMLElement):
         log.debug(f'folder_loop(parent={parent})')
-        for child in list(parent.element):
+        for child in list(parent_element):
             _generate(child, parent)
 
     def _generate(element: XMLElement, parent: ImportNode):
@@ -117,13 +117,13 @@ def generate_tree(root: XMLElement, project_name: str) -> FileTree:
         else:
             _parse_contents = True
 
-        n = xml_to_tree_node(element=element, parent=parent,
+        n = xml_to_tree_node(element=element,
+                             parent=parent,
                              parse_contents_=_parse_contents)
-        n.element = element
         log.info(f'GENERATED: {n.__str__(detail=10)}')
 
         if n.is_folder():
-            folder_loop(n)
+            folder_loop(n, element)
 
     log.debug(f'(root={root}, project_name={project_name}')
 
@@ -131,9 +131,8 @@ def generate_tree(root: XMLElement, project_name: str) -> FileTree:
     node_root = ImportNode(name=project_name,
                            git_track=True,
                            element_type=PARSING_DICT['folder_type'])
-    node_root.element = folder_root
 
-    folder_loop(node_root)
+    folder_loop(node_root, folder_root)
 
     tree = FileTree(node_root)
     log.info(f'RETURNED {tree}')

@@ -19,10 +19,9 @@
             A programming project creation utility
         </short_description>
 
-        <long_description>
-            A programming project creation utility designed to parse some
-            file &amp; directory template (XML, JSON, etc.) into a physical
-            folder structure on a machine.
+        <long_description>A programming project creation utility designed to
+            parse some file &amp; directory template (XML, JSON, etc.) into
+            a physical folder structure on a machine.
         </long_description>
     </meta>
 
@@ -30,13 +29,14 @@
         <type>Python</type>
         <version>3.7</version>
         <frameworks/>
-        <libraries/>
+        <libraries>anytree</libraries>
         <requirements>anytree, unittest</requirements>
     </language>
 
     <auto_generate>
         <text_files>requirements</text_files>
         <rst_files>readme, license, contributors</rst_files>
+        <folders>test</folders>
     </auto_generate>
 
     <git>
@@ -62,10 +62,8 @@
         <test type="folder">
             <context type="file">
                 <extension>py</extension>
-                <import_strategy>path_modified</import_strategy>
-                <import_args>
-                    ./resources/python/test_context.py -var {PROJECT_NAME}
-                </import_args>
+                <import_strategy>rv</import_strategy>
+                <import_args>./resources/python/test_context.py --var {PROJECT_NAME=PROJECT_NAME}</import_args>
             </context>
         </test>
 
