@@ -13,11 +13,17 @@
             <year>2018</year>
         </date>
         <license>MIT</license>
-        <contributors>
-            <contributor>Michael Newman</contributor>
-        </contributors>
-        <short_description/>
-        <long_description/>
+        <contributors>Michael Newman, OTHER CONTR., COMMA SEPARATED</contributors>
+
+        <short_description>
+            A programming project creation utility
+        </short_description>
+
+        <long_description>
+            A programming project creation utility designed to parse some
+            file &amp; directory template (XML, JSON, etc.) into a physical
+            folder structure on a machine.
+        </long_description>
     </meta>
 
     <language>
@@ -25,23 +31,12 @@
         <version>3.7</version>
         <frameworks/>
         <libraries/>
-        <requirements>
-            <requirement>anytree</requirement>
-        </requirements>
+        <requirements>anytree, unittest</requirements>
     </language>
 
     <auto_generate>
-        <readme type="file">
-            <extension>rst</extension>
-        </readme>
-
-        <license type="file">
-            <extension>rst</extension>
-        </license>
-
-        <contributors type="file">
-            <extension>rst</extension>
-        </contributors>
+        <text_files>requirements</text_files>
+        <rst_files>readme, license, contributors</rst_files>
     </auto_generate>
 
     <git>
@@ -60,11 +55,21 @@
 
     <sync/>
 
-    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~HIERARCHY~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~HIERARCHY~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
     <folder_root type="folder">
         <src type="folder" />
 
-        <tests type="folder" />
+        <tests type="folder">
+            <context type="file">
+                <extension>py</extension>
+                <import_strategy>path_modified</import_strategy>
+                <import_args>
+                    ./resources/python/test_context.py -var {PROJECT_NAME}
+                </import_args>
+            </context>
+        </tests>
+
+        <venv type="folder" git="False"/>
 
         <design type="folder">
             <agile type="folder">
@@ -79,49 +84,10 @@
                     <header>Sprint Backlog</header>
                     <text>#. design</text>
                 </sprint_backlog>
-
-                <past_sprints type="folder">
-
-                </past_sprints>
-
             </agile>
-
-            <examples type="folder">
-
-            </examples>
-
-            <strategy type="folder">
-
-            </strategy>
+            <plan type="file">
+                <extension>rst</extension>
+            </plan>
         </design>
-
-        <venv type="folder" git="false">
-
-        </venv>
-
-        <logs type="folder">
-
-        </logs>
-
-        <bin type="folder" git="false" />
-
-        <ref type="folder" />
-
-        <resources type="folder" />
-
-        <config type="folder">
-            <xml_config type="file" git="false">
-                <extension>xml</extension>
-            </xml_config>
-        </config>
-
-        <README type="file">
-            <extension>txt</extension>
-        </README>
-
-        <LICENSE type="import">
-            <path>resources/MIT.rst</path>
-            <extension>rst</extension>
-        </LICENSE>
     </folder_root>
 </project>

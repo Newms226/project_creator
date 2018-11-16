@@ -13,9 +13,7 @@
             <year>2018</year>
         </date>
         <license>MIT</license>
-        <contributors>
-            <contributor>Michael Newman</contributor>
-        </contributors>
+        <contributors>Michael Newman, OTHER CONTR., COMMA SEPARATED</contributors>
         <short_description/>
         <long_description/>
     </meta>
@@ -25,9 +23,7 @@
         <version>3.7</version>
         <frameworks/>
         <libraries/>
-        <requirements>
-            <requirement>anytree</requirement>
-        </requirements>
+        <requirements>anytree, comma_seperated_list, unittest</requirements>
     </language>
 
     <auto_generate>
@@ -74,54 +70,23 @@
                     <header>Project Backlog</header>
                 </project_backlog>
 
-                <sprint_backlog type ="file">
+                <sprint_backlog type ="file" git="False">
                     <extension>rst</extension>
                     <header>Sprint Backlog</header>
                     <text>#. design</text>
                 </sprint_backlog>
-
-                <past_sprints type="folder">
-
-                </past_sprints>
-
             </agile>
-
-            <examples type="folder">
-
-            </examples>
-
-            <strategy type="folder">
-
-            </strategy>
         </design>
-
-        <venv type="folder" git="false">
-
-        </venv>
-
-        <logs type="folder">
-
-        </logs>
-
-        <bin type="folder" git="false" />
-
-        <ref type="folder" />
-
-        <resources type="folder" />
-
-        <config type="folder">
-            <xml_config type="file" git="false">
-                <extension>xml</extension>
-            </xml_config>
-        </config>
 
         <README type="file">
             <extension>txt</extension>
+            <text>This is the readme</text>
+            <header>Readme</header>
         </README>
 
-        <LICENSE type="import">
-            <path>resources/MIT.rst</path>
-            <extension>rst</extension>
+        <LICENSE type="file">
+            <import_strategy/>
+            <import_args/>
         </LICENSE>
     </folder_root>
 </project>

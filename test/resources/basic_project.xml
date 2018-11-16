@@ -13,9 +13,7 @@
             <year>2018</year>
         </date>
         <license>MIT</license>
-        <contributors>
-            <contributor>Michael Newman</contributor>
-        </contributors>
+        <contributors>Michael Newman, OTHER CONTR., COMMA SEPARATED</contributors>
         <short_description/>
         <long_description/>
     </meta>
@@ -25,9 +23,7 @@
         <version>3.7</version>
         <frameworks/>
         <libraries/>
-        <requirements>
-            <requirement>anytree</requirement>
-        </requirements>
+        <requirements>anytree, comma_seperated_list, unittest</requirements>
     </language>
 
     <auto_generate>
@@ -74,7 +70,7 @@
                     <header>Project Backlog</header>
                 </project_backlog>
 
-                <sprint_backlog type ="file">
+                <sprint_backlog type ="file" git="False">
                     <extension>rst</extension>
                     <header>Sprint Backlog</header>
                     <text>#. design</text>
@@ -95,25 +91,7 @@
             </strategy>
         </design>
 
-        <venv type="folder" git="false">
-
-        </venv>
-
-        <logs type="folder">
-
-        </logs>
-
-        <bin type="folder" git="false" />
-
-        <ref type="folder" />
-
-        <resources type="folder" />
-
-        <config type="folder">
-            <xml_config type="file" git="false">
-                <extension>xml</extension>
-            </xml_config>
-        </config>
+        <venv type="folder" git="False"/>
 
         <README type="file">
             <extension>txt</extension>
@@ -122,6 +100,8 @@
         <LICENSE type="import">
             <path>resources/MIT.rst</path>
             <extension>rst</extension>
+            <import_strategy>p</import_strategy>
+            <import_path>path/to/import</import_path>
         </LICENSE>
     </folder_root>
 </project>

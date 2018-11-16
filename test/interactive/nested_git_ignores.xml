@@ -1,0 +1,75 @@
+<project>
+    <info>
+        <name>Project Creator</name>
+            <!-- The name of the project_creator. Should be in title case. Will have
+            spaces removed & capitalization added to generate the root folder
+            name. For example "Project Creator" would become the folder
+            "ProjectCreator"
+             -->
+        <rootdir>/Users/Michael/prog/python/python3</rootdir>
+        <date>2018-10-16</date>
+        <license>MIT</license>
+        <contributors>
+            <contributor>Michael Newman</contributor>
+        </contributors>
+    </info>
+
+    <git>
+        <login>
+            <username></username>
+            <password></password>
+        </login>
+        <remotes>
+            <remote>URL PATH</remote>
+            <remote>FILE PATH</remote>
+        </remotes>
+        <branches>
+            <branch>dev</branch>
+            <branch>feature</branch>
+        </branches>
+    </git>
+
+    <sync>
+        <remotes>
+            <remote>
+                <path></path>
+                <username></username>
+                <password></password>
+            </remote>
+        </remotes>
+
+
+    </sync>
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~HIERARCHY~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <project type="folder">
+        <design type="folder" git="False">
+            <agile type="folder" git="True">
+
+                <project_backlog type="file">
+                    <extension>rst</extension>
+                    <header>Project Backlog</header>
+                </project_backlog>
+
+                <sprint_backlog type ="file" git = "False">
+                    <extension>rst</extension>
+                    <header>Sprint Backlog</header>
+                    <text>#. design</text>
+                </sprint_backlog>
+
+                <past_sprints type="folder">
+
+                </past_sprints>
+
+            </agile>
+
+            <examples type="folder">
+
+            </examples>
+
+            <strategy type="folder">
+
+            </strategy>
+        </design>
+    </project>
+</project>
