@@ -104,22 +104,6 @@ def generate_file_text(file_node: ImportNode, prefix_new_line: bool = True,
         raise Exception('Cannot generate file_text when type is'
                         f'{file_node.element_type}')
 
-    # Header
-    if hasattr(file_node, PARSING_DICT['files']['header']):
-        log.debug(f'Found header in {file_node.name}')
-        file_text = append_header(file_node.header,
-                                  prefix_new_line=False)
-    else:
-        log.debug(f'Found NO header in {file_node.name}')
-        file_text = append_header(_auto_gen_header(file_node.name),
-                                  prefix_new_line=False)
-
-    # Text
-    if hasattr(file_node, PARSING_DICT['files']['text']):
-        log.debug(f'Found text in {file_node.name}')
-        file_text = append_text(file_node.text, append_to=file_text,
-                                prefix_new_line=prefix_new_line)
-
     # Import
     if hasattr(file_node, PARSING_DICT['import_strategy']):
         log.debug(f'Found import in {file_node.name}')
@@ -133,6 +117,23 @@ def generate_file_text(file_node: ImportNode, prefix_new_line: bool = True,
                        f'(file_node={file_node}, AttributeError={e})'
             log.error(error_str)
             raise AttributeError(error_str)  # TODO Attempt to handle this
+    # No Import, typical text file
+    else:
+        # Header
+        if hasattr(file_node, PARSING_DICT['files']['header']):
+            log.debug(f'Found header in {file_node.name}')
+            file_text = append_header(file_node.header,
+                                      prefix_new_line=False)
+        else:
+            log.debug(f'Found NO header in {file_node.name}')
+            file_text = append_header(_auto_gen_header(file_node.name),
+                                      prefix_new_line=False)
+
+        # Text
+        if hasattr(file_node, PARSING_DICT['files']['text']):
+            log.debug(f'Found text in {file_node.name}')
+            file_text = append_text(file_node.text, append_to=file_text,
+                                    prefix_new_line=prefix_new_line)
 
     log.debug(f'generate_file_text RETURNED {file_text}')
     return file_text

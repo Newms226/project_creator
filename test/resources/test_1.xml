@@ -59,7 +59,7 @@
     <folder_root type="folder">
         <src type="folder" />
 
-        <tests type="folder">
+        <test type="folder">
             <context type="file">
                 <extension>py</extension>
                 <import_strategy>path_modified</import_strategy>
@@ -67,9 +67,15 @@
                     ./resources/python/test_context.py -var {PROJECT_NAME}
                 </import_args>
             </context>
-        </tests>
+        </test>
 
         <venv type="folder" git="False"/>
+
+        <docs type="folder"/>
+
+        <resources type="folder"/>
+
+        <logs type="folder"/>
 
         <design type="folder">
             <agile type="folder">

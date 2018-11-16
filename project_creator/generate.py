@@ -1,9 +1,9 @@
 from project_creator.parse import ImportNode
-from project_creator.util import ImmutableConfig
+from project_creator.util.immutable_tuple import ImmutableConfig
 from project_creator.util.folders import WorkingDirectory, TempHandler, \
     make_folder
 from project_creator.util.files.creation import write_file_text
-from project_creator.logging_config import root_logger as log
+from logging_config import root_logger as log
 
 
 def generate(config: ImmutableConfig, destination):
@@ -53,9 +53,10 @@ def generate(config: ImmutableConfig, destination):
     log.debug(f'RETURNED {destination}')
     return temp_handler.temp_dir
 
+
 if __name__ == '__main__':
     from parse.xml_ import parse
     str_ = generate(
-            parse('/Users/michael/prog/python/python3/project_creator'
-                  '/project_creator/test/resources/file_parse_base.xml'), 'NONE')
+            parse('/Users/michael/prog/python/python3/project_creator/'
+                  'test/resources/test_1.xml'), 'NONE')
     print('\n' + str_)
