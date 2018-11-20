@@ -1,15 +1,17 @@
-from src.extensions import NodeMixin
+from __future__ import annotations
+from src.extensions import NodeMixin, find_node
 
 from src.logging_config import root_logger as log
 from src.parse import PARSING_DICT
 from src.util.immutable_tuple import ImmutableUnit
+from src.util.sync import SyncHandler
 
 
 class ImportNode(NodeMixin, object):
 
-    def __init__(self, name: str, element_type, sync: SyncStat, element=None,
-                 parent: ImportNode = None, contents: dict = None,
-                 meta=None):
+    def __init__(self, name: str, element_type, sync: SyncHandler,
+                 element=None, parent: ImportNode = None,
+                 contents: dict = None, meta=None):
         log.debug(f'(name={name}, element_type={element_type}, '
                   f'sync={sync}, element={element}, parent={parent}, '
                   f'contents={contents}, meta={meta})')

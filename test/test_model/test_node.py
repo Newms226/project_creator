@@ -1,8 +1,7 @@
-from .context import src
 import unittest
 
-from parse import FileTree
-from model.node import ImportNode
+from src.model.node import ImportNode
+from src.util.sync import SyncHandler
 
 
 class TestImportNode(unittest.TestCase):
@@ -17,9 +16,10 @@ class TestImportNode(unittest.TestCase):
             for type_ in self.types:
                 for track in self.tracks:
                     with self.subTest():
+                        sync_handler = SyncHandler(git_track=track)
                         n = ImportNode(name=name,
                                        element_type=type_,
-                                       git_track=track)
+                                       sync=sync_handler)
                         self.assertEqual(name, n.name)
                         self.assertEqual(type_, n.element_type)
                         self.assertEqual(track, n.git_track)
@@ -62,22 +62,3 @@ class TestImportNode(unittest.TestCase):
         self.assertTrue(a in root)
         self.assertFalse(a_a in root)
         self.assertTrue(root.__contains__(item=a_a, max_level=3))
-
-
-class TestFileTree(unittest.TestCase):
-
-    def setUp(self):
-        self.root = ImportNode('root', 'folder', True)
-        a = ImportNode('r_a', 'folder', True, parent=self.root)
-        b = ImportNode('r_b', 'folder', True, parent=self.root)
-        a_a = ImportNode('r_a_a', 'folder', True, parent=a)
-        self.tree = FileTree(root=self.root)
-
-    def test_count(self):
-        self.assertEqual(3, self.tree.node_count)
-
-    def test_root(self):
-        self.assertEqual(self.root, self.tree.get_root())
-
-
-
