@@ -1,6 +1,6 @@
 import unittest
 from .context import src
-from src.util.immutable_tuple import ImmutableConfig
+from src.util.immutable_tuple import ImmutableConfig, ImmutableUnit
 
 
 class TestStringConfig(unittest.TestCase):
@@ -19,6 +19,7 @@ class TestStringConfig(unittest.TestCase):
 
     def test_meta_contents(self):
         self.assertTrue(self.config.metadata == 'meta')
+
     def test_auto_contents(self):
         self.assertTrue(self.config.auto_generate == 'auto generate')
 
