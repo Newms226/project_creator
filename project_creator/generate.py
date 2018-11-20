@@ -57,6 +57,5 @@ def generate(config: ImmutableConfig, destination):
 if __name__ == '__main__':
     from parse.xml_ import parse
     str_ = generate(
-            parse('/Users/michael/prog/python/python3/project_creator/'
-                  'test/resources/test_1.xml'), 'NONE')
+            parse('/Users/michael/Desktop/rose.xml'), 'NONE')
     print('\n' + str_)
