@@ -1,7 +1,7 @@
 import unittest
 
-from parse import FileTree
-from model.node import ImportNode
+from src.model.file_tree import FileTree
+from src.model.node import ImportNode
 
 
 class TestFileTree(unittest.TestCase):
@@ -17,7 +17,4 @@ class TestFileTree(unittest.TestCase):
         self.assertEqual(3, self.tree.node_count)
 
     def test_root(self):
-        self.assertEqual(self.root, self.tree.get_root())
-
-
-
+        self.assertEqual(self.root, self.tree.root)
