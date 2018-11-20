@@ -1,13 +1,14 @@
 #from API import TreeNodeAPI
 from __future__ import annotations
 
-from project_creator.API.element_reader import ElementReader as ReaderAPI
-from project_creator.API.tree_reader import TreeReader as TreeReaderAPI
+from src.API.element_reader import ElementReader as ReaderAPI
+from src.API.tree_reader import TreeReader as TreeReaderAPI
 
-from project_creator.parse import ImportNode, FileTree
-from project_creator.logging_config import root_logger as log
-from project_creator.util.immutable_tuple import ImmutableConfig
-from project_creator.parse import PARSING_DICT
+from src.parse import FileTree
+from model.node import ImportNode
+from src.logging_config import root_logger as log
+from src.util.immutable_tuple import ImmutableConfig
+from src.parse import PARSING_DICT
 #from src.parse.xml import parse_contents as parse_xml
 
 

@@ -1,8 +1,8 @@
-from parse import ImportNode
-from project_creator.util.immutable_tuple import ImmutableConfig
-from project_creator.util.folders import WorkingDirectory, TempHandler, \
+from model.node import ImportNode
+from src.util.immutable_tuple import ImmutableConfig
+from src.util.folders import WorkingDirectory, TempHandler, \
     make_folder
-from project_creator.util.files.creation import write_file_text
+from src.util.files.creation import write_file_text
 from logging_config import root_logger as log
 
 
@@ -58,5 +58,5 @@ if __name__ == '__main__':
     from parse.importer import parse
 
     str_ = generate(
-            parse('/Users/michael/prog/python/python3/project_creator/test/resources/rose.xml'), 'rose')
+            parse('/Users/michael/prog/python/python3/src/test/resources/rose.xml'), 'rose')
     print('\n' + str_)

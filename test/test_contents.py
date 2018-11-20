@@ -1,9 +1,9 @@
 import unittest
-from .context import project_creator
-from project_creator.util.files.contents import _prefix_handler, \
+from .context import src
+from src.util.files.contents import _prefix_handler, \
     _generate_header_underline, \
     append_text, append_header, generate_file_text
-from project_creator.parse.xml_ import ImportNode
+from src.parse.xml_ import ImportNode
 from parse.importer import parse
 
 gen_texts = ['header',
@@ -12,7 +12,7 @@ gen_texts = ['header',
              'many\nlines\ no prefix/suffix'
              '\nmany lines \n with follow & precede\n']
 
-test_file = '/Users/michael/prog/python/python3/project_creator/test/' \
+test_file = '/Users/michael/prog/python/python3/src/test/' \
             'resources/file_parse_base.xml'
 
 

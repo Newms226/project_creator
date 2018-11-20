@@ -1,6 +1,6 @@
 from string import Template
 from ast import literal_eval
-from project_creator.logging_config import root_logger as log
+from src.logging_config import root_logger as log
 
 
 def parse_template(template_path, string_args: str,

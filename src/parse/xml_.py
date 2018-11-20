@@ -1,12 +1,12 @@
 from xml.etree import ElementTree as XMLTree
 from xml.etree.ElementTree import Element as XMLElement
 
-from project_creator.parse.importer import generate_tree
-from project_creator.logging_config import root_logger as log
+from src.parse.importer import generate_tree
+from src.logging_config import root_logger as log
 
-from project_creator.API.element_reader import ElementReader as ReaderAPI
-from project_creator.API.tree_reader import TreeReader as TreeReaderAPI
-from project_creator.parse import PARSING_DICT
+from src.API.element_reader import ElementReader as ReaderAPI
+from src.API.tree_reader import TreeReader as TreeReaderAPI
+from src.parse import PARSING_DICT
 
 
 # noinspection PyMethodMayBeStatic
@@ -122,7 +122,7 @@ class XMLTreeReader(TreeReaderAPI):
 
 if __name__ == '__main__':
     root = XMLTree.parse(
-        '/Users/michael/prog/python/python3/project_creator/test/resources/basic_project.xml') \
+        '/Users/michael/prog/python/python3/src/test/resources/basic_project.xml') \
         .getroot()
     tree = generate_tree(root, 'test', element_reader=XML_READER)
     print(f'{tree}\n')

@@ -1,7 +1,7 @@
 <project>
     <info>
         <name>Project Creator</name>
-            <!-- The name of the project_creator. Should be in title case. Will have
+            <!-- The name of the src. Should be in title case. Will have
             spaces removed & capitalization added to generate the root folder
             name. For example "Project Creator" would become the folder
             "ProjectCreator"

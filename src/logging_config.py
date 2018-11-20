@@ -2,7 +2,7 @@ import logging
 import datetime
 from logging import getLogger
 
-LOGGING_DIR = '/Users/michael/prog/python/python3/project_creator/logs'
+LOGGING_DIR = '/Users/michael/prog/python/python3/src/logs'
 
 logging.basicConfig()
 

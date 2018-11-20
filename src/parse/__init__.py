@@ -63,7 +63,5 @@ PARSING_DICT: dict = {
     }
 }
 
-from project_creator.parse.file_tree import ImportNode, FileTree
-
 #from test_src.config import SimpleParsingConfiguration
 

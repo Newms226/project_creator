@@ -1,8 +1,8 @@
 import unittest
 import tempfile
 from ast import literal_eval
-from .context import project_creator
-from project_creator.util.templates import parse_template
+from .context import src
+from src.util.templates import parse_template
 
 tests = [
     {

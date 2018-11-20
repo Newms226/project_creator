@@ -1,21 +1,31 @@
-from anytree import NodeMixin, find, RenderTree, PreOrderIter
+from src.extensions import NodeMixin
 
-from project_creator.logging_config import root_logger as log
-from project_creator.parse import PARSING_DICT
-from project_creator.util.immutable_tuple import ImmutableUnit
+from src.logging_config import root_logger as log
+from src.parse import PARSING_DICT
+from src.util.immutable_tuple import ImmutableUnit
 
 
 class ImportNode(NodeMixin, object):
 
-    def __init__(self, name: str, element_type, git_track: bool, element=None,
-                 parent: ImportNode = None, contents: dict = None):
-        self._unit = ImmutableUnit(name, element_type, git_track)
-        # TODO name & git track can change!
+    def __init__(self, name: str, element_type, sync: SyncStat, element=None,
+                 parent: ImportNode = None, contents: dict = None,
+                 meta=None):
+        log.debug(f'(name={name}, element_type={element_type}, '
+                  f'sync={sync}, element={element}, parent={parent}, '
+                  f'contents={contents}, meta={meta})')
+
+        self._unit = ImmutableUnit(name=name,
+                                   element_type=element_type,
+                                   meta=meta,  # TODO
+                                   sync=sync)
+
         self.parent = parent
         self.element = element
+
         if contents is not None:
             self.__dict__.update(contents)
-        log.debug(f'GENERATED: {self.__str__(detail=10)}')
+
+        log.debug(f'GENERATED {self.__str__(detail=10)}')
 
     @property
     def name(self):
@@ -27,13 +37,18 @@ class ImportNode(NodeMixin, object):
 
     @property
     def git_track(self):
-        return self._unit.git_track
+        return self._unit.sync.git_track
+
+    @property
+    def sync(self):
+        return self._unit.sync
+
+    @property
+    def meta(self):
+        return self._unit.meta
 
     def get_grand_ancestor(self):
         return self.ancestors[0]
-
-    def get_file_path(self, root=None):
-        pass  # TODO
 
     def is_folder(self) -> bool:
         return self.element_type == PARSING_DICT['folder_type']
@@ -81,45 +96,13 @@ class ImportNode(NodeMixin, object):
         if detail <= 0:
             return f'{self.name}'
         if 1 <= detail <= 5:
-            return f'{self.name} ({self.element_type}, tracked: ' \
-                   f'{self.git_track})'
+            return f'{self.name} (type={self.element_type}, ' \
+                   f'tracked={self.git_track})'
         if 5 < detail:
-            return f'{self.name} ({self.element_type}, tracked: ' \
-                   f'{self.git_track}):     {self.__dict__}'
+            return f'{self.name} (type={self.element_type}, ' \
+                   f'sync: ={self.sync}, __dict__={self.__dict__})'
 
     def __contains__(self, item, max_level: int=2):
         return find_node(node=self,
                          filter_=lambda node: node == item,
                          maxlevel=max_level) is not None
-
-
-class FileTree(object):
-
-    def __init__(self, root: NodeMixin):
-        self.root = (root, )
-
-    def get_root(self) -> ImportNode:
-        return self.root[0]
-
-    def get_render(self, root=None) -> RenderTree:
-        if root is None:
-            return RenderTree(self.get_root())
-        else:
-            return RenderTree(root)
-
-    @property
-    def node_count(self) -> int:
-        i: int = -1
-        for node in PreOrderIter(self.get_root()): i = i + 1
-        return i
-
-    def __str__(self, detail: int=0):
-        _str = ''
-
-        for pre, _, node in RenderTree(self.get_root()):
-            _str += f'{pre}{node.__str__(detail=detail)}\n'
-
-        return _str
-
-    def __repr__(self):
-        return f'FileTree <root={self.get_root()}, count={self.node_count}>'

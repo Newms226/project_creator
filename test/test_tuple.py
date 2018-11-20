@@ -1,6 +1,6 @@
 import unittest
-from .context import project_creator
-from project_creator.util.immutable_tuple import ImmutableConfig
+from .context import src
+from src.util.immutable_tuple import ImmutableConfig
 
 
 class TestStringConfig(unittest.TestCase):

@@ -1,9 +1,9 @@
 import abc
-from project_creator import PARSING_DICT
+from src import PARSING_DICT
 
 
 '''class TreeNode(NodeMixin, ImmutableUnit, object, metaclass=abc.ABCMeta):
-    """Base node of the whole project_creator.
+    """Base node of the whole src.
 
     Note:
         Methods of this class and all methods which inherit from it should

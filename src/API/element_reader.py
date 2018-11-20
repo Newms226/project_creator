@@ -1,7 +1,7 @@
 import abc
 from abc import ABCMeta, ABC
 
-from parse import ImportNode
+from model.node import ImportNode
 
 
 class ElementReader(ABC, object):

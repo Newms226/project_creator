@@ -1,10 +1,10 @@
 import os
 import os.path as paths
-from project_creator.logging_config import root_logger as log
+from src.logging_config import root_logger as log
 
 
 def _get_resource_location() -> str:  # TODO!
-    return '/Users/michael/prog/python/python3/project_creator/resources'
+    return '/Users/michael/prog/python/python3/src/resources'
 
 
 

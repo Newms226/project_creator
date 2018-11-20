@@ -1,7 +1,8 @@
-from .context import project_creator
+from .context import src
 import unittest
 
-from parse import ImportNode, FileTree
+from parse import FileTree
+from model.node import ImportNode
 
 
 class TestImportNode(unittest.TestCase):
