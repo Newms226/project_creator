@@ -82,6 +82,8 @@ OPTIONS
 -c --content
     (default) Whenever a file is encountered, the full contents are copied
 
+-i --ignore <REGREX>
+    Do not copy any file/folder which matches the passed regrex.
 
 -o --outline
     Whenever a file is encountered, the contents are ignored but the file is
@@ -112,16 +114,22 @@ OPTIONS
     this process to fail. The single quotations are NOT optional as they
     allow spaces within the replacement field 'NEW'.
 
-    Within the document, the `OLD` field should be encosed with `${ }$` . So,
-    if the variable NAME would appear as `${NAME}$` within the document.
+    Within the document, the `OLD` field should be enclosed with `{ }` . So,
+    if the variable NAME would appear as `{NAME}` within the document.
+
+    Warning:
+        The parsing module does not currently support the replacement of the
+        '-' character. It looks for '-v' & parses options until the next '-'
+        is found. As such, the replacement 'NAME='michael-newman' will
+        automatically fail.
 
     Valid Examples:
-        Document: ... ${NAME}$ ....
+        Document: ... {NAME} ....
         Options: ... -v NAME='Michael Newman'
         Results in: ... Michael Newman ...
 
-        Document: ... ${NAME}$ ... ${YEAR}$
-        Options: ... -v NAME='Michael Newman' YEAR='2018'
+        Document: ... {NAME} ... {YEAR}
+        Options: ... -v NAME='Michael Newman', YEAR='2018'
         Results in: ... Michael Newman ... 2018
 
 

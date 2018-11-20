@@ -1,0 +1,192 @@
+{
+  "meta": {
+    "name": "Rose",
+    "date": {
+      "month": 11,
+      "day": 20,
+      "year": 2018
+    },
+    "license": "MIT",
+    "contributors": [
+      "Michael Newman"
+    ],
+    "description": {
+      "short": "Generic python utility library",
+      "long": null
+    },
+    "keywords": [
+      "utility",
+      "library"
+    ],
+    "language": {
+      "type": "python",
+      "version": "3.7",
+      "libraries": [],
+      "frameworks": [],
+      "requirements": []
+    }
+  },
+  "auto": [
+    {
+      "txt": [
+        "README",
+        "LICENSE",
+        "CONTRIBUTORS"
+      ],
+      "rst": [],
+      "folders": [
+        "test",
+        "venv"
+      ]
+    }
+  ],
+  "test": {
+    "libraries": [
+      {
+        "type": "unittest",
+        "version": null
+      }
+    ],
+    "frameworks": [],
+    "requirements": []
+  },
+  "destination": {
+    "system": {
+      "root": "/Users/Michael/prog/python/python3"
+    }
+  },
+  "sync": {
+    "git": {
+      "branches": [
+        "dev"
+      ],
+      "remotes": [
+        "origin"
+      ]
+    }
+  },
+
+
+
+
+
+  "folder_root": {
+    "src": {
+      "meta": {
+        "type": "folder"
+      },
+
+      "files": {
+        "meta": {
+          "type": "python_module",
+          "extension": "py"
+        }
+      },
+
+      "strings": {
+        "meta": {
+          "type": "python_module",
+          "extension": "py"
+        },
+
+        "methods": {
+          "require_string": {
+            "param":[
+              {
+                "name": "obj"
+              },
+              {
+                "name": "log",
+                "default": "None"
+              }
+            ],
+            "return":
+              {
+                "type": "str"
+              }
+            }
+          }
+        }
+      },
+
+      "folders": {
+        "meta": {
+          "type": "python_module",
+          "extension": "py"
+        }
+      }
+    },
+
+    "docs": {
+      "meta": {
+        "type": "folder"
+      }
+    },
+
+    "resources": {
+      "meta": {
+        "type": "folder"
+      }
+    },
+
+    "logs": {
+      "meta": {
+        "type": "folder",
+
+        "sync": {
+          "git_track": false,
+          "folder_system": null,
+          "remotes": null
+        }
+      }
+    },
+
+    "design": {
+      "meta": {
+        "type": "folder",
+
+        "sync": {
+          "git_track": false,
+          "folder_system": null,
+          "remotes": null
+        }
+      },
+
+      "agile": {
+        "meta": {
+          "type": "folder",
+
+          "sync": {
+            "git_track": false,
+            "folder_system": null,
+            "remotes": null
+          }
+        },
+
+        "project_backlog": {
+          "meta": {
+            "type": "folder",
+
+            "sync": {
+              "git_track": false,
+              "folder_system": null,
+              "remotes": null
+            }
+          }
+        },
+
+        "origin_sprint": {
+          "meta": {
+            "type": "folder",
+
+            "sync": {
+              "git_track": false,
+              "folder_system": null,
+              "remotes": null
+            }
+          }
+        }
+      }
+    }
+  }
+}

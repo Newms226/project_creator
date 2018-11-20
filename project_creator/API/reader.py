@@ -1,16 +1,33 @@
 import abc
+from abc import ABCMeta, ABC
 
 
-class Reader(object, metaclass=abc.ABCMeta):
+class Reader(ABC, object):
 
     @abc.abstractmethod
     def name(self, element) -> str:
         pass
 
     @abc.abstractmethod
-    def git_track(self, element) -> bool:
+    def element_type(self, element) -> str:
         pass
 
     @abc.abstractmethod
-    def element_type(self, element) -> str:
+    def meta(self, element) -> dict:
         pass
+
+
+class FileReader(Reader, ABC):
+
+    @abc.abstractmethod
+    def extension(self):
+        pass
+
+    @abc.abstractmethod
+    def header(self):
+        pass
+
+    @abc.abstractmethod
+    def text(self):
+        pass
+

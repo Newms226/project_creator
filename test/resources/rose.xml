@@ -1,0 +1,109 @@
+<project>
+
+    <meta>
+        <name>Rose</name>
+            <!-- The name of the project_creator. Should be in title case. Will
+            have spaces removed & capitalization added to generate the
+            root folder name. For example "Project Creator" would become
+            the folder "ProjectCreator"-->
+        <root_dir>/Users/Michael/prog/python/python3</root_dir>
+        <date>
+            <month>11</month>
+            <day>19</day>
+            <year>2018</year>
+        </date>
+        <license>MIT</license>
+        <contributors>Michael Newman</contributors>
+
+        <short_description>
+            Generic python utility scripts
+        </short_description>
+
+        <long_description>A collection of python scripts useful to many
+            programs.
+        </long_description>
+        <keyords>
+            <k>utility</k>
+            <k>python</k>
+        </keyords>
+    </meta>
+
+    <language>
+        <type>Python</type>
+        <version>3.7</version>
+        <frameworks/>
+        <libraries/>
+        <requirements/>
+    </language>
+
+    <test>
+        <import/>
+        <frameworks/>
+        <libraries/>
+        <requirements>
+            <r>unittest</r>
+        </requirements>
+    </test>
+
+    <auto_generate>
+        <text_files>requirements</text_files>
+        <rst_files>readme, license, contributors</rst_files>
+        <folders>test</folders>
+    </auto_generate>
+
+    <git>
+        <username/>
+        <password/>
+        <branches>
+            <branch/>
+        </branches>
+        <remotes>
+            <remote/>
+        </remotes>
+        <import>
+            <url/>
+        </import>
+    </git>
+
+    <sync/>
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~HIERARCHY~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <folder_root type="folder">
+        <src type="folder"/>
+
+        <test type="folder">
+            <context type="file">
+                <extension>py</extension>
+                <import_strategy>rv</import_strategy>
+                <import_args>./resources/python/test_context.py --var {PROJECT_NAME=PROJECT_NAME}</import_args>
+            </context>
+        </test>
+
+        <venv type="folder" git="False"/>
+
+        <docs type="folder"/>
+
+        <resources type="folder"/>
+
+        <logs type="folder"/>
+
+        <design type="folder">
+            <agile type="folder">
+
+                <origion_backlog type="file">
+                    <extension>rst</extension>
+                    <header>Project Backlog</header>
+                </origion_backlog>
+
+                <sprint_backlog type ="file">
+                    <extension>rst</extension>
+                    <header>Sprint Backlog</header>
+                    <text>#. design</text>
+                </sprint_backlog>
+            </agile>
+            <plan type="file">
+                <extension>rst</extension>
+            </plan>
+        </design>
+    </folder_root>
+</project>
