@@ -11,7 +11,7 @@ def basic_node_test():
 
 
 def element_parse_test():
-    xml = XMLTree('/Users/michael/prog/python/python3/project_creator/design'
+    xml = XMLTree('/Users/michael/prog/python/python3/src/design'
                   '/examples/hierarchy_config.xml')
     tree = generate_tree(xml)
     print(tree.__str__())

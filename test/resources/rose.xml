@@ -1,37 +1,49 @@
 <project>
 
     <meta>
-        <name>Project Creator</name>
+        <name>Rose</name>
             <!-- The name of the src. Should be in title case. Will
             have spaces removed & capitalization added to generate the
             root folder name. For example "Project Creator" would become
             the folder "ProjectCreator"-->
         <root_dir>/Users/Michael/prog/python/python3</root_dir>
         <date>
-            <month>10</month>
-            <day>5</day>
+            <month>11</month>
+            <day>19</day>
             <year>2018</year>
         </date>
         <license>MIT</license>
-        <contributors>Michael Newman, OTHER CONTR., COMMA SEPARATED</contributors>
+        <contributors>Michael Newman</contributors>
 
         <short_description>
-            A programming project creation utility
+            Generic python utility scripts
         </short_description>
 
-        <long_description>A programming project creation utility designed to
-            parse some file &amp; directory template (XML, JSON, etc.) into
-            a physical folder structure on a machine.
+        <long_description>A collection of python scripts useful to many
+            programs.
         </long_description>
+        <keyords>
+            <k>utility</k>
+            <k>python</k>
+        </keyords>
     </meta>
 
     <language>
         <type>Python</type>
         <version>3.7</version>
         <frameworks/>
-        <libraries>anytree</libraries>
-        <requirements>anytree, unittest</requirements>
+        <libraries/>
+        <requirements/>
     </language>
+
+    <test>
+        <import/>
+        <frameworks/>
+        <libraries/>
+        <requirements>
+            <r>unittest</r>
+        </requirements>
+    </test>
 
     <auto_generate>
         <text_files>requirements</text_files>
@@ -57,7 +69,7 @@
 
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~HIERARCHY~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
     <folder_root type="folder">
-        <src type="folder" />
+        <src type="folder"/>
 
         <test type="folder">
             <context type="file">
@@ -78,10 +90,10 @@
         <design type="folder">
             <agile type="folder">
 
-                <project_backlog type="file">
+                <origion_backlog type="file">
                     <extension>rst</extension>
                     <header>Project Backlog</header>
-                </project_backlog>
+                </origion_backlog>
 
                 <sprint_backlog type ="file">
                     <extension>rst</extension>

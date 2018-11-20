@@ -1,8 +1,8 @@
 import unittest
 from tempfile import mkdtemp
 from os import mkdir, path
-from .context import project_creator
-from project_creator.util.folders import WorkingDirectory, TempHandler, \
+from .context import src
+from src.util.folders import WorkingDirectory, TempHandler, \
     make_folder
 
 

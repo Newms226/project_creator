@@ -1,12 +1,11 @@
 import unittest
-from .context import project_creator
-from project_creator.util.immutable_tuple import ImmutableConfig
+from .context import src
+from src.util.immutable_tuple import ImmutableConfig
 
 
 class TestStringConfig(unittest.TestCase):
     def setUp(self):
-        self.config = ImmutableConfig('git', 'sync', 'folders', 'meta',
-                                      'language', 'auto generate',
+        self.config = ImmutableConfig('git', 'sync', 'folders', 'meta', 'auto generate',
                                       'execution', 'security')
 
     def test_git_contents(self):
@@ -20,10 +19,6 @@ class TestStringConfig(unittest.TestCase):
 
     def test_meta_contents(self):
         self.assertTrue(self.config.metadata == 'meta')
-
-    def test_language_contents(self):
-        self.assertTrue(self.config.language == 'language')
-
     def test_auto_contents(self):
         self.assertTrue(self.config.auto_generate == 'auto generate')
 
@@ -42,7 +37,7 @@ class TestStringConfig(unittest.TestCase):
             self.config.git = 'FAIL'
 
     def test_size(self):
-        self.assertTrue(len(self.config) == 8)
+        self.assertTrue(len(self.config) == 7)
 
     def test_dict_len_empty(self):
         self.assertTrue(len(self.config.__dict__) == 0)

@@ -1,7 +1,7 @@
 from os import makedirs as _makedirs, path
 from tempfile import mkdtemp
-from project_creator.logging_config import root_logger as log
-from project_creator.util.strings import require_string
+from src.logging_config import root_logger as log
+from src.util.strings import require_string
 
 
 '''def make_dir(name, root):

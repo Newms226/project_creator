@@ -1,10 +1,10 @@
 import unittest, tempfile
-from .context import project_creator
-from project_creator.util.files.creation import gen_file_name, \
+from .context import src
+from src.util.files.creation import gen_file_name, \
     _get_valid_name, write_file_text
-from project_creator.parse.xml_ import parse
+from parse.importer import parse
 
-test_file = '/Users/michael/prog/python/python3/project_creator/test' \
+test_file = '/Users/michael/prog/python/python3/src/test' \
             '/resources/file_parse_base.xml'
 
 
