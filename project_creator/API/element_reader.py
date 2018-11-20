@@ -1,8 +1,10 @@
 import abc
 from abc import ABCMeta, ABC
 
+from parse import ImportNode
 
-class Reader(ABC, object):
+
+class ElementReader(ABC, object):
 
     @abc.abstractmethod
     def name(self, element) -> str:
@@ -13,11 +15,19 @@ class Reader(ABC, object):
         pass
 
     @abc.abstractmethod
-    def meta(self, element) -> dict:
+    def git_track(self, element) -> dict:
+        pass
+
+    @abc.abstractmethod
+    def parse_contents(self, element) -> dict:
+        pass
+
+    @abc.abstractmethod
+    def children(self, element) -> list:
         pass
 
 
-class FileReader(Reader, ABC):
+class FileReader(ElementReader, ABC):
 
     @abc.abstractmethod
     def extension(self):

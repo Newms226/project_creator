@@ -63,10 +63,7 @@ PARSING_DICT: dict = {
     }
 }
 
-from .importer import ImportNode, FileTree
-from .xml_ import XMLElement, XML_READER as XMLReader, XMLTree, \
-    parse as parse_xml
-
+from project_creator.parse.file_tree import ImportNode, FileTree
 
 #from test_src.config import SimpleParsingConfiguration
 

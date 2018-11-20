@@ -1,7 +1,7 @@
 from .context import project_creator
 import unittest
 
-from project_creator.parse.importer import ImportNode, FileTree
+from parse import ImportNode, FileTree
 
 
 class TestImportNode(unittest.TestCase):

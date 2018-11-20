@@ -1,5 +1,6 @@
 from project_creator.logging_config import root_logger as log
-from project_creator.parse import ImportNode, PARSING_DICT
+from project_creator.parse import PARSING_DICT
+from project_creator.parse import ImportNode
 
 
 def _prefix_handler(append_to: str,

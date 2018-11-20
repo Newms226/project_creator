@@ -1,4 +1,4 @@
-from project_creator.parse import ImportNode
+from parse import ImportNode
 from project_creator.util.immutable_tuple import ImmutableConfig
 from project_creator.util.folders import WorkingDirectory, TempHandler, \
     make_folder
@@ -55,7 +55,8 @@ def generate(config: ImmutableConfig, destination):
 
 
 if __name__ == '__main__':
-    from parse.xml_ import parse
+    from parse.importer import parse
+
     str_ = generate(
             parse('/Users/michael/prog/python/python3/project_creator/test/resources/rose.xml'), 'rose')
     print('\n' + str_)

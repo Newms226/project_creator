@@ -1,11 +1,12 @@
 from xml.etree import ElementTree as XMLTree
 from xml.etree.ElementTree import Element as XMLElement
 
+from project_creator.parse.importer import generate_tree
 from project_creator.logging_config import root_logger as log
 
-from project_creator.API import ReaderAPI
-from project_creator.util.immutable_tuple import ImmutableConfig
-from project_creator.parse import PARSING_DICT, ImportNode, FileTree
+from project_creator.API.element_reader import ElementReader as ReaderAPI
+from project_creator.API.tree_reader import TreeReader as TreeReaderAPI
+from project_creator.parse import PARSING_DICT
 
 
 # noinspection PyMethodMayBeStatic
@@ -34,145 +35,95 @@ class XMLReader(ReaderAPI):
         log.debug(f'RETURNED {type_}')
         return type_
 
+    def parse_contents(self, element: XMLElement, require_folder=True,
+                       max_loop: int = 2) -> dict:
+
+        def parse_dict(dictionary: dict, tag: str, content, count=0) -> int:
+            dictionary[tag] = content
+            count = count + 1
+            log.debug(f'(tag={tag}, content={content}, count={count}, '
+                      f'dictionary={dictionary})')
+            return count
+
+        def loop(e: XMLElement, dictionary: dict, count=0):
+            if count > max_loop:
+                raise Exception(
+                    f'Max loop exceeded. count={count} max={max_loop}')
+
+            if len(e) == 0:
+                log.debug(f'len = 0')
+                parse_dict(dictionary, e.tag, e.text)
+            else:
+                log.debug(f'sub add: len = {len(e)}')
+                dictionary[e.tag] = {}
+                for e_sub in list(e):
+                    loop(e_sub, dictionary[e.tag], count=count + 1)
+
+        def raise_if_not_folder():
+            if self.element_type(element) == PARSING_DICT['folder_type']:
+                raise Exception('Called parse_contents when type was folder!'
+                                f'{element}')
+
+        log.debug(f'(element={element}, require_folder={require_folder}, '
+                  f'max_loop={max_loop})')
+
+        if require_folder:
+            raise_if_not_folder()
+
+        to_return = {}
+        for child in list(element):
+            loop(child, to_return)
+
+        log.debug(f'RETURNED {to_return}')
+        return to_return
+
+    def children(self, element):
+        return list(element)
+
 
 XML_READER = XMLReader()
 
 
-def parse_contents(element: XMLElement, reader=XML_READER,
-                   require_folder=True, max_loop: int = 2) -> dict:
+class XMLTreeReader(TreeReaderAPI):
 
-    def parse_dict(dictionary: dict, tag: str, content, count=0) -> int:
-        dictionary[tag] = content
-        count = count + 1
-        log.debug(f'(tag={tag}, content={content}, count={count}, '
-                  f'dictionary={dictionary})')
-        return count
+    def __init__(self, file, reader: ReaderAPI = XML_READER):
+        self.reader = reader
+        self.root = XMLTree.parse(xml_file).getroot()
 
-    def loop(e: XMLElement, dictionary: dict, count=0):
-        if count > max_loop:
-            raise Exception(f'Max loop exceeded. count={count} max={max_loop}')
+    def meta(self) -> dict:
+        return reader.parse_contents(
+            self.root.find(parsing_config['roots']['meta'])
+        )
 
-        if len(e) == 0:
-            log.debug(f'len = 0')
-            parse_dict(dictionary, e.tag, e.text)
-        else:
-            log.debug(f'sub add: len = {len(e)}')
-            dictionary[e.tag] = {}
-            for e_sub in list(e):
-                loop(e_sub, dictionary[e.tag], count=count + 1)
+    def auto_generate(self) -> dict:
+        return reader.parse_contents(
+            self.root.find(parsing_config['roots']['auto_generate'])
+        )
 
-    def raise_if_not_folder():
-        if reader.element_type(element) == PARSING_DICT['folder_type']:
-            raise Exception('Called parse_contents when type was folder!'
-                            f'{element}')
+    def sync(self) -> dict:
+        return reader.parse_contents(
+            self.root.find(parsing_config['roots']['sync'])
+        )
 
-    log.debug(f'(element={element}, require_folder={require_folder}, '
-              f'max_loop={max_loop})')
+    def git(self) -> dict:
+        return reader.parse_contents(
+            self.root.find(parsing_config['roots']['git'])
+        )
 
-    if require_folder:
-        raise_if_not_folder()
+    def folder_root(self):
+        return self.root
 
-    to_return = {}
-    for child in list(element):
-        loop(child, to_return)
+    def security(self):
+        return None
 
-    log.debug(f'RETURNED {to_return}')
-    return to_return
-
-
-def xml_to_tree_node(element: XMLElement, reader=XML_READER, parent=None,
-                     parse_contents_: bool = True):
-    log.debug(f'(element={element}, reader={reader}, parent={parent}, '
-              f'parse_contents_={parse_contents_})')
-
-    node = ImportNode(name=reader.name(element),
-                      element_type=reader.element_type(element),
-                      git_track=reader.git_track(element),
-                      # element=element,
-                      parent=parent)
-    if parse_contents_:
-        node.__dict__.update(parse_contents(element=element,
-                                            reader=reader,
-                                            require_folder=False,
-                                            max_loop=1))
-
-    log.info(f'RETURNED {node.__str__(detail=10)}')
-    return node
-
-
-def generate_tree(root: XMLElement, project_name: str) -> FileTree:
-    def folder_loop(parent: ImportNode, parent_element: XMLElement):
-        log.debug(f'folder_loop(parent={parent})')
-        for child in list(parent_element):
-            _generate(child, parent)
-
-    def _generate(element: XMLElement, parent: ImportNode):
-        log.debug(f'(element={element}, parent={parent})')
-        if element is None:
-            raise Exception('Cannot generate a null element')
-
-        _parse_contents = XML_READER.element_type(element)
-        if _parse_contents == PARSING_DICT['folder_type']:
-            _parse_contents = False
-        else:
-            _parse_contents = True
-
-        n = xml_to_tree_node(element=element,
-                             parent=parent,
-                             parse_contents_=_parse_contents)
-        log.info(f'GENERATED: {n.__str__(detail=10)}')
-
-        if n.is_folder():
-            folder_loop(n, element)
-
-    log.debug(f'(root={root}, project_name={project_name}')
-
-    folder_root: XMLElement = root.find(PARSING_DICT['roots']['hierarchy'])
-    node_root = ImportNode(name=project_name,
-                           git_track=True,
-                           element_type=PARSING_DICT['folder_type'])
-
-    folder_loop(node_root, folder_root)
-
-    tree = FileTree(node_root)
-    log.info(f'RETURNED {tree}')
-    return tree
-
-
-def parse(xml_file, config=None, parsing_config: dict = PARSING_DICT) \
-        -> ImmutableConfig:
-    log.debug(f'(xml_file={xml_file}, config={config}, '
-              f'parsing_config={parsing_config})')
-    root = XMLTree.parse(xml_file).getroot()
-
-    _meta = parse_contents(root.find(parsing_config['roots']['meta']))
-    _language = parse_contents(root.find(parsing_config['roots']['language']))
-    _auto_generate = parse_contents(
-        root.find(parsing_config['roots']['auto_generate']))
-    _git = parse_contents(root.find(parsing_config['roots']['git']))
-    _sync = parse_contents(root.find(parsing_config['roots']['sync']))
-    _folders = generate_tree(root, _meta['name'])
-    _security = None
-    _execution = None
-
-    to_return = ImmutableConfig(git=_git,
-                                metadata=_meta,
-                                language=_language,
-                                sync=_sync,
-                                folder_hierarchy=_folders,
-                                auto_generate=_auto_generate,
-                                security=_security,
-                                execution=_execution)
-
-    log.debug(f'RETURNED {to_return}')
-    return to_return
+    def execution(self):
+        return None
 
 
 if __name__ == '__main__':
     root = XMLTree.parse(
         '/Users/michael/prog/python/python3/project_creator/test/resources/basic_project.xml') \
         .getroot()
-    tree = generate_tree(root, 'test')
+    tree = generate_tree(root, 'test', element_reader=XML_READER)
     print(f'{tree}\n')
     print(tree.get_root().__dict__)
-

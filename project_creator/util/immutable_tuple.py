@@ -2,8 +2,7 @@ from collections import namedtuple
 
 ConfigTupleBase = namedtuple('ConfigTupleBase',
                              ['git', 'sync', 'folder_hierarchy', 'metadata',
-                              'language', 'auto_generate', 'execution',
-                              'security'])
+                              'auto_generate', 'execution', 'security'])
 
 UnitTupleBase = namedtuple('UnitTupleBase',
                            ['name', 'element_type', 'git_track'])

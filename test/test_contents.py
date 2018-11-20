@@ -3,7 +3,8 @@ from .context import project_creator
 from project_creator.util.files.contents import _prefix_handler, \
     _generate_header_underline, \
     append_text, append_header, generate_file_text
-from project_creator.parse import parse_xml as parse, ImportNode
+from project_creator.parse.xml_ import ImportNode
+from parse.importer import parse
 
 gen_texts = ['header',
              'header with new line\n',

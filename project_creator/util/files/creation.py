@@ -1,5 +1,6 @@
 from project_creator.logging_config import root_logger as log
-from project_creator.parse import PARSING_DICT, ImportNode
+from project_creator.parse import PARSING_DICT
+from project_creator.parse import ImportNode
 from project_creator.util.files.contents import generate_file_text
 from os import path
 

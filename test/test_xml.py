@@ -1,8 +1,9 @@
 import unittest
 from .context import project_creator
-from project_creator.parse import XMLReader, XMLElement, XMLTree, ImportNode
-from project_creator.parse.xml_ import xml_to_tree_node, parse_contents, \
-    generate_tree, parse
+from project_creator.parse.xml_ import XMLReader, XMLElement, XMLTree
+from parse import ImportNode
+from project_creator.parse.xml_ import parse_contents
+from parse.importer import to_tree_node, generate_tree, parse
 
 test_file = '/Users/michael/prog/python/python3/project_creator/test/' \
             'resources/basic_project.xml'
@@ -91,7 +92,7 @@ class TestParseElement(unittest.TestCase):
         self.assertTrue(d['text'] == '#. design')
 
     def test_license_node(self):
-        n = xml_to_tree_node(self.license, XMLReader)
+        n = to_tree_node(self.license, XMLReader)
         self.assertTrue(n is not None)
         self.assertTrue(n.name == 'LICENSE')
         self.assertTrue(n.parent is None)
@@ -104,7 +105,7 @@ class TestParseElement(unittest.TestCase):
         self.assertFalse(n.is_folder())
 
     def test_src_node(self):
-        n = xml_to_tree_node(self.src, XMLReader)
+        n = to_tree_node(self.src, XMLReader)
         self.assertTrue(n is not None)
         self.assertTrue(n.name == 'src')
         self.assertTrue(n.parent is None)
@@ -114,7 +115,7 @@ class TestParseElement(unittest.TestCase):
         self.assertTrue(n.is_folder())
 
     def test_sprint_backlog_node(self):
-        n = xml_to_tree_node(self.backlog, XMLReader)
+        n = to_tree_node(self.backlog, XMLReader)
         self.assertTrue(n is not None)
         self.assertTrue(n.name == 'sprint_backlog')
         self.assertTrue(n.parent is None)
@@ -183,7 +184,7 @@ class TestTreeParse(unittest.TestCase):
 
 class TestFullParse(unittest.TestCase):
     def setUp(self):
-        self.parsed = parse(xml_file=test_file)
+        self.parsed = parse(file_=test_file)
 
     def test_parsed(self):
         self.assertTrue(self.parsed is not None)

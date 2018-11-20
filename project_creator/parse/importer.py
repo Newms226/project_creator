@@ -1,129 +1,94 @@
 #from API import TreeNodeAPI
 from __future__ import annotations
+
+from project_creator.API.element_reader import ElementReader as ReaderAPI
+from project_creator.API.tree_reader import TreeReader as TreeReaderAPI
+
+from project_creator.parse import ImportNode, FileTree
 from project_creator.logging_config import root_logger as log
-from project_creator.util.immutable_tuple import ImmutableUnit
-from project_creator.extensions import ABCMeta, NodeMixin, RenderTree, \
-    PreOrderIter, find_node
-from . import PARSING_DICT
+from project_creator.util.immutable_tuple import ImmutableConfig
+from project_creator.parse import PARSING_DICT
 #from src.parse.xml import parse_contents as parse_xml
 
 
-class ImportNode(NodeMixin, object):
+def to_tree_node(element, reader, parent=None,
+                 parse_contents_: bool = True) -> ImportNode:
+    log.debug(f'(element={element}, reader={reader}, parent={parent}, '
+              f'parse_contents_={parse_contents_})')
 
-    def __init__(self, name: str, element_type, git_track: bool, element=None,
-                 parent: ImportNode = None):
-        self._unit = ImmutableUnit(name, element_type, git_track)
-        self.parent = parent
-        self.element = element
-        log.debug(f'GENERATED: {self.__str__(detail=10)}')
+    node = ImportNode(name=reader.name(element),
+                      element_type=reader.element_type(element),
+                      git_track=reader.git_track(element),
+                      # element=element,
+                      parent=parent)
+    if parse_contents_:
+        node.__dict__.update(reader.parse_contents(element=element,
+                                                   require_folder=False,
+                                                   max_loop=1))
 
-    @property
-    def name(self):
-        return self._unit.name
+    log.info(f'RETURNED {node.__str__(detail=10)}')
+    return node
 
-    @property
-    def element_type(self):
-        return self._unit.element_type
 
-    @property
-    def git_track(self):
-        return self._unit.git_track
+def generate_tree(folder_root, project_name: str, element_reader) -> FileTree:
+    def folder_loop(parent: ImportNode, element):
+        log.debug(f'folder_loop(parent={parent})')
+        for child in element_reader.children(element):
+            _generate(child, parent)
 
-    def get_grand_ancestor(self):
-        return self.ancestors[0]
+    def _generate(element, parent: ImportNode):
+        log.debug(f'(element={element}, parent={parent})')
+        if element is None:
+            raise Exception('Cannot generate a null element')
 
-    def get_file_path(self, root=None):
-        pass  # TODO
-
-    def is_folder(self) -> bool:
-        return self.element_type == PARSING_DICT['folder_type']
-
-    def is_file(self) -> bool:
-        return self.element_type == PARSING_DICT['file_type']
-
-    def _pre_detach(self, parent):
-        log.warning(f'{self.name}.pre_detach <current={self.parent}, '
-                    f'future={parent}>')
-        pass
-
-    def _post_detach(self, parent):
-        log.warning(f'{self.name}.post_detach <current={self.parent}>')
-        pass
-
-    def _pre_attach(self, parent):
-        log.info(f'{self.name}.pre_attach <current={self.parent}, '
-                 f'future={parent}>')
-        pass
-
-    def _post_attach(self, parent):
-        log.info(f'{self.name}.post_attach <current={self.parent}>')
-        pass
-
-    def get_child(self, child_name: str, max_level=2, filter_=None) \
-            -> ImportNode:
-
-        if filter_ is None:
-            _f = lambda node: node.name == child_name
+        if element_reader.element_type(element) == PARSING_DICT['folder_type']:
+            _parse_contents = False
         else:
-            _f = filter_
+            _parse_contents = True
 
-        return find_node(node=self,
-                         filter_=_f,
-                         maxlevel=max_level)
+        n = to_tree_node(element=element,
+                         reader=element_reader,
+                         parent=parent,
+                         parse_contents_=_parse_contents)
 
-    def __str__(self, detail: int=0) -> str:
-        """String representation with detail customization.
+        log.info(f'GENERATED: {n.__str__(detail=10)}')
 
-        0: lowest amount of info (simple name)
-        1 - 5: name, type, & tracking status
-        10: all info in __dict__
-        """
-        if detail <= 0:
-            return f'{self.name}'
-        if 1 <= detail <= 5:
-            return f'{self.name} ({self.element_type}, tracked: ' \
-                   f'{self.git_track})'
-        if 5 < detail:
-            return f'{self.name} ({self.element_type}, tracked: ' \
-                   f'{self.git_track}):     {self.__dict__}'
+        if n.is_folder():
+            folder_loop(n, element)
 
-    def __contains__(self, item, max_level: int=2):
-        return find_node(node=self,
-                         filter_=lambda node: node == item,
-                         maxlevel=max_level) is not None
+    log.debug(f'(root={folder_root}, project_name={project_name}')
+
+    node_root = ImportNode(name=project_name,
+                           git_track=True,
+                           element_type=PARSING_DICT['folder_type'])
+
+    folder_loop(parent=node_root, element=folder_root)
+
+    tree = FileTree(node_root)
+    log.info(f'RETURNED {tree}')
+    return tree
 
 
-class FileTree(object):
+def parse(element_reader: ReaderAPI, tree_reader: TreeReaderAPI,
+          config=None, parsing_config=None) -> ImmutableConfig:
 
-    def __init__(self, root: NodeMixin):
-        self.root = (root, )
+    if parsing_config is None:
+        parsing_config = PARSING_DICT
 
-    def get_root(self) -> ImportNode:
-        return self.root[0]
+    log.debug(f'(element_reader={element_reader}, tree_reader={tree_reader}, '
+              f'config={config}, parsing_config={parsing_config})')
 
-    def get_render(self, root=None) -> RenderTree:
-        if root is None:
-            return RenderTree(self.get_root())
-        else:
-            return RenderTree(root)
+    folders = generate_tree(folder_root=tree_reader.folder_root(),
+                            project_name=tree_reader.meta()['name'],
+                            element_reader=element_reader)
 
-    @property
-    def node_count(self) -> int:
-        i: int = -1
-        for node in PreOrderIter(self.get_root()): i = i + 1
-        return i
+    to_return = ImmutableConfig(git=tree_reader.git(),
+                                metadata=tree_reader.meta(),
+                                sync=tree_reader.sync(),
+                                folder_hierarchy=folders,
+                                auto_generate=tree_reader.auto_generate(),
+                                security=tree_reader.security(),
+                                execution=tree_reader.execution())
 
-    def __str__(self, detail: int=0):
-        _str = ''
-
-        for pre, _, node in RenderTree(self.get_root()):
-            _str += f'{pre}{node.__str__(detail=detail)}\n'
-
-        return _str
-
-    def __repr__(self):
-        return f'FileTree <root={self.get_root()}, count={self.node_count}>'
-
-
-if __name__ == '__main__':
-    pass
+    log.debug(f'RETURNED {to_return}')
+    return to_return
