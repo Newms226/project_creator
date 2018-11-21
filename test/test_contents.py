@@ -51,7 +51,7 @@ class TestHeader(unittest.TestCase):
     def setUp(self):
         self.contents = gen_texts
         self.headers = ['HEADER', 'Dumb header\n']
-        self.chars = chars = ['#', '=', 'a', '_']
+        self.chars = ['#', '=', 'a', '_']
 
     def test_underline_gen(self):
         for header in self.headers:

@@ -100,10 +100,7 @@
                 "default": "None"
               }
             ],
-            "return":
-              {
-                "type": "str"
-              }
+            "return": "str"
             }
           }
         }

@@ -1,5 +1,4 @@
-from xml.etree import ElementTree as XMLTree
-from xml.etree.ElementTree import Element as XMLElement
+from src.extensions import XMLElement, XMLTree
 
 from src.parse.importer import generate_tree
 from src.logging_config import root_logger as log
@@ -88,7 +87,7 @@ class XMLTreeReader(TreeReaderAPI):
 
     def __init__(self, file, reader: ReaderAPI = XML_READER):
         self.reader = reader
-        self.root = XMLTree.parse(xml_file).getroot()
+        self.root = XMLTree.parse(file).getroot()
 
     def meta(self) -> dict:
         return reader.parse_contents(
