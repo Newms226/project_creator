@@ -1,9 +1,8 @@
 import unittest
-from .context import src
 from src.parse.xml_ import XMLReader, XMLElement, XMLTree
-from model.node import ImportNode
+from src.model.node import ImportNode
 from src.parse.xml_ import parse_contents
-from parse.importer import to_tree_node, generate_tree, parse
+from src.parse.importer import to_tree_node, generate_tree, parse
 
 test_file = '/Users/michael/prog/python/python3/src/test/' \
             'resources/basic_project.xml'

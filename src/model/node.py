@@ -3,10 +3,11 @@ from src.extensions import NodeMixin, find_node
 
 from src.logging_config import root_logger as log
 from src.parse import PARSING_DICT
-from src.util.immutable_tuple import ImmutableUnit
+from src.util.immutable import read_only_properties
 from src.util.sync import SyncHandler
 
 
+@read_only_properties('_element_type')
 class ImportNode(NodeMixin, object):
 
     def __init__(self, name: str, element_type, sync: SyncHandler,
@@ -16,12 +17,12 @@ class ImportNode(NodeMixin, object):
                   f'sync={sync}, element={element}, parent={parent}, '
                   f'contents={contents}, meta={meta})')
 
-        self._unit = ImmutableUnit(name=name,
-                                   element_type=element_type,
-                                   meta=meta,  # TODO
-                                   sync=sync)
+        self._name = name
+        self._element_type = element_type
+        self._sync: SyncHandler = sync
+        self._meta = meta
 
-        self.parent = parent
+        self.parent: ImportNode = parent
         self.element = element
 
         if contents is not None:
@@ -31,23 +32,23 @@ class ImportNode(NodeMixin, object):
 
     @property
     def name(self):
-        return self._unit.name
+        return self._name
 
     @property
     def element_type(self):
-        return self._unit.element_type
+        return self._element_type
 
     @property
     def git_track(self):
-        return self._unit.sync.git_track
+        return self._sync.git_track
 
     @property
     def sync(self):
-        return self._unit.sync
+        return self._sync
 
     @property
     def meta(self):
-        return self._unit.meta
+        return self._meta
 
     def get_grand_ancestor(self):
         return self.ancestors[0]
@@ -108,3 +109,9 @@ class ImportNode(NodeMixin, object):
         return find_node(node=self,
                          filter_=lambda node: node == item,
                          maxlevel=max_level) is not None
+
+if __name__ == '__main__':
+    sync = SyncHandler(False)
+    n = ImportNode('NAME', 'TYPE', sync)
+    n._unit = 5
+    print(n.__dict__)

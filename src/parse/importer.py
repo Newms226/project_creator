@@ -4,10 +4,11 @@ from __future__ import annotations
 from src.API.element_reader import ElementReader as ReaderAPI
 from src.API.tree_reader import TreeReader as TreeReaderAPI
 
-from src.parse import FileTree
-from model.node import ImportNode
+from src.model.file_tree import FileTree
+from src.model.node import ImportNode
 from src.logging_config import root_logger as log
 from src.util.immutable_tuple import ImmutableConfig
+from src.util.sync import SyncHandler
 from src.parse import PARSING_DICT
 #from src.parse.xml import parse_contents as parse_xml
 
@@ -19,7 +20,7 @@ def to_tree_node(element, reader, parent=None,
 
     node = ImportNode(name=reader.name(element),
                       element_type=reader.element_type(element),
-                      git_track=reader.git_track(element),
+                      sync=SyncHandler(reader.git_track(element)),
                       # element=element,
                       parent=parent)
     if parse_contents_:

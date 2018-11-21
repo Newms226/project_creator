@@ -31,6 +31,7 @@ class TestImportNode(unittest.TestCase):
                             n.name = False
                             n.element_type = True
                             n.git_track = 'asdfasdf'
+                            n.sync = False
 
     def test_type_bools(self):
         n = ImportNode('name', 'folder', True)
