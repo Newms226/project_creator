@@ -2,10 +2,10 @@
 
     <meta>
         <name>Rose</name>
-            <!-- The name of the src. Should be in title case. Will
-            have spaces removed & capitalization added to generate the
-            root folder name. For example "Project Creator" would become
-            the folder "ProjectCreator"-->
+        <!-- The name of the src. Should be in title case. Will
+        have spaces removed & capitalization added to generate the
+        root folder name. For example "Project Creator" would become
+        the folder "ProjectCreator"-->
         <root_dir>/Users/Michael/prog/python/python3</root_dir>
         <date>
             <month>11</month>
@@ -68,42 +68,81 @@
     <sync/>
 
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~HIERARCHY~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-    <folder_root type="folder">
-        <src type="folder"/>
+    <folder_root>
+        <src>
+            <meta type="folder"/>
+            <sync>
+                <git track="True"/>
+            </sync>
+            <children>
+                <strings>
+                    <meta type="module" extension="py">
+                        <language>python</language>
+                        <version>3.7</version>
+                    </meta>
+                    <contents>
+                        <methods>
+                            <require_string>
+                                <param>
+                                    <obj/>
+                                    <log default="None"/>
+                                </param>
+                                <return type="str"/>
+                            </require_string>
+                        </methods>
+                    </contents>
+                </strings>
+            </children>
+        </src>
 
-        <test type="folder">
-            <context type="file">
-                <extension>py</extension>
-                <import_strategy>rv</import_strategy>
-                <import_args>./resources/python/test_context.py --var {PROJECT_NAME=PROJECT_NAME}</import_args>
-            </context>
-        </test>
+        <venv>
+            <meta type="folder"/>
+            <sync>
+                <git track="False"/>
+            </sync>
+        </venv>
 
-        <venv type="folder" git="False"/>
+        <docs>
+            <meta type="folder"/>
+        </docs>
 
-        <docs type="folder"/>
+        <resources>
+            <meta type="folder"/>
+        </resources>
 
-        <resources type="folder"/>
+        <logs>
+            <meta type="folder"/>
+            <sync>
+                <git track="False"/>
+            </sync>
+        </logs>
 
-        <logs type="folder"/>
+        <design>
+            <meta type="folder"/>
+            <children>
+                <agile>
+                    <meta type="folder"/>
+                    <children>
+                        <origion_backlog>
+                            <meta type="file" extension="rst"/>
+                            <contents>
+                                <header>Project Backlog</header>
+                            </contents>
+                        </origion_backlog>
 
-        <design type="folder">
-            <agile type="folder">
+                        <sprint_backlog type="file">
+                            <meta type="file" extension="rst"/>
+                            <contents>
+                                <text>[]. design</text>
+                            </contents>
+                        </sprint_backlog>
+                    </children>
 
-                <origion_backlog type="file">
-                    <extension>rst</extension>
-                    <header>Project Backlog</header>
-                </origion_backlog>
-
-                <sprint_backlog type ="file">
-                    <extension>rst</extension>
-                    <header>Sprint Backlog</header>
-                    <text>#. design</text>
-                </sprint_backlog>
-            </agile>
-            <plan type="file">
-                <extension>rst</extension>
-            </plan>
+                </agile>
+                <plan>
+                    <meta type="file" extension="rst"/>
+                </plan>
+            </children>
         </design>
     </folder_root>
 </project>

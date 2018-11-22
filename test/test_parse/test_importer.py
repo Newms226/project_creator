@@ -4,4 +4,5 @@ from test import ELEMENTS, INFO
 import unittest
 
 
-class TestGenerateTree()
+class TestGenerateTree(unittest.TestCase):
+

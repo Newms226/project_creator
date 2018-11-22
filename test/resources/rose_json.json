@@ -88,19 +88,20 @@
           "type": "python_module",
           "extension": "py"
         },
-
-        "methods": {
-          "require_string": {
-            "param":[
-              {
-                "name": "obj"
-              },
-              {
-                "name": "log",
-                "default": "None"
+        "contents": {
+          "methods": {
+            "require_string": {
+              "param":[
+                {
+                  "name": "obj"
+                },
+                {
+                  "name": "log",
+                  "default": "None"
+                }
+              ],
+              "return": "str"
               }
-            ],
-            "return": "str"
             }
           }
         }
@@ -128,62 +129,60 @@
 
     "logs": {
       "meta": {
-        "type": "folder",
-
-        "sync": {
+        "type": "folder"
+      },
+      "sync": {
           "git_track": false,
           "folder_system": null,
           "remotes": null
         }
-      }
     },
 
     "design": {
       "meta": {
-        "type": "folder",
-
-        "sync": {
-          "git_track": false,
-          "folder_system": null,
-          "remotes": null
-        }
+        "type": "folder"
       },
-
-      "agile": {
-        "meta": {
-          "type": "folder",
-
+      "sync": {
+        "git_track": false,
+        "folder_system": null,
+        "remotes": null
+      },
+      "children": {
+        "agile": {
+          "meta": {
+            "type": "folder"
+          },
           "sync": {
             "git_track": false,
             "folder_system": null,
             "remotes": null
-          }
-        },
-
-        "project_backlog": {
-          "meta": {
-            "type": "folder",
-
-            "sync": {
-              "git_track": false,
-              "folder_system": null,
-              "remotes": null
-            }
-          }
-        },
-
-        "origin_sprint": {
-          "meta": {
-            "type": "folder",
-
-            "sync": {
-              "git_track": false,
-              "folder_system": null,
-              "remotes": null
+          },
+          "children": {
+            "project_backlog": {
+              "meta": {
+                "type": "folder",
+                "sync": {
+                  "git_track": false,
+                  "folder_system": null,
+                  "remotes": null
+                }
+              }
+            },
+            "origin_sprint": {
+              "meta": {
+                "type": "folder"
+              },
+              "sync": {
+                "git_track": false,
+                "folder_system": null,
+                "remotes": null
+              },
+              "contents": {
+                "text": "[] design"
+              }
             }
           }
         }
-      }
     }
   }
 }
